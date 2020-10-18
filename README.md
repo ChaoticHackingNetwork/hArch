@@ -1,1 +1,1 @@
-# Harch (Hackerz Arch) - Quick, simplistic Arch box for Hacking
+# Harch (Hackerz Arch) - A Quick, simplistic Arch box for Hacking
