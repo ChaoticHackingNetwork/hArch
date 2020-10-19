@@ -25,7 +25,7 @@ then
 fi
 
 read -p 'This script is by default set to modify /dev/sda, if this is not the drive you want, EXIT NOW!: ' device
-if ! [ $device = 'y' ] && [ $device = 'Y']
+if ! [ $device = 'y' ] && ! [ $device = 'Y']
 then
 	echo "Change your partition via the script or install elsewhere"
  
