@@ -28,6 +28,7 @@ read -p 'This script is by default set to modify /dev/sda, if this is not the dr
 if ! [ $device = 'y' ] && ! [ $device = 'Y']
 then
 	echo "Change your partition via the script or install elsewhere"
+fi
  
 #Determine BIOS or UEFI
 dmesg | grep -q "EFI v" # -q = grep output to nothing
