@@ -24,10 +24,11 @@ then
 	exit
 fi
 
-read -p 'This script is by default set to modify /dev/sda, if this is not the drive you want, EXIT NOW!: ' device
+read -p 'This script is by default set to modify /dev/sda, if this is not the drive you want, EXIT NOW! Continue?: ' device
 if ! [ $device = 'y' ] && ! [ $device = 'Y']
 then
 	echo "Change your partition via the script or install elsewhere"
+	exit
 fi
  
 #Determine BIOS or UEFI
@@ -66,16 +67,16 @@ then
 		
 EOF
 
-	#Format partitions
-	mkfs.ext4 /dev/sda3 
-	mkfs.fat -F32 /dev/sda1
+#Format partitions
+mkfs.ext4 /dev/sda3 
+mkfs.fat -F32 /dev/sda1
 
-	#Mount partitions
-	mount /dev/sda3 /mnt
+#Mount partitions
+mount /dev/sda3 /mnt
 
-	#Create swap space
-	mkswap /dev/sda2
-	swapon /dev/sda2
+#Create swap space
+mkswap /dev/sda2
+swapon /dev/sda2
 
 else
 	echo "This is a BIOS system!"
@@ -104,25 +105,25 @@ else
 		
 EOF
 
-	#Format partitions
-	mkfs.ext4 /dev/sda2
+#Format partitions
+mkfs.ext4 /dev/sda2
 
-	#Mount partitions
-	mount /dev/sda2 /mnt
+#Mount partitions
+mount /dev/sda2 /mnt
 
-	#Create swap space
-	mkswap /dev/sda1
-	swapon /dev/sda1
+#Create swap space
+mkswap /dev/sda1
+swapon /dev/sda1
 
 fi
 
 #Display new tables and confirm
 lsblk
-echo "Mount points correct?"
+echo "Do your Mount points look correct?"
 read -p 'Continue? [Y/n]' confirm
 if ! [ $confirm = 'y' ] && ! [ $confirm = 'Y' ]
 then 
-	echo "Please edit the script to continue..."
+	echo "Ensure you know what disk you want to install on: (lsblk or fdisk -l)"
 	exit
 fi
 
