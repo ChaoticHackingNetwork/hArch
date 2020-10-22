@@ -123,7 +123,7 @@ echo "Do your Mount points look correct?"
 read -p 'Continue? [Y/n]' confirm
 if ! [ $confirm = 'y' ] && ! [ $confirm = 'Y' ]
 then 
-	echo "Ensure you know what disk you want to install on: (lsblk or fdisk -l)"
+	echo "Ensure you know what disk you want to install on: lsblk or fdisk -l"
 	exit
 fi
 
@@ -143,6 +143,6 @@ echo "Run these commands to finish setup..."
 echo.
 echo "	[1] arch-chroot /mnt /bin/bash"
 echo "	[2] chmod +x HarchPost.sh"
-echo "  [3] ./HarchPost.sh"
+echo "  [3] './HarchPost.sh'"
 
 exit
