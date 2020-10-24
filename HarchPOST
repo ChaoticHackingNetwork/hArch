@@ -6,6 +6,10 @@
 # Discord   : https://discord.gg/nv445EX (ChaoticHackingNetwork) |
 # ---------------------------------------------------------------
 
+#Install some needed packages
+pacman -Syyu
+pacman -S vim nano dhcpcd netctl dialog wpa_supplicant mlocate neofetch net-tools dnsutils ntfs-3g sudo man-db usbutils pulseaudio alsa-utils perl ruby go python3 --noconfirm
+
 #Set root password
 echo -e "\033[33;36mPlease set ROOT password!!!\033[0m"
 passwd
@@ -30,10 +34,6 @@ hwclock --systohc --utc
 
 #Change localtime *Note this script has it set too Chicago*
 ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime #CHANGE THIS TO YOUR TIMEZONE
-
-#Install some needed packages
-pacman -Syyu
-pacman -S vim nano dhcpcd netctl dialog wpa_supplicant mlocate neofetch net-tools dnsutils ntfs-3g sudo man-db usbutils pulseaudio alsa-utils --noconfirm
 
 #Install MATE Desktop env and LightDM after reboot
 pacman -S xorg-server xorg-xrandr mate mate-extra sddm xorg-xinit --noconfirm
