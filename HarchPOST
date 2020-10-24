@@ -51,6 +51,8 @@ else
 grub-install --target=i386-pc /dev/sda --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 
+fi
+
 #Install BlackArch Mirror
 curl -O https://blackarch.org/strap.sh
 chmod +x strap.sh
