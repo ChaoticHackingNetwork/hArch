@@ -14,7 +14,7 @@ echo '     /\            | |     | |    (_)                 '
 echo '    /  \   _ __ ___| |__   | |     _ _ __  _   ___  __'
 echo "   / /\ \ | '__/ __| '_ \  | |    | | '_ \| | | \ \/ /"
 echo '  / ____ \| | | (__| | | | | |____| | | | | |_| |>  < '
-echo " /_/    \_\_|  \___|_| |_| |______|_|_| |_|\__,_/_/\_\"
+echo ' /_/    \_\_|  \___|_| |_| |______|_|_| |_|\__,_/_/\_\'
                                                       
 #Network Connections
 read -p 'Are you connected to the Internet? [y/N]: ' connected
@@ -24,7 +24,7 @@ then
 	exit
 fi
 
-read -p 'This script is by default set to modify /dev/sda, if this is not the drive you want, EXIT NOW! Continue?: ' device
+read -p 'This script is by default change to modify /dev/sda, ensure this is the drive you want, or EXIT NOW! Continue? [y/N]:  device
 if ! [ $device = 'y' ] && ! [ $device = 'Y']
 then
 	echo "Change your partition via the script or install elsewhere"
