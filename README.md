@@ -10,7 +10,7 @@ Still to do:
 
 Add tools
 
-Add GUI
+~~Add GUI~~
 
 Harch = A 'really' basic script install for Arch Linux BIOS/UEFI systems
   To install, boot into Arch live ISO and:
