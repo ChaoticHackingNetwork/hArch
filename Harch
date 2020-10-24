@@ -128,7 +128,7 @@ cat /mnt/etc/fstab
 
 #Finish last minute setup
 echo 0 > /proc/sys/kernel/hung_task_timeout_secs
-curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/master/HarchPost
+curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/HarchPost
 mv HarchPost /mnt
 echo "The final script has been installed and move to your new root directory..."
 echo "Run these commands to finish setup..."
