@@ -64,8 +64,7 @@ then
 	p # print the in-memory table
 	w # write changes to disk
 	q # quit
-		
-EOF
+	EOF
 
 	#Format partitions
 	mkfs.ext4 /dev/sda3 
@@ -102,8 +101,7 @@ else
 	p # print the in-memory table
 	w # write changes to disk
 	q # quit
-		
-EOF
+	EOF
 
 	#Format partitions
 	mkfs.ext4 /dev/sda2
