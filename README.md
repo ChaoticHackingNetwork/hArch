@@ -4,14 +4,6 @@ Updates 10/23/2020:
 
 Fixed BIOS/UEFI bug, it now properly identifies system
 
-Added HarchPOST
-
-Still to do:
-
-~~Add tools~~
-
-~~Add GUI~~
-
 Harch = A 'really' basic script install for Arch Linux BIOS/UEFI systems
   To install, boot into Arch live ISO and:
   
