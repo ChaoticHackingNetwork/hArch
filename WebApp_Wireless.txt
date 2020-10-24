@@ -12,5 +12,13 @@ dirsearch
 dirbuster
 sublist3r
 sqlmap
-hydra
+arachni
+wpscan
+davscan
+droopescan
+joomlascan
+gospider
+httpforge
+
+
 
