@@ -1,0 +1,13 @@
+burpsuite
+zaproxy
+ffuf
+wireshark-qt
+aircrack-ng
+nikto
+nmap
+gobuster
+dirsearch
+dirbuster
+sublist3r
+sqlmap
+
