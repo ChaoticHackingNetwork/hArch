@@ -33,8 +33,8 @@ then
 fi
  
 #Determine BIOS or UEFI
-dmesg | grep -q "EFI v" # -q = grep output to nothing
-if [ $0 -eq 0 ]
+ls /sys/firmware/efi
+if [[ -d "/sys/firmware/efi" ]]
 then
 echo "This is a UEFI System!" 
 echo "This script will create and format the following partitions:"
