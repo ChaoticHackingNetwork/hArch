@@ -15,6 +15,7 @@ sqlmap
 arachni
 wpscan
 davscan
+davtest
 droopescan
 joomlascan
 gospider
