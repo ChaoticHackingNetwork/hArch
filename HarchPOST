@@ -8,7 +8,7 @@
 
 #Install some needed packages
 pacman -Syyu
-pacman -S vim nano dhcpcd netctl dialog wpa_supplicant mlocate neofetch net-tools dnsutils ntfs-3g sudo man-db usbutils pulseaudio alsa-utils perl ruby go python3 --noconfirm
+pacman -S vim nano dhcpcd netctl dialog wpa_supplicant mlocate grub neofetch net-tools dnsutils ntfs-3g sudo man-db usbutils pulseaudio alsa-utils perl ruby go python3 --noconfirm
 
 #Set root password
 echo -e "\033[33;36mPlease set ROOT password!!!\033[0m"
@@ -40,9 +40,10 @@ pacman -S xorg-server xorg-xrandr mate mate-extra sddm xorg-xinit --noconfirm
 systemctl enable sddm
 
 #Install bootloader
-dmesg | grep -q "EFI v" 
-if [ $0 -eq 0 ]
+ls /sys/firmware/efi
+if [[ -d "/sys/firmware/efi" ]]
 then
+pacman -S efibootmgr dosfstools mtools os-prober
 mkdir /boot/EFI
 mount /dev/sda1 /boot/EFI
 grub-install --target=x86_64-efi --bootloader-id=HARCH_UEFI --recheck
