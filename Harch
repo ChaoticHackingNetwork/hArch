@@ -24,10 +24,11 @@ then
 	exit
 fi
 
-read -p 'This script is by default change to modify /dev/sda, ensure this is the drive you want, or EXIT NOW! Continue? [y/N]:  device
+read -p 'This script is by default change to modify /dev/sda, ensure this is the drive you want, or EXIT NOW! Continue? [y/N]:' device
 if ! [ $device = 'y' ] && ! [ $device = 'Y']
 then
 	echo "Change your partition via the script or install elsewhere"
+	echo "HINT: Line 48 X_X"
 	exit
 fi
  
@@ -35,13 +36,14 @@ fi
 dmesg | grep -q "EFI v" # -q = grep output to nothing
 if [ $0 -eq 0 ]
 then
-echo "This is a UEFI System!" && sleep 5s
+echo "This is a UEFI System!" 
 echo "This script will create and format the following partitions:"
 echo "--------- /dev/sda1 - 512M will be mounted as /boot/EFI ------------"
 echo "--------- /dev/sda2 - 16G of space will be mounted as SWAP ---------"
 echo "--------- /dev/sda3 - rest of space will be mounted as / -----------"
 echo.
 echo "Exit now if this is not correct!!!"
+sleep 10s
 #Create partitions thru fdisk...
 #https://superuser.com/a/984637
 sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk /dev/sda #CHANGE THIS IF NEEDED!!!
@@ -78,12 +80,14 @@ EOF
 	swapon /dev/sda2
 
 else
-echo "This is a BIOS system!" && sleep 5s
+echo "This is a BIOS system!" 
 echo "This script will create and format the following partitions:"
 echo ""
 echo "--------- /dev/sda1 - 16G will be mounted as SWAP space ------------"
 echo "--------- /dev/sda2 - Rest of space will be mounted as / -----------"
-echo ""
+echo "Exit now if this is not correct!!!"
+sleep 10s
+echo.
 #Create partitions thru fdisk...
 #https://superuser.com/a/984637
 sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk /dev/sda # CHANGE THIS IF NEEDED!!!
