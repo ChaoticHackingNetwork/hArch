@@ -1,4 +1,4 @@
-# Harch (Hackers Arch) - A Quick, simplistic Arch box
+# Harch (Hackers Arch) - A Quick, simplistic Arch box with a small amount of powerful tools, a badass lightwieght hacker OS!
 
 Updates 10/23/2020:
 
