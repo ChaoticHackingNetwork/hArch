@@ -1,4 +1,4 @@
-# Harch (Hackerz Arch) - A Quick, simplistic Arch box
+# Harch (Hackers Arch) - A Quick, simplistic Arch box
 
 Updates 10/23/2020:
 
