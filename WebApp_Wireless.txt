@@ -1,5 +1,7 @@
 burpsuite
 zaproxy
+metasploit
+postgresql
 ffuf
 wireshark-qt
 aircrack-ng
