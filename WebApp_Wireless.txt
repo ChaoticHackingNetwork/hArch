@@ -12,4 +12,5 @@ dirsearch
 dirbuster
 sublist3r
 sqlmap
+hydra
 
