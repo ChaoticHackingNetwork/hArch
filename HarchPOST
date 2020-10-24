@@ -42,7 +42,7 @@ systemctl enable sddm
 ls /sys/firmware/efi
 if [[ -d "/sys/firmware/efi" ]]
 then
-pacman -S efibootmgr dosfstools mtools os-prober
+pacman -S efibootmgr dosfstools mtools os-prober --noconfirm
 mkdir /boot/EFI
 mount /dev/sda1 /boot/EFI
 grub-install --target=x86_64-efi --bootloader-id=HARCH_UEFI --recheck
