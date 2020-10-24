@@ -25,7 +25,7 @@ then
 fi
 
 lsblk
-echo 'Which disk you want to install Harch on?
+echo 'Which disk you want to install Harch on?'
 read devname
 read -p 'Are you sure you want to use $devname? [y/N]: ' device
 if ! [ $device = 'y' ] && [ $device = 'Y' ]
