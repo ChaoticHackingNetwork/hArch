@@ -35,7 +35,7 @@ fi
 dmesg | grep -q "EFI v" # -q = grep output to nothing
 if [ $0 -eq 0 ]
 then
-	echo "This is a UEFI System!"
+	echo "This is a UEFI System!" && sleep 5s
 	echo "This script will create and format the following partitions:"
 	echo "--------- /dev/sda1 - 512M will be mounted as /boot/EFI ------------"
 	echo "--------- /dev/sda2 - 16G of space will be mounted as SWAP ---------"
@@ -67,19 +67,19 @@ then
 		
 EOF
 
-#Format partitions
-mkfs.ext4 /dev/sda3 
-mkfs.fat -F32 /dev/sda1
+	#Format partitions
+	mkfs.ext4 /dev/sda3 
+	mkfs.fat -F32 /dev/sda1
 
-#Mount partitions
-mount /dev/sda3 /mnt
+	#Mount partitions
+	mount /dev/sda3 /mnt
 
-#Create swap space
-mkswap /dev/sda2
-swapon /dev/sda2
+	#Create swap space
+	mkswap /dev/sda2
+	swapon /dev/sda2
 
 else
-	echo "This is a BIOS system!"
+	echo "This is a BIOS system!" && sleep 5s
 	echo "This script will create and format the following partitions:"
 	echo ""
 	echo "--------- /dev/sda1 - 16G will be mounted as SWAP space ------------"
@@ -105,15 +105,15 @@ else
 		
 EOF
 
-#Format partitions
-mkfs.ext4 /dev/sda2
+	#Format partitions
+	mkfs.ext4 /dev/sda2
 
-#Mount partitions
-mount /dev/sda2 /mnt
+	#Mount partitions
+	mount /dev/sda2 /mnt
 
-#Create swap space
-mkswap /dev/sda1
-swapon /dev/sda1
+	#Create swap space
+	mkswap /dev/sda1
+	swapon /dev/sda1
 
 fi
 
