@@ -24,3 +24,9 @@ Harch = A 'really' basic script install for Arch Linux BIOS/UEFI systems
     5. arch-chroot /mnt
     6. chmod +x HarchPOST
     7. ./HarchPOST
+
+Tools:
+
+    1. Tools will be broken down into categories for a more user preferred system, not every tool is needed
+    2. WebApp_Wireless.txt = Web App and Wireless Tools, i.e. Metasploit, Dirbuster etc...
+    3. 
