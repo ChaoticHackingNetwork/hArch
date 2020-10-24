@@ -20,7 +20,7 @@ Harch = A 'really' basic script install for Arch Linux BIOS/UEFI systems
     2. chmod +x Harch
     3. ./Harch
     * Some systems show a bad meterpreter if so run: sed -i -e 's/\r$//' Harch 
-    4. After Harch install, it will download PostHarch
+    4. After Harch install, it will download HarchPOST
     5. arch-chroot /mnt
     6. chmod +x HarchPOST
     7. ./HarchPOST
