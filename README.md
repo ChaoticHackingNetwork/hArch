@@ -1,8 +1,10 @@
 # Harch {Hackers Arch} - A quick(depending on Internet Speed), simplistic Arch box with a small portion of powerful hacking tools, a badass lightwieght hacker OS!
 
-Updates 10/23/2020:
+Updates 10/27/2020:
 
-Fixed BIOS/UEFI bug, it now properly identifies system
+~~Fix BIOS/UEFI bug~~
+UEFI grub-install is taking longer than usual, working on solution 
+
 
 Harch = A 'really' basic script install for Arch Linux BIOS/UEFI systems
   To install, boot into Arch live ISO and:
