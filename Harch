@@ -41,7 +41,7 @@ echo "This script will create and format the following partitions:"
 echo "--------- /dev/sda1 - 512M will be mounted as /boot/EFI ------------"
 echo "--------- /dev/sda2 - 16G of space will be mounted as SWAP ---------"
 echo "--------- /dev/sda3 - rest of space will be mounted as / -----------"
-echo.
+echo""
 echo "Exit now if this is not correct!!!"
 sleep 10s
 #Create partitions thru fdisk...
@@ -87,7 +87,7 @@ echo "--------- /dev/sda1 - 16G will be mounted as SWAP space ------------"
 echo "--------- /dev/sda2 - Rest of space will be mounted as / -----------"
 echo "Exit now if this is not correct!!!"
 sleep 10s
-echo.
+echo""
 #Create partitions thru fdisk...
 #https://superuser.com/a/984637
 sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk /dev/sda # CHANGE THIS IF NEEDED!!!
@@ -132,7 +132,7 @@ curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/Harch
 mv HarchPOST /mnt
 echo "The final script has been installed and move to your new root directory..."
 echo "Run these commands to finish setup..."
-echo.
+echo""
 echo "	[1] arch-chroot /mnt /bin/bash"
 echo "	[2] chmod +x HarchPost.sh"
 echo "  [3] ./HarchPost.sh"
