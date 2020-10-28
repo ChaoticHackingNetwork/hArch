@@ -1,8 +1,13 @@
-# Harch {Hackers Arch} - A quick(depending on Internet Speed), simplistic Arch box with a small portion of powerful hacking tools, a badass lightwieght hacker OS!
+# Harch {Hackers Arch} - A quick(depending on Internet Speed), simplistic Arch box with a small portion of powerful hacking tools, a badass lightweight hacker OS!
+
+Harch is intended for experienced Security Professionals. The tools at your disposal are powerful in the right hands! The lightweight design speeds up install time as well not having unneeded applications taking up precious resources! Arch is what some people call "not user friendly" though I disagree, Arch is by far a user friendly OS (If you want to learn WTF is going on). 
+
+If you wish to communicate with me on any updates or bugs! Find me on Discord: https://discord.gg/8FkAV4B
 
 Updates 10/27/2020:
 
-~~Fix BIOS/UEFI bug~~.....
+~~Fix BIOS/UEFI bug~~
+
 UEFI grub-install is taking longer than usual, working on solution 
 
 
