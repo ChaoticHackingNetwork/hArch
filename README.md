@@ -2,7 +2,7 @@
 
 Updates 10/27/2020:
 
-~~Fix BIOS/UEFI bug~~
+~~Fix BIOS/UEFI bug~~.....
 UEFI grub-install is taking longer than usual, working on solution 
 
 
