@@ -10,6 +10,7 @@ Updates 10/27/2020:
 
 UEFI grub-install is taking longer than usual, working on solution 
 
+_____________________________________________________________________________________________________________________________________________________________________________
 
 Harch = A 'really' basic script install for Arch Linux BIOS/UEFI systems
   To install, boot into Arch live ISO and:
