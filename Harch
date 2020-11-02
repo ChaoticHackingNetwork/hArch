@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# HArch Bios Install (Harchbvbvvvvb)
+# Harch UEFI/Bios Install (Hackers Arch)
 # ---------------------------------------------------------------
 # Author    : Chaotic_Guru                                       |
 # Github    : https://github.com/ChaoticHackingNetwork           |
@@ -27,8 +27,9 @@ fi
 read -p 'This script is by default change to modify /dev/sda, ensure this is the drive you want, Continue? [y/N]:' device
 if ! [ $device = 'y' ] && ! [ $device = 'Y']
 then
-	echo "Change your partition via the script or install elsewhere"
-	echo "HINT: Line 48 X_X"
+	echo "Change your partition via the script"
+	echo "HINT: Youll need to change multiple lines"
+	echo "Soon the script will take input for device!!! COMING SOON!"
 	exit
 fi
 
@@ -125,16 +126,22 @@ pacstrap /mnt base base-devel linux linux-firmware
 #Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab
+lsblk
+echo "Finishing last minute setup..."
+sleep 3
 
 #Finish last minute setup
 echo 0 > /proc/sys/kernel/hung_task_timeout_secs
 curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/HarchPOST
 mv HarchPOST /mnt
-echo "The final script has been installed and move to your new root directory..."
-echo "Run these commands to finish setup..."
+echo""
+echo "The final script has been installed and move to your new root directory"
+echo "Run these commands to finish setup"
+echo""
 echo""
 echo "	[1] arch-chroot /mnt /bin/bash"
 echo "	[2] chmod +x HarchPost.sh"
 echo "  [3] ./HarchPost.sh"
+echo""
 
 exit
