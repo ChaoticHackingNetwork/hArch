@@ -1,8 +1,8 @@
 # Harch {Hackers Arch} - A quick(depending on Internet speed), simplistic Arch box with a small portion of powerful hacking tools, a badass lightweight hacker OS!
 
-Harch is intended for experienced Security Professionals, preferably those who know Linux... The tools at your disposal are powerful in the right hands! The lightweight Arch design speeds up install time as well not having unneeded applications taking up precious resources! Arch is what some people call "not user friendly" though I disagree, Arch is by far a user friendly OS (If you want to learn WTF is going on with your system). 
+Harch is intended for Linux Security Researchers, preferably those who want to get into Ethical Hacking but have an old or slow system... The tools at your disposal are powerful in the right hands! The lightweight(If you choose) Arch design speeds up install time as well not having unneeded applications taking up precious resources! 
 
-If you wish to communicate with me on any updates or bugs! Find me on Discord: https://discord.gg/8FkAV4B or email me @ bughunt3r88@outlook.com
+If you wish to communicate with me on any updates or bugs! Find me on Discord: Username: Chaotic_Guru or email me @ bughunt3r88@outlook.com
 
 Updates 10/27/2020:
 
