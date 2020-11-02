@@ -7,7 +7,7 @@
 # ---------------------------------------------------------------
 
 #Install some needed packages
-pacman -S vim nano dhcpcd iwd wpa_supplicant mlocate grub neofetch firefox net-tools dnsutils ntfs-3g sudo man-db usbutils pulseaudio alsa-utils pyenv python2 python3  --noconfirm
+pacman -S vim nano dhcpcd iwd wpa_supplicant mlocate grub neofetch firefox konsole net-tools dnsutils ntfs-3g sudo man-db usbutils pulseaudio alsa-utils pyenv python2 python3  --noconfirm
 
 #Set root password
 echo -e "\033[33;36mPlease set ROOT password!!!\033[0m"
