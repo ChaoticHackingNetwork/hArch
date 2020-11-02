@@ -7,8 +7,7 @@
 # ---------------------------------------------------------------
 
 #Install some needed packages
-pacman -Syyu
-pacman -S vim nano dhcpcd netctl dialog wpa_supplicant mlocate grub neofetch net-tools dnsutils ntfs-3g sudo man-db usbutils pulseaudio alsa-utils perl ruby go python3 --noconfirm
+pacman -S vim nano dhcpcd iwd wpa_supplicant mlocate grub neofetch firefox net-tools dnsutils ntfs-3g sudo man-db usbutils pulseaudio alsa-utils pyenv python2 python3  --noconfirm
 
 #Set root password
 echo -e "\033[33;36mPlease set ROOT password!!!\033[0m"
@@ -18,7 +17,7 @@ passwd
 read -p "Enter a new Username: " username
 echo "Welcome to your new system $username!"
 useradd -mg users -G wheel,power,storage,uucp,network -s /bin/bash $username
-echo "Please set your password now!"
+echo -e "\033[33;36mPlease set your password now!\033[0m"
 passwd $username
 perl -i -pe 's/# (%wheel ALL=\(ALL\) ALL)/$1/' /etc/sudoers
 
