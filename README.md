@@ -4,13 +4,13 @@ Harch is intended for Linux Security Researchers, preferably those who want to g
 
 If you wish to communicate with me on any updates or bugs! Find me on Discord: Username: Chaotic_Guru or email me @ bughunt3r88@outlook.com
 
-Updates 10/27/2020:
+Updates 11/2/2020:
 
 ~~Fix BIOS/UEFI bug~~
 
-UEFI grub-install is taking longer than usual, working on solution 
+UEFI grub-install is taking longer than usual, working on solution - WIP
 
-Working on a single script to avoid multiple user inputs! 
+Working on a single script to avoid multiple user inputs! - WIP
 
 _____________________________________________________________________________________________________________________________________________________________________________
 
