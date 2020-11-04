@@ -52,11 +52,13 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 fi
 
-#Install BlackArch Mirror
+#Install BlackArch Mirror & download tools list
 curl -O https://blackarch.org/strap.sh
 chmod +x strap.sh
 ./strap.sh
 pacman -Syyu --noconfirm
+curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/Master-toolList
+mv Master-toolList /$username/
 
 #Successfully Installed
 neofetch
