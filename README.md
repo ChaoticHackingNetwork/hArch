@@ -3,8 +3,9 @@
 Harch is intended for Linux Security Researchers, preferably those who want to get into Ethical Hacking but have an old or slow system... The tools(which are not pre-installed rather a txt file to install aftwards to save on install time) at your disposal are powerful in the right hands! The lightweight(if you choose) Arch design speeds up install time as well not having unneeded applications taking up precious resources! 
 
 Default Features:
-  DE = Mate
-  DM = SDDM 
+
+         DE = Mate
+         DM = SDDM 
   
 
 If you wish to communicate with me on any updates or bugs! Find me on Discord username: Chaotic_Guru or email me @ bughunt3r88@outlook.com
