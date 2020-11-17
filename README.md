@@ -10,9 +10,11 @@ Default Features:
 
 If you wish to communicate with me on any updates or bugs! Find me on Discord username: Chaotic_Guru or email me @ bughunt3r88@outlook.com
 
-Updates 11/2/2020:
+Updates 11/16/2020:
 
 ~~Fix BIOS/UEFI bug~~
+
+Vbox issue with Kernel Panic - WIP
 
 UEFI grub-install is taking long! **UPDATE: This seems to be taking longer only when installing for a dual boot, standalone works fine**
 
