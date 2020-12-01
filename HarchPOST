@@ -34,8 +34,8 @@ hwclock --systohc --utc
 ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime #CHANGE THIS TO YOUR TIMEZONE
 
 #Install MATE Desktop env and LightDM after reboot
-pacman -S xorg-server xorg-xrandr mate mate-extra sddm xorg-xinit --noconfirm
-systemctl enable sddm
+pacman -S xorg-server xorg-xrandr gdm gnome gnome-extra xorg-xinit --noconfirm
+systemctl enable gdm
 
 #Install bootloader
 ls /sys/firmware/efi
