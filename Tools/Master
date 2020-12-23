@@ -2,7 +2,6 @@ john
 johnny
 hashcat
 fcrackzip
-against
 fern-wifi-cracker
 hydra
 kerbrute
@@ -13,6 +12,7 @@ autopsy
 zipdump
 steghide
 binwalk
+radare2
 burpsuite
 zaproxy
 metasploit
