@@ -5,7 +5,7 @@ Harch is intended for Security Researchers, preferably those who want to get int
 Default Features:
 
          DE = Mate
-         DM = SDDM 
+         DM = SDDM
   
 
 If you wish to communicate with me on any updates or bugs! Find me on Discord username: Chaotic_Guru#8356 or email me @ bughunt3r88@outlook.com
