@@ -59,7 +59,7 @@ chmod +x strap.sh
 pacman -Syyu --noconfirm
 curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/Tools/Master
 mkdir /$username/Desktop
-mv Master-toolList /$username/Desktop
+mv Master-toolList /$username/
 
 #Successfully Installed
 neofetch
