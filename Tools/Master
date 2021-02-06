@@ -42,3 +42,6 @@ seclists
 ghidra
 radare2
 checksec
+ropper
+pwntools
+pwndbg
