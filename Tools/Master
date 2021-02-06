@@ -39,3 +39,6 @@ enum4linux
 altdns
 padbuster
 seclists
+ghidra
+radare2
+checksec
