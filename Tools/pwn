@@ -4,3 +4,4 @@ checksec
 ropper
 pwntools
 pwndbg
+peda
