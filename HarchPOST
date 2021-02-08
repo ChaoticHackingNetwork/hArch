@@ -7,7 +7,7 @@
 # ---------------------------------------------------------------
 
 #Install some needed packages
-pacman -S vi vim nano dhcpcd iwd wpa_supplicant mlocate grub neofetch firefox konsole net-tools dnsutils ntfs-3g sudo man-db usbutils pulseaudio alsa-utils pyenv python2 python3 xf86-video-fbdev --noconfirm
+pacman -S vim nano dhcpcd iwd wpa_supplicant mlocate grub neofetch firefox chromium terminator konsole net-tools dnsutils ntfs-3g sudo man-db usbutils pulseaudio alsa-utils pyenv python2 python3 nvidia --noconfirm
 
 #Set root password
 echo -e "\033[33;36mPlease set ROOT password!!!\033[0m"
@@ -58,8 +58,8 @@ chmod +x strap.sh
 ./strap.sh
 pacman -Syyu --noconfirm
 curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/Tools/Master
-mkdir /$username/Desktop
-mv Master-toolList /$username/
+mkdir /home/$username/Desktop
+mv Master-toolList home/$username/Desktop
 
 #Successfully Installed
 neofetch
@@ -71,5 +71,3 @@ echo
 echo "  [1]: exit "
 echo "  [2]: umount -a "
 echo "  [3]: telinit 6 "
-
-exit
