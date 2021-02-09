@@ -34,7 +34,7 @@ hwclock --systohc --utc
 ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime #CHANGE THIS TO YOUR TIMEZONE
 
 #Install XFCE Desktop env and LightDM after reboot
-pacman -S xorg xorg-xinit xorg-xdm lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings arc-gtk-theme xfce4-whiskermenu-plugin xfce4 xfce4-weather-plugin xfce4-datetime-plugin xfce4-screensaver xfce4-mount-pluginxfce4-pulseaudio-plugin --noconfirm
+pacman -S xorg xorg-xinit xorg-xdm lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings arc-gtk-theme xfce4-whiskermenu-plugin xfce4 xfce4-weather-plugin xfce4-datetime-plugin xfce4-screensaver xfce4-mount-plugin xfce4-pulseaudio-plugin --noconfirm
 systemctl enable lightdm
 systemctl enable NetworkManager
 
