@@ -139,9 +139,9 @@ echo "The final script has been installed and move to your new root directory"
 echo "Run these commands to finish setup"
 echo""
 echo""
-echo "[1] arch-chroot /mnt /bin/bash"
-echo "[2] chmod +x HarchPost.sh"
-echo "[3] ./HarchPost.sh"
+echo -e "\033[33;36m[1] arch-chroot /mnt /bin/bash\033[0m"
+echo -e "\033[33;36m[2] chmod +x HarchPost.sh\033[0m"
+echo -e "\033[33;36m[3] ./HarchPost.sh\033[0m"
 echo""
 
 exit
