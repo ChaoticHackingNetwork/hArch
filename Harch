@@ -15,6 +15,9 @@ echo "║╚═╝║╔══╗ ╔═╗╔══╗║╚═╗    ║║   
 echo "║╔═╗║╚ ╗║ ║╔╝║╔═╝║╔╗║    ║║ ╔╗╠╣║╔╗╗║║║║╚╬╬╝"
 echo "║║ ║║║╚╝╚╗║║ ║╚═╗║║║║    ║╚═╝║║║║║║║║╚╝║╔╬╬╗"
 echo "╚╝ ╚╝╚═══╝╚╝ ╚══╝╚╝╚╝    ╚═══╝╚╝╚╝╚╝╚══╝╚╝╚╝"
+echo""
+echo""
+echo""
                                                       
 #Network Connections
 read -p 'Are you connected to the Internet? [y/N]: ' connected
