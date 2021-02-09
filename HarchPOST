@@ -34,8 +34,8 @@ hwclock --systohc --utc
 ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime #CHANGE THIS TO YOUR TIMEZONE
 
 #Install MATE Desktop env and LightDM after reboot
-pacman -S xorg-server xorg-xrandr gdm gnome gnome-extra xorg-xinit --noconfirm
-systemctl enable gdm
+pacman -S xorg xorg-xdm mate mate-extra --noconfirm
+systemctl enable xdm
 
 #Install bootloader
 ls /sys/firmware/efi
@@ -58,7 +58,8 @@ chmod +x strap.sh
 ./strap.sh
 pacman -Syyu --noconfirm
 curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/Tools/Master
-mkdir /home/$username/Desktop
+cd /home/$username
+mkdir Desktop
 mv Master-toolList home/$username/Desktop
 
 #Successfully Installed
@@ -68,6 +69,8 @@ echo "Hack the planet $username"
 echo "A reboot should now take place"
 echo "Run the following commands to reboot properly!"
 echo
-echo "  [1]: exit "
-echo "  [2]: umount -a "
-echo "  [3]: telinit 6 "
+echo -e "\033[33;36m[1]: exit\033[0m"
+echo -e "\033[33;36m[2]: umount -a\033[0m"
+echo -e "\033[33;36m[3]: telinit 6\033[0m"
+
+exit 
