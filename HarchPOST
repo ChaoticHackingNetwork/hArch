@@ -18,7 +18,7 @@ if [[ $video == amd ]]
 then
 pacman -S xf86-video-amdgpu xf86-video-ati mesa --noconfirm
 elif [[ $video == nvidia ]]
-then4
+then
 pacman -S nvidia nvidia-settings --noconfirm
 else [[ $video == intel ]]
 pacman -S xf86-video-intel mesa --noconfirm
