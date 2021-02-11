@@ -10,6 +10,9 @@
 pacman -S vim nano dhcpcd grub python3 zsh fish --noconfirm
 
 #Install correct video driver
+echo""
+echo""
+lspci -v | grep -A1 -e VGA -e 3D
 read -p "What is your GPU: amd, nvidia or intel?" video
 if $video == 'amd'
 then
