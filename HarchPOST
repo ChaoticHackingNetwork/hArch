@@ -13,15 +13,15 @@ pacman -S vim nano dhcpcd grub python3 zsh fish --noconfirm
 echo""
 echo""
 lspci -v | grep -A1 -e VGA -e 3D
-read -p "What is your GPU: amd, nvidia or intel?" video
+read -p "What is your GPU: amd, nvidia or intel? " video
 if [[ $video == amd ]]
 then
-pacman -S xf86-video-amdgpu xf86-video-ati mesa --noconfirm
+pacman -S xf86-video-ati mesa amd-ucode --noconfirm
 elif [[ $video == nvidia ]]
 then
-pacman -S nvidia nvidia-settings --noconfirm
+pacman -S nvidia nvidia-settings intel-ucode --noconfirm
 else [[ $video == intel ]]
-pacman -S xf86-video-intel mesa --noconfirm
+pacman -S xf86-video-intel mesa intel-ucode --noconfirm
     
 fi
 
