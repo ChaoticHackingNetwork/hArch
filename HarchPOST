@@ -7,7 +7,7 @@
 # ---------------------------------------------------------------
 
 #Install some needed packages
-pacman -S vim nano dhcpcd python3 zsh fish --noconfirm
+pacman -S vim nano dhcpcd grub python3 zsh fish --noconfirm
 
 #Set root password
 echo -e "\033[33;36mPlease set ROOT password!!!\033[0m"
