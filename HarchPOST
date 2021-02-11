@@ -16,7 +16,7 @@ lspci -v | grep -A1 -e VGA -e 3D
 read -p "What is your GPU: amd, nvidia or intel? " video
 if [[ $video == amd ]]
 then
-pacman -S xf86-video-ati mesa amd-ucode --noconfirm
+pacman -S xf86-video-ati xf86-video-fbdev mesa --noconfirm
 elif [[ $video == nvidia ]]
 then
 pacman -S nvidia nvidia-settings intel-ucode --noconfirm
@@ -50,7 +50,7 @@ hwclock --systohc --utc
 ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime #CHANGE THIS TO YOUR TIMEZONE
 
 #Install MATE Desktop env
-pacman -S xorg xorg-server xinitrc mate mate-extra lightdm lightdm-gtk-greeter --noconfirm
+pacman -S xorg xorg-server xorg-xinit xterm mate mate-extra lightdm lightdm-gtk-greeter --noconfirm
 systemctl enable lightdm
 
 #Install bootloader
