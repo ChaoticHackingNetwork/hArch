@@ -4,7 +4,7 @@ Harch is intended for Security Researchers, preferably those who want to get int
 
 Default Features:
 
-         DE    = I3
+         DE    = I3/MATE
          DM    = LightDM
          Shell = Fish
   
