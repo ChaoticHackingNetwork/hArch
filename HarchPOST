@@ -7,7 +7,7 @@
 # ---------------------------------------------------------------
 
 #Install some needed packages
-pacman -S vim nano dhcpcd iwd mlocate grub neofetch firefox mousepad epdfview leafpad chromium terminator konsole net-tools dnsutils ntfs-3g sudo man-db usbutils pulseaudio alsa-utils pyenv python2 python3 zsh fish openvpn --noconfirm
+pacman -S vim nano dhcpcd python3 zsh fish --noconfirm
 
 #Set root password
 echo -e "\033[33;36mPlease set ROOT password!!!\033[0m"
@@ -33,8 +33,8 @@ hwclock --systohc --utc
 #Change localtime *Note this script has it set too Chicago*
 ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime #CHANGE THIS TO YOUR TIMEZONE
 
-#Install MATE Desktop env and LightDM after reboot
-pacman -S xorg xorg-xinit lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings mate mate-extra --noconfirm
+#Install i3 Desktop env xf86-video-amdgpu mesa
+pacman -S xorg xorg-xinit i3-gaps ttf-dejavu i3status xterm virtualbox-guest-utlis xf86-video-fbdev xf86-video-amdgpu mesa lightdm lightdm-gtk-greeter--noconfirm
 systemctl enable lightdm
 
 #Install bootloader
