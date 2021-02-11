@@ -1,10 +1,10 @@
 # Harch {Hackers Arch} - A quick, simplistic Arch Linux box with a minimal selection of powerful hacking tools, a lightweight hacker OS!!!
 
-Harch is intended for Security Researchers, preferably those who want to get into Ethical Hacking but have an old or slow system... The tools(which are not pre-installed rather a txt file to install aftwards to save on install time) at your disposal are powerful in the right hands! The lightweight(if you choose) Arch design speeds up install time as well not having unneeded applications taking up precious resources! **Works great with HypverV**
+Harch is intended for Security Researchers, preferably those who want to get into Ethical Hacking but have an old or slow system... The tools(which are not pre-installed rather a txt file to install aftwards to save on install time) at your disposal are powerful in the right hands! The lightweight(if you choose) Arch design speeds up install time as well not having unneeded applications taking up precious resources! **Works great with HypverV or Virtualbox**
 
 Default Features:
 
-         DE    = Mate
+         DE    = I3
          DM    = LightDM
          Shell = Fish
   
