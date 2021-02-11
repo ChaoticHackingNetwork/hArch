@@ -34,7 +34,7 @@ hwclock --systohc --utc
 ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime #CHANGE THIS TO YOUR TIMEZONE
 
 #Install i3 Desktop env xf86-video-amdgpu mesa
-pacman -S xorg xorg-xinit i3-gaps ttf-dejavu i3status xterm virtualbox-guest-utlis xf86-video-fbdev xf86-video-amdgpu mesa lightdm lightdm-gtk-greeter--noconfirm
+pacman -S xorg xorg-xinit i3-gaps ttf-dejavu i3status xterm xf86-video-fbdev xf86-video-amdgpu mesa lightdm lightdm-gtk-greeter --noconfirm
 systemctl enable lightdm
 
 #Install bootloader
