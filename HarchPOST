@@ -7,7 +7,7 @@
 # ---------------------------------------------------------------
 
 #Install some needed packages
-pacman -S vim nano dhcpcd iwd wpa_supplicant mlocate grub neofetch firefox mousepad epdfview network-manager-applet leafpad chromium terminator konsole net-tools dnsutils ntfs-3g sudo man-db usbutils pulseaudio alsa-utils pyenv python2 python3 nvidia --noconfirm
+pacman -S vim nano dhcpcd iwd mlocate grub neofetch firefox mousepad epdfview leafpad chromium terminator konsole net-tools dnsutils ntfs-3g sudo man-db usbutils pulseaudio alsa-utils pyenv python2 python3 zsh fish openvpn --noconfirm
 
 #Set root password
 echo -e "\033[33;36mPlease set ROOT password!!!\033[0m"
@@ -33,8 +33,8 @@ hwclock --systohc --utc
 #Change localtime *Note this script has it set too Chicago*
 ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime #CHANGE THIS TO YOUR TIMEZONE
 
-#Install XFCE Desktop env and LightDM after reboot
-pacman -S xorg xorg-xinit xorg-xdm lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings arc-gtk-theme xfce4-whiskermenu-plugin xfce4 xfce4-weather-plugin xfce4-datetime-plugin xfce4-screensaver xfce4-mount-plugin xfce4-pulseaudio-plugin --noconfirm
+#Install MATE Desktop env and LightDM after reboot
+pacman -S xorg xorg-xinit xorg-xdm lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings mate mate-extra --noconfirm
 systemctl enable lightdm
 systemctl enable NetworkManager
 
