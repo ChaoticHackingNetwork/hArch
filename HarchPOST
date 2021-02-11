@@ -7,7 +7,7 @@
 # ---------------------------------------------------------------
 
 #Install some needed packages
-pacman -S vim nano dhcpcd neofetch grub python3 zsh fish --noconfirm
+pacman -S vim nano dhcpcd neofetch grub terminator python3 zsh fish --noconfirm
 
 #Install correct video driver
 echo""
@@ -50,7 +50,7 @@ hwclock --systohc --utc
 ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime #CHANGE THIS TO YOUR TIMEZONE
 
 #Install MATE Desktop env
-pacman -S xorg xorg-server xorg-xinit xterm mate mate-extra lightdm lightdm-gtk-greeter --noconfirm
+pacman -S xorg xorg-server xorg-xinit xterm mate mate-extra i3-gaps i3status lightdm lightdm-gtk-greeter --noconfirm
 systemctl enable lightdm
 
 #Install bootloader
