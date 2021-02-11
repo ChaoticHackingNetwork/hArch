@@ -45,3 +45,4 @@ checksec
 ropper
 pwntools
 pwndbg
+netcat
