@@ -50,7 +50,7 @@ hwclock --systohc --utc
 ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime #CHANGE THIS TO YOUR TIMEZONE
 
 #Install MATE Desktop env
-pacman -S xorg xorg-server mate mate-extra lightdm lightdm-gtk-greeter --noconfirm
+pacman -S xorg xorg-server xinitrc mate mate-extra lightdm lightdm-gtk-greeter --noconfirm
 systemctl enable lightdm
 
 #Install bootloader
