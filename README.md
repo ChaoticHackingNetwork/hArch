@@ -27,6 +27,7 @@ Harch = A really basic script install for Ethcial Hacking with Arch Linux on eit
     5. arch-chroot /mnt
     6. chmod +x HarchPOST
     7. ./HarchPOST
+    8. To install all tools after install run: sudo pacman -S - < /Master
 
 Tools will be broken down into categories for a more user preferred system, not every tool is needed. MORE TOOLS COMING SOON!!!
 
