@@ -9,6 +9,18 @@
 #Install some needed packages
 pacman -S vim nano dhcpcd grub python3 zsh fish --noconfirm
 
+#Install correct video driver
+read -p "What is your GPU: amd, nvidia or intel?" video
+if video == 'amd'
+then
+pacman -S xf86-video-amdgpu xf86-video-ati mesa --noconfirm
+elif video == 'nvidia'
+pacman -S nvidia nvidia-settings --noconfirm
+else video == 'intel'
+pacman -S xf86-video-intel mesa --noconfirm
+    
+fi
+
 #Set root password
 echo -e "\033[33;36mPlease set ROOT password!!!\033[0m"
 passwd
