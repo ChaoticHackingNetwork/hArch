@@ -7,7 +7,7 @@
 # ---------------------------------------------------------------
 
 #Install some needed packages
-pacman -S vim nano dhcpcd grub python3 zsh fish --noconfirm
+pacman -S vim nano dhcpcd neofetch grub python3 zsh fish --noconfirm
 
 #Install correct video driver
 echo""
