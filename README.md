@@ -29,7 +29,7 @@ Harch = A really basic script install for Ethcial Hacking with Arch Linux on eit
     7. ./HarchPOST
     8. To install all tools after install run: sudo pacman -S - < /Master
 
-Tools will be broken down into categories for a more user preferred system, not every tool is needed. MORE TOOLS COMING SOON!!!
+Tools will be broken down into categories for a more user preferred system, not every tool is needed. Master tool list is downloaded as of now!!!
 
     1. Web-Tools = Web App and Wireless Tools, i.e. Metasploit, Dirbuster etc...
     2. Cracking-Tools = PW Cracking tools , i.e Hydra, Hashcat etc...
