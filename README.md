@@ -1,6 +1,6 @@
 # Harch {Hackers Arch} - A quick, simplistic Arch Linux box with a minimal selection of powerful hacking tools, a lightweight hacker OS!!!
 
-Harch is intended for Security Researchers, preferably those who want to get into Ethical Hacking but have an old or slow system... The tools(which are not pre-installed rather a txt file to install aftwards to save on install time) at your disposal are powerful in the right hands! The lightweight(if you choose) Arch design speeds up install time as well not having unneeded applications taking up precious resources! **Works great with HypverV or Virtualbox**
+Harch is intended for Security Researchers, preferably those who want to get into Ethical Hacking but have an old or slow system... The tools(Downloaded during install or after, your choice) are many of the basic but widely used tools out there! The lightweight Arch design speeds up install time as well not having unneeded applications taking up precious resources! **Works great with HypverV or Virtualbox**
 
 Default Features:
 
@@ -15,9 +15,7 @@ Working on a single script to avoid multiple user inputs! - WIP
 
 __________________________________________________________________________________________________________________________________________________________________
 
-Harch = A really basic script install for Ethcial Hacking with Arch Linux on either BIOS/UEFI systems.
-  To install, boot into Arch live ISO and:
-  
+To install, boot into Arch live ISO and:
   
     1. curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/Harch
     2. chmod +x Harch
@@ -27,7 +25,7 @@ Harch = A really basic script install for Ethcial Hacking with Arch Linux on eit
     5. arch-chroot /mnt
     6. chmod +x HarchPOST
     7. ./HarchPOST
-    8. To install all tools after install run: sudo pacman -S - < /Master
+    8. To install all tools after install run: sudo pacman -S - < ~/Master
 
 Tools will be broken down into categories for a more user preferred system, not every tool is needed. Master tool list is downloaded as of now!!!
 
