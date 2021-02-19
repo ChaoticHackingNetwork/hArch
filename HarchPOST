@@ -21,7 +21,7 @@ elif [[ $video == nvidia ]]
 then
 pacman -S nvidia nvidia-settings intel-ucode --noconfirm
 else [[ $video == intel ]]
-pacman -S xf86-video-intel mesa intel-ucode --noconfirm
+pacman -S xf86-video-intel xf86-video-fbdev mesa intel-ucode --noconfirm
     
 fi
 
