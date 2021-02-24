@@ -19,3 +19,5 @@ unrar
 audacity
 kubectl
 minikube
+dnsutils
+nfs-utils
