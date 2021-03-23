@@ -1,6 +1,7 @@
 python-pyspnego
 python-pysmb
 mlocate
+cmake
 exploitdb
 leafpad
 gedit
