@@ -7,8 +7,15 @@
 # Discord   : https://discord.gg/nv445EX (ChaoticHackingNetwork) |
 # ---------------------------------------------------------------
 
-echo -e "\033[33;36mChaotic_Guru's Hacking Arch Installer\033[0m"
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+WHITE='\033[0;37m'
+YELLOW='\033[0;33m'
+PURPLE='\033[0;35m'
+RESET='\033[0m'
 
+echo -e "${GREEN}Chaotic_Guru's Harch Installer${RESET}"
+echo""
 echo "╔╗ ╔╗            ╔╗      ╔╗                 "
 echo "║║ ║║            ║║      ║║                 "
 echo "║╚═╝║╔══╗ ╔═╗╔══╗║╚═╗    ║║   ╔╗╔═╗ ╔╗╔╗╔╗╔╗"
@@ -23,14 +30,14 @@ echo""
 read -p 'Are you connected to the Internet? [y/N]: ' connected
 if ! [ $connected = 'y' ] && ! [ $connected = 'Y' ]
 then
-	echo "Please connect to the Internet to continue..."
+	echo -e "${RED}Please connect to the Internet to continue...${RESET}"
 	exit
 fi
 
 read -p 'This script is by default modifying /dev/sda, ensure this is the drive you want, Continue? [y/N]:' device
 if ! [ $device = 'y' ] && ! [ $device = 'Y']
 then
-	echo "Change your partition via the script"
+	echo -e "${RED}Change your partition via the script${RESET}"
 	exit
 fi
 
@@ -38,7 +45,8 @@ fi
 ls /sys/firmware/efi
 if [[ -d "/sys/firmware/efi" ]]
 then
-echo -e "\033[33;36mThis is a UEFI System!\033[0m" 
+echo -e "${YELLOW}UEFI was determined!${RESET}"
+echo"" 
 echo "This script will create and format the following partitions:"
 echo "/dev/sda1 - 512M will be mounted as /boot/EFI"
 echo "/dev/sda2 - 16G of space will be mounted as SWAP"
@@ -82,7 +90,7 @@ EOF
 	swapon /dev/sda2
 
 else
-echo -e "\033[33;36mThis is a BIOS system!\033[0m" 
+echo -e "${YELLOW}mBIOS was determined!${RESET}" 
 echo "This script will create and format the following partitions:"
 echo ""
 echo "/dev/sda1 - 16G will be mounted as SWAP space"
@@ -140,9 +148,9 @@ echo "The final script has been installed and move to your new root directory"
 echo "Run these commands to finish setup"
 echo""
 echo""
-echo -e "\033[33;36m[1] arch-chroot /mnt /bin/bash\033[0m"
-echo -e "\033[33;36m[2] chmod +x HarchPost.sh\033[0m"
-echo -e "\033[33;36m[3] ./HarchPost.sh\033[0m"
+echo -e "${PURPLE}[1] arch-chroot /mnt${RESET}"
+echo -e "${PURPLE}[2] chmod +x HarchPost.sh${RESET}"
+echo -e "${PURPLE}[3] ./HarchPost.sh${RESET}"
 echo""
 
 exit
