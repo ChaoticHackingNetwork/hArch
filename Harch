@@ -90,7 +90,7 @@ EOF
 	swapon /dev/sda2
 
 else
-echo -e "${YELLOW}mBIOS was determined!${RESET}" 
+echo -e "${YELLOW}BIOS was determined!${RESET}" 
 echo "This script will create and format the following partitions:"
 echo ""
 echo "/dev/sda1 - 16G will be mounted as SWAP space"
