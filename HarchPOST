@@ -90,6 +90,7 @@ then
 	pacman -Syyu --noconfirm
 else
 	pacman -S - < /home/$username/Master --noconfirm
+	
 fi
 
 #Successfully Installed
