@@ -85,11 +85,11 @@ mv Master /home/$username/
 echo""
 echo""
 read -p "Do you want to install Master toolset now? - [Y/n]: " master
-if [[ $master = 'y' ] && [[ $master = 'Y' ]]
+if ! [[ $master = 'y' ] && ! [[ $master = 'Y' ]]
 then
-	pacman -S - < /home/$username/Master --noconfirm
-else
 	pacman -Syyu --noconfirm
+else
+	pacman -S - < /home/$username/Master --noconfirm
 fi
 
 #Successfully Installed
