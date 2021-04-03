@@ -98,7 +98,8 @@ fi
 #Successfully Installed
 neofetch
 echo -e "${GREEN}Harch has been succesfully installed on your system"
-echo -e "Hack the planet $username${RESET}"
+echo""
+echo -e "Hack the Universe $username${RESET}"
 echo""
 echo""
 echo -e "${YELLOW}A reboot should now take place"
