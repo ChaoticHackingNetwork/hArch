@@ -81,13 +81,15 @@ curl -O https://blackarch.org/strap.sh
 chmod +x strap.sh
 ./strap.sh
 curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/Tools/Master
+curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/Tools/useful-packages
 mv Master /home/$username/
+mv useful-packages /home/$username
 echo""
 echo""
 read -p "Do you want to install Master toolset now? - [Y/n]: " master
 if [[ $master = 'y' ]]
 then
-	pacman -S - < /home/$username/Master --noconfirm
+	pacman -S - < /home/$username/Master --noconfirm && pacman -S - < /home/$username/useful-packages --noconfirm
 else
 	pacman -Syyu --noconfirm
 	
