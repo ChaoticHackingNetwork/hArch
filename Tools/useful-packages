@@ -1,5 +1,6 @@
 python-pyspnego
 python-pysmb
+python-sqlalchemy
 mlocate
 cmake
 ninja
