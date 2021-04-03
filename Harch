@@ -47,12 +47,13 @@ if [[ -d "/sys/firmware/efi" ]]
 then
 echo -e "${YELLOW}UEFI was determined!${RESET}"
 echo"" 
-echo "This script will create and format the following partitions:"
+echo -e "${YELLOW}This script will create and format the following partitions:"
 echo "/dev/sda1 - 512M will be mounted as /boot/EFI"
 echo "/dev/sda2 - 16G of space will be mounted as SWAP"
-echo "/dev/sda3 - rest of space will be mounted as /"
+echo -e "/dev/sda3 - rest of space will be mounted as /${RESET}"
 echo""
-echo "Exit now if this is not correct!!!"
+echo""
+echo -e "${RED}Exit now if this is not correct!!!${RESET}"
 sleep 10s
 #Create partitions thru fdisk...
 #https://superuser.com/a/984637
@@ -93,11 +94,12 @@ else
 echo -e "${YELLOW}BIOS was determined!${RESET}" 
 echo "This script will create and format the following partitions:"
 echo ""
-echo "/dev/sda1 - 16G will be mounted as SWAP space"
-echo "/dev/sda2 - Rest of space will be mounted as /"
-echo "Exit now if this is not correct!!!"
-sleep 10s
+echo -e "${YELLOW}/dev/sda1 - 16G will be mounted as SWAP space"
+echo -e "/dev/sda2 - Rest of space will be mounted as /${RESET}"
 echo""
+echo""
+echo -e "${RED}Exit now if this is not correct!!!$P{RESET}"
+sleep 10s
 #Create partitions thru fdisk...
 #https://superuser.com/a/984637
 sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk /dev/sda # CHANGE THIS IF NEEDED!!!
@@ -148,9 +150,9 @@ echo "The final script has been installed and move to your new root directory"
 echo "Run these commands to finish setup"
 echo""
 echo""
-echo -e "${PURPLE}[1] arch-chroot /mnt${RESET}"
-echo -e "${PURPLE}[2] chmod +x HarchPost.sh${RESET}"
-echo -e "${PURPLE}[3] ./HarchPost.sh${RESET}"
+echo -e "${PURPLE}[1] arch-chroot /mnt"
+echo -"[2] chmod +x HarchPost.sh"
+echo -e "[3] ./HarchPost.sh${RESET}"
 echo""
 
 exit
