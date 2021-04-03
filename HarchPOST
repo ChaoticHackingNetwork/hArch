@@ -85,7 +85,7 @@ mv Master /home/$username/
 echo""
 echo""
 read -p "Do you want to install Master toolset now? - [Y/n]: " master
-if [[ $master = 'y' ]
+if [[ $master = 'y' ]]
 then
 	pacman -S - < /home/$username/Master --noconfirm
 else
