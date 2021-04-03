@@ -151,8 +151,8 @@ echo "Run these commands to finish setup"
 echo""
 echo""
 echo -e "${PURPLE}[1] arch-chroot /mnt"
-echo -"[2] chmod +x HarchPost.sh"
-echo -e "[3] ./HarchPost.sh${RESET}"
+echo -"[2] chmod +x HarchPOST"
+echo -e "[3] ./HarchPOST${RESET}"
 echo""
 
 exit
