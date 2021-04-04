@@ -27,3 +27,4 @@ dnsutils
 nfs-utils
 htop
 lsof
+sysstat
