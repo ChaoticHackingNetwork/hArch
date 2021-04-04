@@ -25,3 +25,5 @@ kubectl
 minikube
 dnsutils
 nfs-utils
+htop
+lsof
