@@ -14,7 +14,7 @@ PURPLE='\033[0;35m'
 RESET='\033[0m'
 
 #Install some needed packages
-pacman -S vim nano dhcpcd dialog perl wpa_supplicant neofetch grub terminator python3 zsh fish --noconfirm
+pacman -S vim nano dhcpcd dialog perl wpa_supplicant iwd mlocate cmake neofetch grub terminator zsh fish --noconfirm
 
 #Install correct video driver
 echo""
