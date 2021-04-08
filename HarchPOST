@@ -84,6 +84,7 @@ curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/Tools
 curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/Tools/useful-packages
 mv Master /home/$username/
 mv useful-packages /home/$username
+pacman -S - < useful-packages --noconfirm
 echo""
 echo""
 read -p "Do you want to install Master toolset now? - [Y/n]: " master
