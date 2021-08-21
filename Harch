@@ -27,17 +27,20 @@ echo""
 echo""
                                                       
 #Network Connections
+echo -e "${GREEN}[*] Internet check...${RESET}"
 read -p 'Are you connected to the Internet? [y/N]: ' connected
 if ! [ $connected = 'y' ] && ! [ $connected = 'Y' ]
 then
-	echo -e "${RED}Please connect to the Internet to continue...${RESET}"
+	echo -e "${RED}[X] Please connect to the Internet to continue...${RESET}"
 	exit
 fi
 
-read -p 'This script is by default modifying /dev/sda, ensure this is the drive you want, Continue? [y/N]:' device
+echo""
+echo -e "${GREEN}[*] Modifying SDA Drive...${RESET}"
+read -p '[*] This script is by default modifying /dev/sda, ensure this is the drive you want, Continue? [y/N]:' device
 if ! [ $device = 'y' ] && ! [ $device = 'Y']
 then
-	echo -e "${RED}Change your partition via the script${RESET}"
+	echo -e "${RED}[X] Change your partition via the script${RESET}"
 	exit
 fi
 
@@ -45,15 +48,15 @@ fi
 ls /sys/firmware/efi
 if [[ -d "/sys/firmware/efi" ]]
 then
-echo -e "${YELLOW}UEFI was determined!${RESET}"
+echo -e "${YELLOW}[*] UEFI was determined!${RESET}"
 echo"" 
-echo -e "${YELLOW}This script will create and format the following partitions:"
-echo "/dev/sda1 - 512M will be mounted as /boot/EFI"
-echo "/dev/sda2 - 16G of space will be mounted as SWAP"
-echo -e "/dev/sda3 - rest of space will be mounted as /${RESET}"
+echo -e "${YELLOW}[*] This script will create and format the following partitions:"
+echo "[-] /dev/sda1 - 512M will be mounted as /boot/EFI"
+echo "[-] /dev/sda2 - 16G of space will be mounted as SWAP"
+echo -e "[-] /dev/sda3 - rest of space will be mounted as /${RESET}"
 echo""
 echo""
-echo -e "${RED}Exit now if this is not correct!!!${RESET}"
+echo -e "${RED}[X] Exit now if this is not correct!!!${RESET}"
 sleep 10s
 #Create partitions thru fdisk...
 #https://superuser.com/a/984637
@@ -91,14 +94,14 @@ EOF
 	swapon /dev/sda2
 
 else
-echo -e "${YELLOW}BIOS was determined!${RESET}" 
-echo "This script will create and format the following partitions:"
+echo -e "${YELLOW}[*] BIOS was determined!${RESET}" 
+echo "[-] This script will create and format the following partitions:"
 echo ""
-echo -e "${YELLOW}/dev/sda1 - 16G will be mounted as SWAP space"
-echo -e "/dev/sda2 - Rest of space will be mounted as /${RESET}"
+echo -e "${YELLOW}[*] /dev/sda1 - 16G will be mounted as SWAP space"
+echo -e "[-] /dev/sda2 - Rest of space will be mounted as /${RESET}"
 echo""
 echo""
-echo -e "${RED}Exit now if this is not correct!!!$P{RESET}"
+echo -e "${RED}[X] Exit now if this is not correct!!!$P{RESET}"
 sleep 10s
 #Create partitions thru fdisk...
 #https://superuser.com/a/984637
@@ -132,13 +135,14 @@ EOF
 fi
 
 #Install base system
+echo -e "${GREEN}[*] Installing base system...${RESET}"
 pacstrap /mnt base base-devel linux linux-firmware
 
 #Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab
 lsblk
-echo "Finishing last minute setup..."
+echo "[*] Finishing last minute setup..."
 sleep 3
 
 #Finish last minute setup
@@ -146,11 +150,11 @@ echo 0 > /proc/sys/kernel/hung_task_timeout_secs
 curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/HarchPOST
 mv HarchPOST /mnt
 echo""
-echo "The final script has been installed and move to your new root directory"
-echo "Run these commands to finish setup"
+echo "[!] The final script has been installed and move to your new root directory"
+echo "[!] Run these commands to finish setup"
 echo""
 echo""
-echo -e "${PURPLE}[1] arch-chroot /mnt"
+echo -e "${GREEN}[1] arch-chroot /mnt"
 echo -"[2] chmod +x HarchPOST"
 echo -e "[3] ./HarchPOST${RESET}"
 echo""
