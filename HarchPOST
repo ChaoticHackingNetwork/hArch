@@ -14,14 +14,16 @@ PURPLE='\033[0;35m'
 RESET='\033[0m'
 
 #Install some needed packages
-pacman -S vim nano dhcpcd dialog perl wpa_supplicant iwd mlocate cmake neofetch grub terminator zsh fish --noconfirm
+echo -e "[*] Installing packages..."
+pacman -S vim nano dhcpcd dialog perl wpa_supplicant iwd mlocate cmake neofetch grub terminator zsh fish dconf-editor leafpad gedit ntfs-3g --noconfirm
 
 #Install correct video driver
 echo""
 echo""
-lspci -v | grep -A1 -e VGA -e 3D
+echo -e "${GREEN}[*] Gathering Graphics info${RESET}"
+lspci -v | grep -A 2 -E "(VGA|3D)"
 echo""
-read -p "What is your GPU: amd, nvidia or intel? " video
+read -p "[*] What is your GPU: AMD, NVIDIA or INTEL? " video
 if [[ $video == amd ]]
 then
 pacman -S xf86-video-ati xf86-video-fbdev mesa --noconfirm
@@ -34,14 +36,14 @@ pacman -S xf86-video-intel xf86-video-fbdev mesa intel-ucode --noconfirm
 fi
 
 #Set root password
-echo -e "${YELLOW}Please set ROOT password!!!${RESET}"
+echo -e "${YELLOW}[*] Please set ROOT password!!!${RESET}"
 passwd
 
 #Create a new user
-read -p "Enter a new Username: " username
-echo -e "${GREEN}Welcome to your new system $username!${RESET}"
+read -p "[*] Enter a new Username: " username
+echo -e "${GREEN}[*] Welcome to your new system $username!${RESET}"
 useradd -mg users -G wheel,power,storage,uucp,network -s /usr/bin/fish $username
-echo -e "${YELLOW}Please set your password now!${RESET}"
+echo -e "${YELLOW}[*] Please set your password now!${RESET}"
 passwd $username
 perl -i -pe 's/# (%wheel ALL=\(ALL\) ALL)/$1/' /etc/sudoers
 
@@ -87,8 +89,8 @@ mv useful-packages /home/$username
 pacman -S - < useful-packages --noconfirm
 echo""
 echo""
-read -p "Do you want to install Master toolset now? - [Y/n]: " master
-if [[ $master = 'y' ]]
+read -p "[*] Do you want to install Master toolset now? - [Y/n]: " master
+if [ $device = 'y' ] && [ $device = 'Y']
 then
 	pacman -S - < /home/$username/Master --noconfirm && pacman -S - < /home/$username/useful-packages --noconfirm
 else
@@ -98,13 +100,13 @@ fi
 
 #Successfully Installed
 neofetch
-echo -e "${GREEN}Harch has been succesfully installed on your system"
+echo -e "${GREEN}[!] Harch has been succesfully installed on your system"
 echo""
 echo -e "Hack the Universe $username${RESET}"
 echo""
 echo""
-echo -e "${YELLOW}A reboot should now take place"
-echo "Run the following commands to reboot properly!"
+echo -e "${YELLOW}[!] A reboot should now take place"
+echo "[!] Run the following commands to reboot properly!"
 echo""
 echo  "[1]: exit"
 echo  "[2]: umount -a"
