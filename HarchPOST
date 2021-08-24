@@ -84,15 +84,12 @@ chmod +x strap.sh
 ./strap.sh
 curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/Tools/Master
 curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/Tools/useful-packages
-mv Master /home/$username/
-mv useful-packages /home/$username
-pacman -S - < useful-packages --noconfirm
 echo""
 echo""
-read -p "[*] Do you want to install Master toolset now? - [Y/n]: " master
+read -p "[*] Do you want to install Master toolset and useful-packages now? - [Y/n]: " master
 if [ $device = 'y' ] && [ $device = 'Y']
 then
-	pacman -S - < /home/$username/Master --noconfirm && pacman -S - < /home/$username/useful-packages --noconfirm
+	pacman -S - < Master --noconfirm && pacman -S - < useful-packages --noconfirm
 else
 	pacman -Syyu --noconfirm
 	
