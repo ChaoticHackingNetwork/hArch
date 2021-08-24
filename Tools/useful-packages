@@ -28,3 +28,7 @@ lsof
 sysstat
 expac
 python-pyftpdlib
+dconf-editor
+pyenv
+go
+ruby
