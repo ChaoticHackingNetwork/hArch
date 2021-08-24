@@ -4,9 +4,10 @@ Harch is intended for Security Researchers, preferably those who want to get int
 
 Default Features:
 
-         DE    = I3/MATE 
-         DM    = LightDM
          Shell = Fish
+         DeskT = I3/MATE 
+         Displ = LightDM
+        
   
 
 If you wish to communicate with me on any updates or bugs! Create an issue or find me on Discord: @Chaotic_Guru#8356 or email me @bughunt3r88@outlook.com
