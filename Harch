@@ -38,7 +38,7 @@ fi
 echo""
 echo -e "${GREEN}[*] Modifying SDA Drive...${RESET}"
 read -p '[*] This script is by default modifying /dev/sda, ensure this is the drive you want, Continue? [y/N]:' device
-if ! [ $device = 'y' ] && ! [ $device = 'Y']
+if ! [ $device = 'y' ] && ! [ $device = 'Y' ]
 then
 	echo -e "${RED}[X] Change your partition via the script${RESET}"
 	exit
