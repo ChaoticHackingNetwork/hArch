@@ -27,7 +27,7 @@ echo""
 echo""
                                                       
 #Network Connections
-echo -e "${GREEN}[*] Internet check...${RESET}"
+echo -e "${GREEN}[!] Internet check...${RESET}"
 read -p 'Are you connected to the Internet? [y/N]: ' connected
 if ! [ $connected = 'y' ] && ! [ $connected = 'Y' ]
 then
@@ -37,7 +37,7 @@ fi
 
 echo""
 echo -e "${GREEN}[*] Modifying SDA Drive...${RESET}"
-read -p '[*] This script is by default modifying /dev/sda, ensure this is the drive you want, Continue? [y/N]:' device
+read -p '[!] This script is by default modifying /dev/sda, ensure this is the drive you want, Continue? [y/N]:' device
 if ! [ $device = 'y' ] && ! [ $device = 'Y' ]
 then
 	echo -e "${RED}[X] Change your partition via the script${RESET}"
@@ -135,14 +135,14 @@ EOF
 fi
 
 #Install base system
-echo -e "${GREEN}[*] Installing base system...${RESET}"
+echo -e "${GREEN}[!] Installing base system...${RESET}"
 pacstrap /mnt base base-devel linux linux-firmware
 
 #Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab
 lsblk
-echo "[*] Finishing last minute setup..."
+echo "[!] Finishing last minute setup..."
 sleep 3
 
 #Finish last minute setup
