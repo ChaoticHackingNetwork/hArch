@@ -23,7 +23,7 @@ echo""
 echo -e "${GREEN}[*] Gathering Graphics info${RESET}"
 lspci -v | grep -A 2 -E "(VGA|3D)"
 echo""
-read -p "[*] What is your GPU: AMD, NVIDIA or INTEL? " video
+read -p "[!] What is your GPU: AMD, NVIDIA or INTEL? " video
 if [[ $video == amd ]]
 then
 pacman -S xf86-video-ati xf86-video-fbdev mesa --noconfirm
@@ -36,14 +36,14 @@ pacman -S xf86-video-intel xf86-video-fbdev mesa intel-ucode --noconfirm
 fi
 
 #Set root password
-echo -e "${YELLOW}[*] Please set ROOT password!!!${RESET}"
+echo -e "${YELLOW}[!] Please set ROOT password!!!${RESET}"
 passwd
 
 #Create a new user
 read -p "[*] Enter a new Username: " username
 echo -e "${GREEN}[*] Welcome to your new system $username!${RESET}"
 useradd -mg users -G wheel,power,storage,uucp,network -s /usr/bin/fish $username
-echo -e "${YELLOW}[*] Please set your password now!${RESET}"
+echo -e "${YELLOW}[!] Please set your password now!${RESET}"
 passwd $username
 perl -i -pe 's/# (%wheel ALL=\(ALL\) ALL)/$1/' /etc/sudoers
 
