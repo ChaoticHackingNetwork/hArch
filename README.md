@@ -1,6 +1,6 @@
 # Harch {Hackers Arch} - A simplistic Arch Linux box, a lightweight hacker OS!!!
 
-Harch is intended for Security Researchers, preferably those who want to get into Penetration Testing/Ethical Hacking but have an old or slow system... The tools(Downloaded during install or after, your choice) are many of the basic but widely used tools out there! The lightweight Arch design is ideal for this as alot of the bloatware of unneeded applications is not taking up precious resources!
+Harch is intended for Security Researchers, preferably those who want to get into Penetration Testing/Reverse Engineering but have an old or slow system... The tools(Downloaded during install or after, your choice) are many of the basic but widely used tools out there! The lightweight Arch design is ideal as alot of the bloatware of unneeded applications is not taking up precious resources!
 
 **Works great with HypverV or Virtualbox**
 
@@ -10,11 +10,7 @@ Default Features:
          DeskT = I3/MATE 
          Displ = LightDM
         
-  
-
-If you wish to communicate with me on any updates or bugs! Create an issue or find me on Discord: @Chaotic_Guru#8356 or email me @bughunt3r88@outlook.com
-
-
+ 
 __________________________________________________________________________________________________________________________________________________________________
 
 To install, boot into Arch live ISO and:
@@ -36,5 +32,5 @@ Tools will be broken down into categories for a more user preferred system, not 
     3. Forensic-Tools = Tools for Forensics, i.e. Maltego, Steghide etc...
     4. Master-toolList = You guessed it, all the tools in one txt file...
     
-    
+    If you wish to communicate with me on any updates or bugs! Create an issue or find me on Discord: @Chaotic_Guru#8356 or email me @bughunt3r88@outlook.com
   
