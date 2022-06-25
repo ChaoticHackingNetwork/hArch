@@ -1,4 +1,6 @@
-# Harch {Hackers Arch} - A simplistic Linux box, a lightweight hacker OS!!!
+# Harch {Hackers Arch} 
+
+A simplistic Linux box, a lightweight hacker OS!!!
 
 Harch is preferably for Security Researchers, specifically those who want to get into Penetration Testing/Reverse Engineering but have an old or slow system. The tools (Downloaded during install or after, your choice) are many of the known but widely used tools out there! The lightweight Arch design is ideal as alot of the bloatware of unneeded applications is not taking up precious resources!
 
