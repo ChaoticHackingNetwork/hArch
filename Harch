@@ -36,9 +36,13 @@ then
 	exit
 fi
 
+#Varablize Drive
+lsblk -J
+read -p "Enter Drive to Install Harch on: " drive
+
 echo""
-echo -e "${GREEN}[*] Modifying SDA Drive...${RESET}"
-read -p '[!] This script is by default modifying /dev/sda, ensure this is the drive you want, Continue? [y/N]:' device
+echo -e "${GREEN}[*] Modifying $drive...${RESET}"
+read -p '[!] This script is going to destroy data on $drive, ensure this is the drive you want, Continue? [y/N]:' device
 if ! [ $device = 'y' ] && ! [ $device = 'Y' ]
 then
 	echo -e "${RED}[X] Change your partition via the script${RESET}"
@@ -60,10 +64,6 @@ echo""
 echo -e "${RED}[X] Exit now if this is not correct!!!${RESET}"
 sleep 10s
 #Create partitions thru fdisk...
-
-#Varablize Drive
-lsblk -J
-read -p "Enter Drive to Install Harch on: " drive
 
 #https://superuser.com/a/984637
 sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk $drive
