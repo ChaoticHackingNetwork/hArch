@@ -14,6 +14,7 @@ YELLOW='\033[0;33m'
 PURPLE='\033[0;35m'
 RESET='\033[0m'
 
+
 echo -e "${GREEN}Chaotic_Guru's Harch Installer${RESET}"
 echo""
 echo "╔╗ ╔╗            ╔╗      ╔╗                 "
@@ -59,8 +60,13 @@ echo""
 echo -e "${RED}[X] Exit now if this is not correct!!!${RESET}"
 sleep 10s
 #Create partitions thru fdisk...
+
+#Varablize Drive
+lsblk -J
+read -p "Enter Drive to Install Harch on: " drive
+
 #https://superuser.com/a/984637
-sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk /dev/sda #CHANGE THIS IF NEEDED!!!
+sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk $drive
 o # Clear the in-memory partition table
 n # New partition
 p # Primary partition
@@ -83,15 +89,21 @@ q # quit
 EOF
 
 	#Format partitions
-	mkfs.ext4 /dev/sda3 
-	mkfs.fat -F32 /dev/sda1
+	BOOT="1"
+	SWAP="2"
+	HOME="3"
+	HOMEDRIVE=$drive$HOME
+	mkfs.ext4 $HOMEDRIVE
+	BOOTDRIVE=$drive$BOOT 
+	mkfs.fat -F32 $BOOTDRIVE
 
 	#Mount partitions
-	mount /dev/sda3 /mnt
+	mount $HOMEDRIVE /mnt
 
 	#Create swap space
-	mkswap /dev/sda2
-	swapon /dev/sda2
+	SWAPDRIVE=$drive$SWAP
+	mkswap $SWAPDRIVE
+	swapon $SWAPDRIVE
 
 else
 echo -e "${YELLOW}[*] BIOS was determined!${RESET}" 
@@ -105,7 +117,7 @@ echo -e "${RED}[X] Exit now if this is not correct!!!$P{RESET}"
 sleep 10s
 #Create partitions thru fdisk...
 #https://superuser.com/a/984637
-sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk /dev/sda # CHANGE THIS IF NEEDED!!!
+sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk $drive
 o # Clear the in-memory partition table
 n # New partition
 p # Primary partition
@@ -123,14 +135,18 @@ q # quit
 EOF
 
 	#Format partitions
-	mkfs.ext4 /dev/sda2
+	SWAP="1"
+	HOME="2"
+	HOMEDRIVE=$drive$HOME
+	mkfs.ext4 $HOMEDRIVE
 
 	#Mount partitions
-	mount /dev/sda2 /mnt
+	mount $HOMEDRIVE /mnt
 
 	#Create swap space
-	mkswap /dev/sda1
-	swapon /dev/sda1
+	SWAPDRIVE=$drive$SWAP
+	mkswap $SWAPDRIVE
+	swapon $SWAPDRIVE
 
 fi
 
@@ -141,8 +157,8 @@ pacstrap /mnt base base-devel linux linux-firmware
 #Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab
-lsblk
-echo "[!] Finishing last minute setup..."
+lsblk -J
+echo -e "${YELLOW}[!] Finishing last minute setup...${RESET}"
 sleep 3
 
 #Finish last minute setup
