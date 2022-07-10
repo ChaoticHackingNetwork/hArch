@@ -64,16 +64,18 @@ pacman -S xorg xorg-server xorg-xinit xterm mate mate-extra i3-gaps i3status lig
 systemctl enable lightdm
 
 #Install bootloader
+lsblk -J
+read -p "Enter drive and partition to Install Bootloader(If BIOS, hit ENTER)" drive
 ls /sys/firmware/efi
 if [[ -d "/sys/firmware/efi" ]]
 then
 pacman -S efibootmgr dosfstools mtools os-prober --noconfirm
 mkdir /boot/EFI
-mount /dev/sda1 /boot/EFI
+mount $drive /boot/EFI
 grub-install --target=x86_64-efi --bootloader-id=HARCH_UEFI --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 else
-grub-install --target=i386-pc /dev/sda --recheck
+grub-install --target=i386-pc $drive --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 
 fi
