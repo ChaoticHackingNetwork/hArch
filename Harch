@@ -38,10 +38,10 @@ fi
 
 #Varablize Drive
 lsblk -J
-read -p "Enter Drive to Install Harch on: " drive
+read -p "Enter Drive to install Harch on: " drive
 echo""
 echo -e "${GREEN}[*] Modifying $drive...${RESET}"
-read -p '[!] This script is going to destroy data on $drive, ensure this is the drive you want, Continue? [y/N]:' device
+read -p '[!] This script is going to destroy data on this drive, ensure this is what you want, Continue? [y/N]:' device
 if ! [ $device = 'y' ] && ! [ $device = 'Y' ]
 then
 	echo -e "${RED}[X] Change your partition via the script${RESET}"
