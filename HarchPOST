@@ -57,15 +57,15 @@ timedatectl set-ntp true
 hwclock --systohc --utc
 
 #Change localtime *Note this script has it set too Chicago*
-ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime #CHANGE THIS TO YOUR TIMEZONE
+ln -sf /usr/share/zoneinfo/America/Chicago/etc/localtime #CHANGE THIS TO YOUR TIMEZONE
 
-#Install MATE Desktop env
-pacman -S xorg xorg-server xorg-xinit xterm mate mate-extra i3-gaps i3status lightdm lightdm-gtk-greeter --noconfirm
-systemctl enable lightdm
+#Install MATE/i3 Desktop env
+pacman -S xorg xorg-server xorg-xinit xterm mate mate-extra i3-gaps i3status gdm3 --noconfirm
+systemctl enable gdm.service
 
 #Install bootloader
-lsblk -J
-read -p "Enter drive and partition to Install Bootloader(If BIOS, hit ENTER)" drive
+lsblk
+read -p "Enter drive and partition to Install Bootloader(If BIOS, hit ENTER): " drive
 ls /sys/firmware/efi
 if [[ -d "/sys/firmware/efi" ]]
 then
