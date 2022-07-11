@@ -5,3 +5,11 @@ ropper
 pwntools
 pwndbg
 peda
+frida
+lief
+dex2jar
+edb-debugger
+jad
+javasnoop
+valgrind
+yara
