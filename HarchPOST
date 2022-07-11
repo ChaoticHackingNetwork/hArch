@@ -89,7 +89,7 @@ curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/Tools
 echo""
 echo""
 read -p "[*] Do you want to install Master toolset and useful-packages now? - [Y/n]: " master
-if [[ $device = 'y' ]] && [[ $device = 'Y' ]]
+if [[ $master = 'y' ]] && [[ $master = 'Y' ]]
 then
 	pacman -S - < Master --noconfirm && pacman -S - < useful-packages --noconfirm
 else
