@@ -37,7 +37,7 @@ then
 fi
 
 #Varablize Drive
-lsblk -J
+lsblk
 read -p "Enter Drive to install Harch on: " drive
 echo""
 echo -e "${GREEN}[*] Modifying $drive...${RESET}"
@@ -156,7 +156,7 @@ pacstrap /mnt base base-devel linux linux-firmware
 #Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab
-lsblk -J
+lsblk
 echo -e "${YELLOW}[!] Finishing last minute setup...${RESET}"
 sleep 3
 
