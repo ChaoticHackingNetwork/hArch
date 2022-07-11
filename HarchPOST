@@ -60,7 +60,7 @@ hwclock --systohc --utc
 ln -sf /usr/share/zoneinfo/America/Chicago/etc/localtime #CHANGE THIS TO YOUR TIMEZONE
 
 #Install MATE/i3 Desktop env
-pacman -S xorg xorg-server xorg-xinit xterm mate mate-extra i3-gaps i3status gdm3 --noconfirm
+pacman -S xorg xorg-server xorg-xinit xterm mate mate-extra i3-gaps i3status gdm --noconfirm
 systemctl enable gdm.service
 
 #Install bootloader
