@@ -15,7 +15,7 @@ RESET='\033[0m'
 
 #Install some needed packages
 echo -e "[*] Installing packages..."
-pacman -S vim nano dhcpcd dialog perl wpa_supplicant iwd mlocate cmake neofetch grub terminator zsh fish dconf-editor leafpad gedit ntfs-3g --noconfirm
+pacman -S vim nano dhcpcd dialog perl wpa_supplicant iwd mlocate cmake neofetch grub pulseaudio terminator zsh fish dconf-editor leafpad gedit ntfs-3g --noconfirm
 
 #Install correct video driver
 echo""
