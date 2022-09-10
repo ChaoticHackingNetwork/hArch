@@ -111,6 +111,8 @@ EOF
 		mkfs.ext4 $HOMEDRIVE
 		BOOTDRIVE=$drive$BOOT 
 		mkfs.fat -F32 $BOOTDRIVE
+		
+		fi
 
 		#Mount partitions
 		mount $HOMEDRIVE /mnt
