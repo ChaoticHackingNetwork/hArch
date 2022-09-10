@@ -137,12 +137,14 @@ blackArch
 sleep 5
 clear
 
-read -p "Do you want to install Sublime Text? [Y/n]: " subl
+read -p "Do you want to install Sublime Text? [y/n]: " subl
 if [[ $subl == 'y' ]]
 then
 sublimeInstaller
 sleep 3
 clear
+else
+continue
 
 fi
 
