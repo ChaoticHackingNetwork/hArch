@@ -152,16 +152,16 @@ EOF
 lastMinSetup() {
 	#Finish last minute setup
 	echo 0 > /proc/sys/kernel/hung_task_timeout_secs
-	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/HarchPOST
-	mv HarchPOST /mnt
+	curl -O 'https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/HarchPostV1.0'
+	mv HarchPostV1.0 /mnt
 	echo ${NEWLLINE}
 	echo "[!] The final script has been installed and move to your new root directory"
 	echo "[!] Run these commands to finish setup"
 	echo ${NEWLLINE}
 	echo ${NEWLLINE}
 	echo -e "${GREEN}[1] arch-chroot /mnt"
-	echo -"[2] chmod +x HarchPOST"
-	echo -e "[3] ./HarchPOST${RESET}"
+	echo -"[2] chmod +x HarchPostV1.0"
+	echo -e "[3] ./HarchPostV1.0${RESET}"
 	echo ${NEWLLINE}
 }
 
