@@ -47,7 +47,7 @@ installer() {
 	#Generate fstab
 	genfstab -U /mnt >> /mnt/etc/fstab
 	mountpoints=$(cat /mnt/etc/fstab)
-	echo -e "${GREEN}New Mount Points created... ${NEWLINE}${RESET}
+	echo -e "${GREEN}New Mount Points created... ${NEWLINE}${RESET}"
 	echo -e "${YELLOW}$mountpoints${NEWLINE}{$NEWLINE}"
 	echo -e "[!] Finishing last minute setup...${RESET}"
 }
