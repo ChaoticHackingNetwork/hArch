@@ -130,11 +130,16 @@ EOF
 	n # New partition
 	p # Primary partition
 	1 # First partition
-		# SWAP - start at beginning of disk
-	+8G # swap space
-	n 
+		# EFI - start at beginning of disk
+	+512M # /boot
+	n
 	p
 	2
+		# SWAP - start immediately after preceding partition
+	+8G
+	n 
+	p
+	3
 		# ROOT, start immediately after preceding partition
 		# default, use rest of disk space
 	p # print the in-memory table
