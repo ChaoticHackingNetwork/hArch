@@ -32,13 +32,12 @@ greet() {
 
 checkNet() {
 	echo -e "${YELLOW}Checking Internet Connection...${NEWLINE}"
-	wget -q --spider http://google.com
-	if [$? -eq 0]
+	if nc -zw1 google.com 443
 	then
-		continue
+  	echo "${GREEN}BOOM BABY!${RESET}"
 	else
-		echo -e "${RED}Check Internet connection, something went wrong${RESET}"
-
+	echo -e "${RED}Check Internet connection, something went wrong${RESET}"
+	fi
 }
 
 logger() {
