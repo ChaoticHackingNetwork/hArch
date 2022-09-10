@@ -101,16 +101,12 @@ EOF
 		HOME="p3"
 		HOMEDRIVE=$drive$HOME
 		mkfs.ext4 $HOMEDRIVE
-		BOOTDRIVE=$drive$BOOT 
-		mkfs.fat -F32 $BOOTDRIVE
 		else
 		BOOT="1"
 		SWAP="2"
 		HOME="3"
 		HOMEDRIVE=$drive$HOME
 		mkfs.ext4 $HOMEDRIVE
-		BOOTDRIVE=$drive$BOOT 
-		mkfs.fat -F32 $BOOTDRIVE
 		
 		fi
 
@@ -121,6 +117,12 @@ EOF
 		SWAPDRIVE=$drive$SWAP
 		mkswap $SWAPDRIVE
 		swapon $SWAPDRIVE
+		
+		#Setup EFI Dir
+		BOOTDRIVE=$drive$BOOT 
+		mkfs.fat -F32 $BOOTDRIVE
+		mkdir /boot/EFI
+		mount $BOOTDRIVE /boot/EFI
 
 	else
 	echo -e "${YELLOW}[*] BIOS was determined!${RESET}" 
@@ -163,6 +165,11 @@ EOF
 		SWAPDRIVE=$drive$SWAP
 		mkswap $SWAPDRIVE
 		swapon $SWAPDRIVE
+		
+		#Setup Boot Drive
+		BOOTDRIVE=$drive$BOOT
+		mkdir /boot
+		mount $BOOTDRIVE /boot
 
 	fi
 }
