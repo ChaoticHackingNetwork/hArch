@@ -143,4 +143,6 @@ sublimeInstaller
 sleep 3
 clear
 
+fi
+
 complete
