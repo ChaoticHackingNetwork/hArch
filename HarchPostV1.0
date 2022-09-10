@@ -141,4 +141,4 @@ sublimeInstaller
 sleep 3
 clear
 
-complete()
+complete
