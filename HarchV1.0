@@ -122,7 +122,7 @@ EOF
 		#Setup EFI Dir
 		BOOTDRIVE=$drive$BOOT 
 		mkfs.fat -F32 $BOOTDRIVE
-		mkdir /mnt/boot/EFI
+		mkdir -p /mnt/boot/EFI
 		mount $BOOTDRIVE /mnt/boot/EFI
 
 	else
@@ -169,7 +169,7 @@ EOF
 		
 		#Setup Boot Drive
 		BOOTDRIVE=$drive$BOOT
-		mkdir /mnt/boot
+		mkdir -p /mnt/boot
 		mount $BOOTDRIVE /mnt/boot
 
 	fi
