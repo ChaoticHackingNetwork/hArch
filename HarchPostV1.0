@@ -84,6 +84,8 @@ booter() {
 	grub-install --target=x86_64-efi --bootloader-id=HARCH_UEFI --efi-directory=/boot/EFI --recheck
 	grub-mkconfig -o /boot/grub/grub.cfg
 	else
+	mkdir /boot
+	mount $drive /boot
 	grub-install --target=i386-pc $drive --recheck
 	grub-mkconfig -o /boot/grub/grub.cfg
 
