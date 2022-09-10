@@ -47,7 +47,7 @@ logger() {
 
 installer() {
 	echo ""
-	echo -e "${GREEN}[!] Installing base system...${RESET}"
+	echo -e "${GREEN}[!] Installing base system...${RESET}${NEWLINE}"
 	pacstrap /mnt base base-devel linux linux-firmware vi vim nano
 	#Generate fstab
 	genfstab -U /mnt >> /mnt/etc/fstab
@@ -61,12 +61,12 @@ getDrive() {
 	#Find new method to get disk
 	echo ""
 	echo ""
-	echo -e "${GREEN}Gathering drives...${RESET}"
-	local drives=$(lspci -f)
-	echo -e "${YELLOW}$drives${RESET}"
+	echo -e "${GREEN}Gathering drives...${RESET}${NEWLINE}"
+	local drives=$(lsblk -f)
+	echo -e "${YELLOW}$drives${RESET}${NEWLINE}"
 	read -p "Enter Drive to install Harch on: " drive
 	echo ""
-	echo -e "${GREEN}[*] Modifying $drive... HANG TIGHT!!!${RESET}"
+	echo -e "${GREEN}[*] Modifying $drive... HANG TIGHT!!!${RESET}${NEWLINE}"
 	sleep 3
 	ls /sys/firmware/efi
 	if [[ -d "/sys/firmware/efi" ]]
@@ -170,16 +170,16 @@ lastMinSetup() {
 	echo""
 }
 
-greet()
-sleep 2
+greet
+sleep 5
 clear
-checkNet()
-sleep 2
+checkNet
+sleep 5
 clear
-getDrive()
-sleep 2
+getDrive
+sleep 5
 clear
-installer()
-sleep 2
+installer
+sleep 5
 clear
-lastMinSetup()
+lastMinSetup
