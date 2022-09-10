@@ -34,14 +34,14 @@ checkNet() {
 	echo -e "${YELLOW}Checking Internet Connection...${NEWLINE}"
 	if nc -zw1 google.com 443
 	then
-  	echo "${GREEN}BOOM BABY!${RESET}"
+  	echo -e "${GREEN}BOOM BABY!${RESET}"
 	else
 	echo -e "${RED}Check Internet connection, something went wrong${RESET}"
 	fi
 }
 
 installer() {
-	echo ""
+	echo ${NEWLINE}
 	echo -e "${GREEN}[!] Installing base system...${RESET}${NEWLINE}"
 	pacstrap /mnt base base-devel linux linux-firmware vi vim nano
 	#Generate fstab
@@ -50,7 +50,6 @@ installer() {
 	echo -e "${GREEN}New Mount Points created... ${NEWLINE}${RESET}
 	echo -e "${YELLOW}$mountpoints${NEWLINE}{$NEWLINE}"
 	echo -e "[!] Finishing last minute setup...${RESET}"
-	sleep 3
 }
 
 getDrive() {
@@ -155,15 +154,15 @@ lastMinSetup() {
 	echo 0 > /proc/sys/kernel/hung_task_timeout_secs
 	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/HarchPOST
 	mv HarchPOST /mnt
-	echo""
+	echo ${NEWLLINE}
 	echo "[!] The final script has been installed and move to your new root directory"
 	echo "[!] Run these commands to finish setup"
-	echo""
-	echo""
+	echo ${NEWLLINE}
+	echo ${NEWLLINE}
 	echo -e "${GREEN}[1] arch-chroot /mnt"
 	echo -"[2] chmod +x HarchPOST"
 	echo -e "[3] ./HarchPOST${RESET}"
-	echo""
+	echo ${NEWLLINE}
 }
 
 greet
