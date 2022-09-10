@@ -150,8 +150,9 @@ EOF
 EOF
 
 		#Format partitions
-		SWAP="1"
-		HOME="2"
+		BOOT="1"
+		SWAP="2"
+		HOME="3"
 		HOMEDRIVE=$drive$HOME
 		mkfs.ext4 $HOMEDRIVE
 
