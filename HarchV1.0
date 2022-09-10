@@ -94,6 +94,16 @@ getDrive() {
 EOF
 
 		#Format partitions
+		if [[ -d /sys/class/nvme ]]
+		then
+		BOOT="p1"
+		SWAP="p2"
+		HOME="p3"
+		HOMEDRIVE=$drive$HOME
+		mkfs.ext4 $HOMEDRIVE
+		BOOTDRIVE=$drive$BOOT 
+		mkfs.fat -F32 $BOOTDRIVE
+		else
 		BOOT="1"
 		SWAP="2"
 		HOME="3"
