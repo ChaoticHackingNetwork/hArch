@@ -75,7 +75,7 @@ booter() {
 	echo -e "${GREEN}[*] Setting Booterloader...${RESET}"
 	drives=$(lsblk -f)
 	echo -e "${YELLOW}$drives${RESET}${NEWLINE}"
-	read -p "Enter Drive to install Booterloader [Example: /dev/sda]: " drive
+	read -p "Enter Drive to install Booterloader [Example: /dev/sda1]: " drive
 	ls /sys/firmware/efi
 	if [[ -d "/sys/firmware/efi" ]]
 	then
