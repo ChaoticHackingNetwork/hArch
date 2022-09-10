@@ -77,11 +77,10 @@ getDrive() {
 	1 # First partition
 		# EFI - start at beginning of disk
 	+512M # /boot/EFI
-	
+
 	n
 	p
 	2
-	
 		# SWAP - start immediately after preceding partition
 	+8G
 	n 
@@ -123,8 +122,8 @@ EOF
 		#Setup EFI Dir
 		BOOTDRIVE=$drive$BOOT 
 		mkfs.fat -F32 $BOOTDRIVE
-		mkdir /mnt/boot/EFI
-		mount $BOOTDRIVE /mnt/boot/EFI
+		mkdir /boot/EFI
+		mount $BOOTDRIVE /boot/EFI
 
 	else
 	echo -e "${YELLOW}[*] BIOS was determined!${RESET}" 
@@ -183,7 +182,7 @@ lastMinSetup() {
 	chmod +x HarchPostV1.0
 	mv HarchPostV1.0 /mnt
 	echo ${NEWLINE}
-	echo "[!] The final script has been installed and moved to your new root directory"
+	echo "[!] The final script has been installed and move to your new root directory"
 	echo "[!] Run these commands to finish setup"
 	echo ${NEWLLINE}
 	echo ${NEWLLINE}
