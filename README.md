@@ -1,4 +1,4 @@
-# Harch {Hackers Arch} 
+# hArch {Hackers Arch} 
 
 ![image](https://user-images.githubusercontent.com/49621391/189473325-b63e7711-f5bc-4a6e-b19d-6c104306ea1e.png)
 
