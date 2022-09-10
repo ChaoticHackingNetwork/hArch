@@ -33,7 +33,8 @@ greet() {
 checkNet() {
 	echo -e "${YELLOW}Checking Internet Connection...${NEWLINE}"
 	wget -q --spider http://google.com
-	if [$? -eq 0]; then
+	if [$? -eq 0]
+	then
 		continue
 	else
 		echo -e "${RED}Check Internet connection, something went wrong${RESET}"
