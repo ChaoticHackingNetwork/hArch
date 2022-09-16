@@ -39,3 +39,5 @@ Tools will be broken down into categories for a more user preferred system, not 
     
     If you wish to communicate with me on any updates or bugs! Create an issue or find me on Discord: @Chaotic_Guru#8356 or email me @bughunt3r88@outlook.com
   
+  
+  ｈＡｒｃｈ Ｌｉｎｕｘ
