@@ -5,7 +5,7 @@
 # Author    : Chaotic_Guru                                       |
 # Github    : https://github.com/ChaoticHackingNetwork           |
 # Discord   : https://discord.gg/nv445EX (ChaoticHackingNetwork) |
-# Version   : 0.1.0 											 |
+# Version   : 0.1.1 						 |					 |
 # ---------------------------------------------------------------
 
 GREEN='\033[0;32m'
@@ -17,15 +17,21 @@ RESET='\033[0m'
 NEWLINE=$'\n'
 
 greet() {
-	echo -e "${GREEN}Chaotic_Guru's Harch Installer${RESET}"
+	echo -e "${GREEN}Chaotic_Guru's hArch Installer${RESET}"
+	echo "${NEWLINE}${NEWLINE}${NEWLINE}"
+	echo -e "${RED}"
 	echo""
-	echo "╔╗ ╔╗            ╔╗      ╔╗                 "
-	echo "║║ ║║            ║║      ║║                 "
-	echo "║╚═╝║╔══╗ ╔═╗╔══╗║╚═╗    ║║   ╔╗╔═╗ ╔╗╔╗╔╗╔╗"
-	echo "║╔═╗║╚ ╗║ ║╔╝║╔═╝║╔╗║    ║║ ╔╗╠╣║╔╗╗║║║║╚╬╬╝"
-	echo "║║ ║║║╚╝╚╗║║ ║╚═╗║║║║    ║╚═╝║║║║║║║║╚╝║╔╬╬╗"
-	echo "╚╝ ╚╝╚═══╝╚╝ ╚══╝╚╝╚╝    ╚═══╝╚╝╚╝╚╝╚══╝╚╝╚╝"
-	echo""
+	echo" ██░ ██  ▄▄▄       ██▀███   ▄████▄   ██░ ██     ██▓     ██▓ ███▄    █  █    ██ ▒██   ██▒"
+	echo"▓██░ ██▒▒████▄    ▓██ ▒ ██▒▒██▀ ▀█  ▓██░ ██▒   ▓██▒    ▓██▒ ██ ▀█   █  ██  ▓██▒▒▒ █ █ ▒░"
+	echo"▒██▀▀██░▒██  ▀█▄  ▓██ ░▄█ ▒▒▓█    ▄ ▒██▀▀██░   ▒██░    ▒██▒▓██  ▀█ ██▒▓██  ▒██░░░  █   ░"
+	echo"░▓█ ░██ ░██▄▄▄▄██ ▒██▀▀█▄  ▒▓▓▄ ▄██▒░▓█ ░██    ▒██░    ░██░▓██▒  ▐▌██▒▓▓█  ░██░ ░ █ █ ▒ "
+	echo"░▓█▒░██▓ ▓█   ▓██▒░██▓ ▒██▒▒ ▓███▀ ░░▓█▒░██▓   ░██████▒░██░▒██░   ▓██░▒▒█████▓ ▒██▒ ▒██▒"
+	echo" ▒ ░░▒░▒ ▒▒   ▓▒█░░ ▒▓ ░▒▓░░ ░▒ ▒  ░ ▒ ░░▒░▒   ░ ▒░▓  ░░▓  ░ ▒░   ▒ ▒ ░▒▓▒ ▒ ▒ ▒▒ ░ ░▓ ░"
+	echo" ▒ ░▒░ ░  ▒   ▒▒ ░  ░▒ ░ ▒░  ░  ▒    ▒ ░▒░ ░   ░ ░ ▒  ░ ▒ ░░ ░░   ░ ▒░░░▒░ ░ ░ ░░   ░▒ ░"
+	echo" ░  ░░ ░  ░   ▒     ░░   ░ ░         ░  ░░ ░     ░ ░    ▒ ░   ░   ░ ░  ░░░ ░ ░  ░    ░  "
+	echo" ░  ░  ░      ░  ░   ░     ░ ░       ░  ░  ░       ░  ░ ░           ░    ░      ░    ░  "
+	echo"                           ░                                                            "
+	echo -e "${RESET}"
 	echo""
 	echo""
 }
@@ -178,16 +184,16 @@ EOF
 lastMinSetup() {
 	#Finish last minute setup
 	echo 0 > /proc/sys/kernel/hung_task_timeout_secs
-	curl -O 'https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/HarchPostV1.0'
-	chmod +x HarchPostV1.0
-	mv HarchPostV1.0 /mnt
+	curl -O 'https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/hArchPost'
+	chmod +x hArchPost
+	mv hArchPost /mnt
 	echo ${NEWLINE}
 	echo "[!] The final script has been installed and move to your new root directory"
 	echo "[!] Run these commands to finish setup"
 	echo ${NEWLLINE}
 	echo ${NEWLLINE}
 	echo -e "${GREEN}[1] arch-chroot /mnt"
-	echo -e "[2] ./HarchPostV1.0${RESET}"
+	echo -e "[2] ./hArchPost${RESET}"
 	echo ${NEWLINE}
 }
 
