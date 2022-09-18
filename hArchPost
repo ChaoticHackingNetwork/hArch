@@ -20,7 +20,7 @@ installer() {
 	#Installs needed packages
 	echo -e "${GREEN}[*] Installing packages...${RESET}"
 	echo -e "${YELLOW}[!] Adding Mate/i3 DE${RESET}"
-	pacman -S chromium firefox discord dhcpcd iwd mlocate cmake neofetch pulseaudio git terminator zsh fish dconf-editor leafpad ntfs-3g xorg xorg-server xorg-xinit xterm mate mate-extra i3-gaps i3status lightdm lightdm-gtk-greeter sudo --noconfirm
+	pacman -S chromium firefox discord dhcpcd iwd mlocate cmake neofetch pulseaudio git terminator zsh fish dconf-editor leafpad ntfs-3g xorg xorg-server xorg-xinit xterm mate mate-extra i3-gaps i3status lightdm lightdm-gtk-greeter --noconfirm
 	systemctl enable lightdm
 }
 
@@ -63,7 +63,7 @@ userInfo() {
 	read -p "[*] Enter a new Username: " username
 	echo -e "${GREEN}[*] Welcome to your new system $username!${RESET}"
 	useradd -mg users -G wheel,power,storage,uucp,network -s /usr/bin/fish $username
-	usermod -aG sudo $username
+	usermod -aG wheel $username
 	echo -e "${YELLOW}[!] Please set your password now!${RESET}"
 	passwd $username
 }
@@ -107,6 +107,8 @@ vimSetup() {
 	mv vimrc_bundle_conf /home/$users/.vimrc
 	else
 	echo "Skipping"
+	
+	fi
 }
 
 
@@ -156,4 +158,5 @@ continue
 
 fi
 
+vimSetup
 complete
