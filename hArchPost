@@ -98,6 +98,16 @@ blackArch() {
 	
 }
 
+vimSetup() {
+	read -p 'Do you want to add Bunle to VIM? [Y/n]: ' vim
+	if [[ $vim == 'y' ]]
+	then 
+	curl -O https://raw.githubsercontent.com/ChaoticHackingNetwork/hArch/main/vimrc_bundle_conf
+	mv vimrc_bundle_conf /home/*
+	else
+	echo "Skipping"
+}
+
 
 complete() {
 	#Successfully Installed
