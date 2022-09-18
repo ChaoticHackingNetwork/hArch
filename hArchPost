@@ -47,7 +47,7 @@ vidDriver() {
 	pacman -S xf86-video-ati xf86-video-fbdev mesa --noconfirm
 	elif [[ $video == nvidia ]]
 	then
-	pacman -S nvidia nvidia-settings --noconfirm
+	pacman -S nvidia nvidia-settings nvidia-utils --noconfirm
 	else [[ $video == intel ]]
 	pacman -S xf86-video-intel xf86-video-fbdev mesa intel-ucode --noconfirm
 	    
