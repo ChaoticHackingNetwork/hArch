@@ -22,6 +22,7 @@ greet() {
 	echo "- Quick"
 	echo "- Efficient"
 	echo ""
+	echo -e ${YELLOW}
 	echo "Created by Hackers, for Hackers..."
 	echo ""
 	echo ""
@@ -47,7 +48,7 @@ checkNet() {
   	echo -e "${GREEN}BOOM BABY!${RESET}"
 	else
 	echo -e "${RED}Check Internet connection, something went wrong${RESET}"
-	break
+	exit
 	
 	fi
 }
