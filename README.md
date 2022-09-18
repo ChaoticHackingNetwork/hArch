@@ -1,6 +1,7 @@
 # hArch {Hackers Arch} 
 
-![image](https://user-images.githubusercontent.com/49621391/189473325-b63e7711-f5bc-4a6e-b19d-6c104306ea1e.png)
+![image](https://user-images.githubusercontent.com/49621391/190882386-5ae0fa75-727b-4046-bee2-84947bec3cbf.png)
+
 
 
 A simplistic Linux box, a lightweight hacker OS!!!
