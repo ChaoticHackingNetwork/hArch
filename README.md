@@ -22,15 +22,14 @@ ________________________________________________________________________________
 
 To install, boot into Arch live ISO and:
   
-    1. curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/Harch
-    2. chmod +x Harch
-    3. ./Harch
-    * Some systems show a bad meterpreter if so run: sed -i -e 's/\r$//' Harch 
-    4. After Harch install, it will download HarchPOST
+    1. curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/hArch
+    2. chmod +x hArch
+    3. ./hArch
+    * Some systems show a bad meterpreter if so run: sed -i -e 's/\r$//' hArch 
+    4. After hArch install, it will download hArchPost
     5. arch-chroot /mnt
-    6. chmod +x HarchPOST
-    7. ./HarchPOST
-    8. To install all tools after install run: sudo pacman -S - < Master or Install during boot
+    6. ./HarchPOST
+    7. ~~To install all tools after install run: sudo pacman -S - < Master or Install during boot~~
 
 Tools will be broken down into categories for a more user preferred system, not every tool is needed. Master tool list is downloaded as of now!!!
 
