@@ -20,7 +20,7 @@ installer() {
 	#Installs needed packages
 	echo -e "${GREEN}[*] Installing packages...${RESET}"
 	echo -e "${YELLOW}[!] Adding Mate/i3 DE${RESET}"
-	pacman -S chromium firefox discord dhcpcd iwd mlocate cmake neofetch pulseaudio git terminator zsh git fish dconf-editor leafpad ntfs-3g xorg xorg-server xorg-xinit xterm mate mate-extra i3-gaps i3status lightdm lightdm-gtk-greeter --noconfirm
+	pacman -S chromium firefox discord dhcpcd iwd mlocate cmake neofetch pulseaudio git net-tools dnsutils terminator zsh git fish dconf-editor leafpad ntfs-3g xorg xorg-server xorg-xinit xterm mate mate-extra i3-gaps i3status lightdm lightdm-gtk-greeter --noconfirm
 	systemctl enable lightdm
 }
 
