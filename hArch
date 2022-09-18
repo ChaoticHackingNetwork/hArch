@@ -42,6 +42,8 @@ checkNet() {
   	echo -e "${GREEN}BOOM BABY!${RESET}"
 	else
 	echo -e "${RED}Check Internet connection, something went wrong${RESET}"
+	break
+	
 	fi
 }
 
