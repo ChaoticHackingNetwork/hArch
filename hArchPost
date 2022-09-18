@@ -99,11 +99,12 @@ blackArch() {
 }
 
 vimSetup() {
-	read -p 'Do you want to add Bunle to VIM? [Y/n]: ' vim
+	read -p 'Do you want to add Bunle to VIM? [y/n]: ' vim
 	if [[ $vim == 'y' ]]
 	then 
-	curl -O https://raw.githubsercontent.com/ChaoticHackingNetwork/hArch/main/vimrc_bundle_conf
-	mv vimrc_bundle_conf /home/*
+	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/vimrc_bundle_conf
+	users=$(ls /home)
+	mv vimrc_bundle_conf /home/$users/.vimrc
 	else
 	echo "Skipping"
 }
