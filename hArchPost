@@ -103,13 +103,13 @@ complete() {
 	#Successfully Installed
 	neofetch
 	echo -e "${GREEN}[!] Harch has been succesfully installed on your system"
-	echo""
+	echo ""
 	echo -e "Hack the Universe $username${RESET}"
-	echo""
+	echo ""
 	echo""
 	echo -e "${YELLOW}[!] A reboot should now take place"
 	echo "[!] Run the following commands to reboot properly!"
-	echo""
+	echo ""
 	echo  "[1]: exit"
 	echo  "[2]: umount -a"
 	echo -e "[3]: reboot${RESET}"
