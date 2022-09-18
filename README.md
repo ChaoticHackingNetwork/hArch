@@ -1,4 +1,5 @@
 # hArch {Hackers Arch} 
+Version 0.1.1
 
 ![image](https://user-images.githubusercontent.com/49621391/190882386-5ae0fa75-727b-4046-bee2-84947bec3cbf.png)
 
