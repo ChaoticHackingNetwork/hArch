@@ -22,8 +22,8 @@ greet() {
 	echo "- Quick"
 	echo "- Efficient"
 	echo ""
-	echo -e ${YELLOW}
 	echo "Created by Hackers, for Hackers..."
+	echo -e ${YELLOW}
 	echo ""
 	echo ""
 	echo " ██░ ██  ▄▄▄       ██▀███   ▄████▄   ██░ ██     ██▓     ██▓ ███▄    █  █    ██ ▒██   ██▒"
