@@ -17,9 +17,8 @@ RESET='\033[0m'
 NEWLINE=$'\n'
 
 greet() {
-	echo -e "${GREEN}Chaotic_Guru's hArch Installer${RESET}"
+	echo -e "${GREEN}Chaotic_Guru's hArch Installer"
 	echo "${NEWLINE}${NEWLINE}${NEWLINE}"
-	echo -e "${RED}"
 	echo""
 	echo" ██░ ██  ▄▄▄       ██▀███   ▄████▄   ██░ ██     ██▓     ██▓ ███▄    █  █    ██ ▒██   ██▒"
 	echo"▓██░ ██▒▒████▄    ▓██ ▒ ██▒▒██▀ ▀█  ▓██░ ██▒   ▓██▒    ▓██▒ ██ ▀█   █  ██  ▓██▒▒▒ █ █ ▒░"
