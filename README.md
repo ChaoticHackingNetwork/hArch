@@ -29,16 +29,11 @@ To install, boot into Arch live ISO and:
     4. After hArch install, it will download hArchPost
     5. arch-chroot /mnt
     6. ./hArchPost
-    7. ~~To install all tools after install run: sudo pacman -S - < Master or Install during boot~~
+ 
+~~To install all tools after install run: sudo pacman -S - < Master or Install during boot~~
 
-Tools will be broken down into categories for a more user preferred system, not every tool is needed. Master tool list is downloaded as of now!!!
+WIP coming soon with Version 0.1.2
 
-    1. Web-Tools = Web App and Network Tools, i.e. Metasploit, Dirbuster etc...
-    2. Cracking-Tools = Cracking tools , i.e Hydra, Hashcat etc...
-    3. Forensic-Tools = Tools for Forensics, i.e. Maltego, Steghide etc...
-    4. Master-toolList = You guessed it, all the tools in one txt file...
-    
-    If you wish to communicate with me on any updates or bugs! Create an issue or find me on Discord: @Chaotic_Guru#8356 or email me @bughunt3r88@outlook.com
+
+If you wish to communicate with me on any updates or bugs! Create an issue or find me on Discord: @Chaotic_Guru#8356 or email me @bughunt3r88@outlook.com
   
-  
-  ｈＡｒｃｈ Ｌｉｎｕｘ
