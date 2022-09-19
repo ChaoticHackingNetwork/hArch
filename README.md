@@ -10,12 +10,7 @@ A simplistic Arch build, a lightweight hacker distro...
 Harch is intended preferably for Security Researchers but open to anyone, it is geared towards those who want to get into Penetration Testing/Reverse Engineering or even learn Linux but have an old or slow; maybe even Ancient piece of Technology. The tools (Downloaded during install or after, your choice) are many of the known but widely used tools out there. The lightweight Arch design is ideal for bringing the older computers to life!
 
 Have an old laptop collecting dust? Throw hArch on it.
-
-Current State:
-        - Adds Bundle to VIM, VIM IDE FTW
-        - Choose DE during install, if its not there skip and install yours later
-        - Partially automated, user required input for username, passwords and drive to install
-        
+ 
  **Works great with HypverV or Virtualbox** 
 
 But to get the real experience, use bare-metal :) 
