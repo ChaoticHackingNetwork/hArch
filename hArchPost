@@ -74,6 +74,7 @@ vidDriver() {
 	echo -e "${YELLOW}$GPU${RESET}"
 	echo ${NEWLINE}
 	echo -e "${YELLOW}[!] Installing drivers...${RESET}"
+	sleep 2
 	str=$(lspci -vmm | grep VGA -A6)
 	AMD='AMD'
 	NVD='NVIDIA'
