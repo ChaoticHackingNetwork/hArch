@@ -5,19 +5,15 @@ Version 0.1.1
 
 
 
-A simplistic Linux box, a lightweight hacker OS!!!
+A simplistic Arch build, a lightweight hacker distro...
 
-Harch is preferably for Security Researchers, specifically those who want to get into Penetration Testing/Reverse Engineering but have an old or slow system. The tools (Downloaded during install or after, your choice) are many of the known but widely used tools out there! The lightweight Arch design is ideal as alot of the bloatware of unneeded applications is not taking up precious resources!
+Harch is intended preferably for Security Researchers but open to anyone, it is geared towards those who want to get into Penetration Testing/Reverse Engineering but have an old or slow system. The tools (Downloaded during install or after, your choice) are many of the known but widely used tools out there. The lightweight Arch design is ideal for bringing the older computers to life!
 
-Have an old laptop collecting dust? Throw Harch on it.
-
-Default Features:
-
-         Shell = Fish
-         DeskT = I3/MATE 
-         Displ = LightDM
+Have an old laptop collecting dust? Throw hArch on it.
         
- **Works great with HypverV or Virtualbox**
+ **Works great with HypverV or Virtualbox** 
+
+But to get the real experience, use bare-metal :) 
 __________________________________________________________________________________________________________________________________________________________________
 
 To install, boot into Arch live ISO and:
@@ -29,6 +25,7 @@ To install, boot into Arch live ISO and:
     4. After hArch install, it will download hArchPost
     5. arch-chroot /mnt
     6. ./hArchPost
+    7. Hack the Universe!
  
 ~~To install all tools after install run: sudo pacman -S - < Master or Install during boot~~
 
