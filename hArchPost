@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-#HarchPost - Post install - Downloadeded after Harch finishes
+#hArchPost - Post install - Downloadeded after Harch finishes
 # ---------------------------------------------------------------
 # Author    : Chaotic_Guru                                       |
 # Github    : https://github.com/ChaoticHackingNetwork           |
 # Discord   : https://discord.gg/nv445EX (ChaoticHackingNetwork) |
-# Version   : 0.1.1						 |						 |
+# Version   : 0.1.1						 						 |
 # ---------------------------------------------------------------
 
 GREEN='\033[0;32m'
@@ -18,10 +18,42 @@ NEWLINE=$'\n'
 
 installer() {
 	#Installs needed packages
-	echo -e "${GREEN}[*] Installing packages...${RESET}"
-	echo -e "${YELLOW}[!] Adding Mate/i3 DE${RESET}"
-	pacman -S chromium firefox discord dhcpcd iwd mlocate cmake neofetch pulseaudio cherrytree git net-tools dnsutils terminator zsh git fish dconf-editor leafpad ntfs-3g xorg xorg-server xorg-xinit xterm mate mate-extra i3-gaps i3status lightdm lightdm-gtk-greeter --noconfirm
-	systemctl enable lightdm
+	echo -e "${YELLOW}[*] Installing some handy packages...${RESET}"
+	pacman -S chromium firefox discord dhcpcd iwd mlocate cmake neofetch pulseaudio cherrytree git net-tools dnsutils terminator zsh git fish leafpad --noconfirm
+}
+
+desktopEnv() {
+	#WIP - Choose DE - If Mate and Nvidia graphics, check comp manager
+	echo -e "${GREEN}[!] Choose a Desktop Enviornment${RESET}"
+	DEs=("Mate" "KDE" "Gnome" "Cinnamon" "Deepin" "Enlightenment" "Skip")
+	select opt in "${DEs[@]}"
+	do
+		case $opt in 
+			"Mate")
+				#Do stuff
+				;;
+			"KDE")
+				#Do stuff
+				;;
+			"Gnome")
+				#Do stuff
+				;;
+			"Cinnamon")
+				#Do stuff
+				;;
+			"Deepin")
+				#Do stuff
+				;;
+			"Enlightenment")
+				#Do stuff
+				;;
+			"Skip")
+				continue
+				;;
+			*) echo -e "${RED}Invalid Option, Try Again...${RESET}"
+		esac
+	done
+
 }
 
 
@@ -41,17 +73,22 @@ vidDriver() {
 	GPU=$(lspci -v | grep -A 2 -E "(VGA|3D)")
 	echo -e "${YELLOW}$GPU${RESET}"
 	echo ${NEWLINE}
-	read -p "[!] What is your GPU: [amd] [nvidia] or [intel]: " video
-	if [[ $video == amd ]] 
-	then
-	pacman -S xf86-video-ati xf86-video-fbdev mesa --noconfirm
-	elif [[ $video == nvidia ]]
-	then
-	pacman -S nvidia nvidia-settings nvidia-utils --noconfirm
-	else [[ $video == intel ]]
-	pacman -S xf86-video-intel xf86-video-fbdev mesa intel-ucode --noconfirm
-	    
-	fi
+	echo -e "${YELLOW}[!] Installing drivers...${RESET}"
+	str=$(lspci -vmm | grep VGA -A6)
+	AMD='AMD'
+	NVD='NVIDIA'
+	case $str in
+		*"$AMD"*)
+			echo -e "${YELLOW}[!] Installing AMD Drivers...${RESET}"
+			pacman -S xf86-video-ati xf86-video-fbdev mesa --noconfirm
+			;;
+
+		*"$NVD"*)
+			echo -e "${GREEN}[!] Installing NVIDIA Drivers...${RESET}"
+			pacman -S nvidia nvidia-settings nvidia-utils --noconfirm
+			;;
+	esac
+
 }
 
 userInfo() {
@@ -60,7 +97,7 @@ userInfo() {
 	passwd
 	#Create a new user
 	read -p "[*] Enter a new Username: " username
-	echo -e "${GREEN}[*] Welcome to your new system $username!${RESET}"
+	echo -e "${GREEN}------> hArch welcomes you $username! <------${RESET}"
 	useradd -mg users -G wheel,power,storage,uucp,network -s /usr/bin/fish $username
 	echo '%wheel ALL=(ALL:ALL) ALL' >> /etc/sudoers.d/wheel_group
     	chmod 440 /etc/sudoers.d/wheel_group
@@ -115,6 +152,7 @@ vimSetup() {
 complete() {
 	#Successfully Installed
 	neofetch
+	echo ${NEWLINE}
 	echo -e "${GREEN}[!] Harch has been succesfully installed on your system"
 	echo ""
 	echo -e "Hack the Universe $username${RESET}"
