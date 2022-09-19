@@ -20,7 +20,7 @@ installer() {
 	#Installs needed packages
 	echo -e "${GREEN}[*] Installing packages...${RESET}"
 	echo -e "${YELLOW}[!] Adding Mate/i3 DE${RESET}"
-	pacman -S chromium firefox discord dhcpcd iwd mlocate cmake neofetch pulseaudio git net-tools dnsutils terminator zsh git fish dconf-editor leafpad ntfs-3g xorg xorg-server xorg-xinit xterm mate mate-extra i3-gaps i3status lightdm lightdm-gtk-greeter --noconfirm
+	pacman -S chromium firefox discord dhcpcd iwd mlocate cmake neofetch pulseaudio cherrytree git net-tools dnsutils terminator zsh git fish dconf-editor leafpad ntfs-3g xorg xorg-server xorg-xinit xterm mate mate-extra i3-gaps i3status lightdm lightdm-gtk-greeter --noconfirm
 	systemctl enable lightdm
 }
 
@@ -32,14 +32,6 @@ sublimeInstaller() {
 	echo -e "\n[sublime-text]\nServer = https://download.sublimetext.com/arch/stable/x86_64" | tee -a /etc/pacman.conf
 	sleep 3
 	pacman -Syu sublime-text --noconfirm
-}
-
-cherrytreeInstaller() {
-	echo -e "${GREEN}Installing Cherrytree...${RESET}"
-	cd /opt && pacman -S gtksourceviewmm libxml++2.6 gspell uchardet fmt spdlog --noconfirm
-	git clone https://github.com/giuspen/cherrytree.git && cd /cherrytree
-	git submodule update --init
-	./build.sh
 }
 
 vidDriver() {
@@ -140,42 +132,24 @@ complete() {
 
 
 installer
-sleep 5
+sleep 3
 clear
 userInfo
-sleep 5
+sleep 3
 clear
 vidDriver
-sleep 5
+sleep 3
 clear
 booter
-sleep 5
+sleep 3
 clear
-blackArch
-sleep 5
-clear
-
-read -p "Do you want to install Sublime Text? [y/n]: " subl
-if [[ $subl == 'y' ]]
-then
 sublimeInstaller
 sleep 3
-clear
-else
-continue
-
-fi
-
-read -p "Do you want to install Cherrytree? [y/n]: " ct
-if [[ $ct == 'y' ]]
-then
-cherrytreeInstaller
+blackArch
 sleep 3
 clear
-else
-continue
 
-fi
+
 
 vimSetup
 complete
