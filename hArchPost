@@ -63,7 +63,8 @@ userInfo() {
 	read -p "[*] Enter a new Username: " username
 	echo -e "${GREEN}[*] Welcome to your new system $username!${RESET}"
 	useradd -mg users -G wheel,power,storage,uucp,network -s /usr/bin/fish $username
-	usermod -aG wheel $username
+	echo '%wheel ALL=(ALL:ALL) ALL' >> /etc/sudoers.d/wheel_group
+    	chmod 440 /etc/sudoers.d/wheel_group
 	echo -e "${YELLOW}[!] Please set your password now!${RESET}"
 	passwd $username
 }
