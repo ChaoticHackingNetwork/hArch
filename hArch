@@ -17,10 +17,11 @@ RESET='\033[0m'
 NEWLINE=$'\n'
 
 greet() {
-	echo -e "${GREEN}Chaotic_Guru's hArch Installer${RESET}"
-	echo "- Simple"
-	echo "- Quick"
-	echo "- Efficient"
+	echo -e "${PURPLE}Chaotic_Guru's hArch Installer${RESET}"
+	echo ${NEWLINE}
+	echo -e "${YELLOW}- Simple${RESET}"
+	echo -e "${GREEN}-- Quick${RESET}"
+	echo -e "${WHITE}--- Efficient${RESET}"
 	echo ""
 	echo "Created by Hackers, for Hackers..."
 	echo -e ${YELLOW}
@@ -45,7 +46,7 @@ checkNet() {
 	echo -e "${YELLOW}Checking Internet Connection...${NEWLINE}"
 	if nc -zw1 google.com 443
 	then
-  	echo -e "${GREEN}BOOM BABY!${RESET}"
+  	echo -e "${GREEN}BOOM BABY!.. Firing up Scripting Engines...${RESET}"
 	else
 	echo -e "${RED}Check Internet connection, something went wrong${RESET}"
 	exit
