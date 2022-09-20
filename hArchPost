@@ -19,7 +19,7 @@ NEWLINE=$'\n'
 installer() {
 	#Installs needed packages
 	echo -e "${YELLOW}[*] Installing some handy packages...${RESET}"
-	pacman -S chromium firefox discord dhcpcd iwd mlocate cmake neofetch pulseaudio cherrytree git net-tools dnsutils terminator zsh git fish leafpad --noconfirm
+	pacman -S dkms linux-headers chromium firefox discord dhcpcd iwd mlocate cmake neofetch pulseaudio cherrytree git net-tools dnsutils terminator zsh git fish leafpad --noconfirm
 }
 
 desktopEnv() {
@@ -30,25 +30,49 @@ desktopEnv() {
 	do
 		case $opt in 
 			"Mate")
-				#Do stuff
+				pacman -S mate mate-extra lightdm lightdm-gtk-greeter xorg-server xorg-xinit
+				systemctl enable lightdm
+				#Disable compositing if nvidia graphics
+				NVD='NVIDIA'
+				card=$(lspci -vmm | grep VGA -A6)
+				case $card in 
+					*"$NVD"*)
+						#Fixes screen tearing for mulit-head or hybrid graphics
+						echo "WIP"
+						;;
+				esac
+				systemctl enbale lightdm
 				;;
 			"KDE")
-				#Do stuff
+				pacman -S plasma-meta sddm plasma-desktop
+				#If nvidia graphics, add stacked compositer
+				NVD='NVIDIA'
+				card=$(lspci -vmm | grep VGA -A6)
+				case $card in 
+					*"$NVD"*)
+						pacman -S kwin plasma-wayland-session
+						;;
+				esac
+				systemctl enbale sddm
 				;;
 			"Gnome")
 				#Do stuff
+				echo -e "${YELLOW}Coming soon... Press 7 to skip and add after install${RESET}"
 				;;
 			"Cinnamon")
 				#Do stuff
+				echo -e "${YELLOW}Coming soon... Press 7 to skip and add after install${RESET}"
 				;;
 			"Deepin")
 				#Do stuff
+				echo -e "${YELLOW}Coming soon... Press 7 to skip and add after install${RESET}"
 				;;
 			"Enlightenment")
 				#Do stuff
+				echo -e "${YELLOW}Coming soon... Press 7 to skip and add after install${RESET}"
 				;;
 			"Skip")
-				continue
+				break
 				;;
 			*) echo -e "${RED}Invalid Option, Try Again...${RESET}"
 		esac
@@ -70,8 +94,7 @@ vidDriver() {
 	echo ${NEWLINE}
 	echo ${NEWLINE}
 	echo -e "${GREEN}[*] Gathering Graphics info...${RESET}"
-	GPU=$(lspci -v | grep -A 2 -E "(VGA|3D)")
-	echo -e "${YELLOW}$GPU${RESET}"
+	echo ${NEWLINE}
 	echo ${NEWLINE}
 	echo -e "${YELLOW}[!] Installing drivers...${RESET}"
 	sleep 2
@@ -81,7 +104,7 @@ vidDriver() {
 	case $str in
 		*"$AMD"*)
 			echo -e "${YELLOW}[!] Installing AMD Drivers...${RESET}"
-			pacman -S xf86-video-ati xf86-video-fbdev mesa --noconfirm
+			pacman -S xf86-video-ati mesa --noconfirm
 			;;
 
 		*"$NVD"*)
@@ -188,6 +211,9 @@ blackArch
 sleep 3
 clear
 vimSetup
+sleep 3
+clear
+desktopEnv
 sleep 3
 clear
 
