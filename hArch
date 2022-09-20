@@ -184,6 +184,7 @@ EOF
 		#Setup Boot Drive
 		BOOTDRIVE=$drive$BOOT
 		mkdir -p /mnt/boot
+		mkfs.ext4 $BOOTDRIVE
 		mount $BOOTDRIVE /mnt/boot
 
 	fi
