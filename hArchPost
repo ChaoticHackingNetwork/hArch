@@ -109,7 +109,7 @@ vidDriver() {
 
 		*"$NVD"*)
 			echo -e "${GREEN}[!] Installing NVIDIA Drivers...${RESET}"
-			pacman -S nvidia nvidia-settings nvidia-utils --noconfirm
+			pacman -S nvidia nvidia-settings nvidia-utils glxinfo --noconfirm
 			;;
 	esac
 
