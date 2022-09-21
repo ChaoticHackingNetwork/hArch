@@ -5,7 +5,7 @@
 # Author    : Chaotic_Guru                                       |
 # Github    : https://github.com/ChaoticHackingNetwork           |
 # Discord   : https://discord.gg/nv445EX (ChaoticHackingNetwork) |
-# Version   : 0.1.1						 						 |
+# Version   : 0.1.1		                                 |
 # ---------------------------------------------------------------
 
 GREEN='\033[0;32m'
@@ -30,8 +30,7 @@ desktopEnv() {
 	do
 		case $opt in 
 			"Mate")
-				pacman -S mate mate-extra lightdm lightdm-gtk-greeter xorg-server xorg-xinit
-				systemctl enable lightdm
+				pacman -S mate mate-extra lightdm lightdm-gtk-greeter xorg-server xorg-xinit --noconfirm
 				#Disable compositing if nvidia graphics
 				NVD='NVIDIA'
 				card=$(lspci -vmm | grep VGA -A6)
@@ -44,32 +43,33 @@ desktopEnv() {
 				systemctl enable lightdm
 				;;
 			"KDE")
-				pacman -S plasma-meta sddm plasma-desktop
+				pacman -S plasma-meta sddm plasma-desktop xorg-server xorg-xinit --noconfirm
 				#If nvidia graphics, add stacked compositer
 				NVD='NVIDIA'
 				card=$(lspci -vmm | grep VGA -A6)
 				case $card in 
 					*"$NVD"*)
-						pacman -S kwin plasma-wayland-session
+						pacman -S kwin plasma-wayland-session --noconfirm
 						;;
 				esac
 				systemctl enable sddm
 				;;
 			"Gnome")
-				#Do stuff
-				echo -e "${YELLOW}Coming soon... Press 7 to skip and add after install${RESET}"
+				pacman -S gnome gnome-extra gdm xorg-server xorg-xinit --noconfirm
+				systemctl enable gdm
 				;;
 			"Cinnamon")
-				#Do stuff
-				echo -e "${YELLOW}Coming soon... Press 7 to skip and add after install${RESET}"
+				pacman -S cinnamon metacity gnome-shell gdm xorg-server xorg-xinit --noconfirm
+				systemctl enable gdm
 				;;
 			"Deepin")
-				#Do stuff
-				echo -e "${YELLOW}Coming soon... Press 7 to skip and add after install${RESET}"
+				pacman -S deepin deepin-extra deepin-kwin lightdm lightdm-deepin-greeter xorg--noconfirm
+				#Sed the greeter to conf - WIP
+				systemctl enable lightdm
 				;;
 			"Enlightenment")
-				#Do stuff
-				echo -e "${YELLOW}Coming soon... Press 7 to skip and add after install${RESET}"
+				pacman -S enlightenment terminology xorg-server xorg-xinit lxdm --noconfirm
+				systemctl enable lxdm
 				;;
 			"Skip")
 				break
@@ -143,10 +143,12 @@ booter() {
 	pacman -S efibootmgr grub dosfstools mtools os-prober --noconfirm
 	grub-install --target=x86_64-efi --bootloader-id=HARCH_UEFI --efi-directory=/boot/EFI --recheck
 	grub-mkconfig -o /boot/grub/grub.cfg
+	mkinitcpio -p linux
 	else
 	pacman -S grub --noconfirm
 	grub-install --target=i386-pc $drive --recheck
 	grub-mkconfig -o /boot/grub/grub.cfg
+	mkinitcpio -p linux
 
 	fi
 }
