@@ -182,13 +182,13 @@ complete() {
 	neofetch
 	echo ${NEWLINE}
 	echo -e "${GREEN}[!] Harch has been succesfully installed on your system"
-	echo ""
+	echo ${NEWLINE}
 	echo -e "Hack the Universe $username${RESET}"
-	echo ""
-	echo""
+	echo ${NEWLINE}
+	echo ${NEWLINE}
 	echo -e "${YELLOW}[!] A reboot should now take place"
 	echo "[!] Run the following commands to reboot properly!"
-	echo ""
+	echo ${NEWLINE}
 	echo  "[1]: exit"
 	echo  "[2]: umount -a"
 	echo -e "[3]: reboot${RESET}"
@@ -196,29 +196,35 @@ complete() {
 	exit
 }
 
+oneFuncToRuleThemAll() {
+	installer
+	sleep 3
+	clear
+	userInfo
+	sleep 3
+	clear
+	vidDriver
+	sleep 3
+	clear
+	booter
+	sleep 3
+	clear
+	sublimeInstaller
+	sleep 3
+	clear
+	blackArch
+	sleep 3
+	clear
+	vimSetup
+	sleep 3
+	clear
+	desktopEnv
+	sleep 3
+	clear
 
-installer
-sleep 3
-clear
-userInfo
-sleep 3
-clear
-vidDriver
-sleep 3
-clear
-booter
-sleep 3
-clear
-sublimeInstaller
-sleep 3
-blackArch
-sleep 3
-clear
-vimSetup
-sleep 3
-clear
-desktopEnv
-sleep 3
-clear
+	complete
 
-complete
+}
+
+
+oneFuncToRuleThemAll
