@@ -73,6 +73,7 @@ getDrive() {
 	echo -e "${GREEN}Gathering drives...${RESET}${NEWLINE}"
 	local drives=$(lsblk -f)
 	echo -e "${YELLOW}$drives${RESET}${NEWLINE}"
+	echo "Syntax: /dev/sda or /dev/nvme0n1"
 	read -p "Enter Drive to install Harch on: " drive
 	echo ""
 	echo -e "${GREEN}[*] Modifying $drive... HANG TIGHT!!!${RESET}${NEWLINE}"
