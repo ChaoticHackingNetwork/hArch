@@ -5,7 +5,7 @@
 # Author    : Chaotic_Guru                                       |
 # Github    : https://github.com/ChaoticHackingNetwork           |
 # Discord   : https://discord.gg/nv445EX (ChaoticHackingNetwork) |
-# Version   : 0.1.1		                                 |
+# Version   : 0.1.2		                                 |
 # ---------------------------------------------------------------
 
 GREEN='\033[0;32m'
@@ -176,6 +176,26 @@ vimSetup() {
 	fi
 }
 
+hackTools() {
+	echo ${NEWLINE}
+	read -p 'Do you want to add the Master Hacking Toolset? [y/n]: ' ht
+	if [[ $ht == 'y' ]]
+	echo -e "${GREEN}Please Wait... Installing Tools"
+	echo ${NEWLINE}
+	echo "Grab a coffee, play with your pet...${RESET}"
+	echo ${NEWLINE}
+	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/Master
+	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/useful-packages
+	echo -e "${YELLOW}Installing Master Toolset... Hack the Universe!${RESET}"
+	pacman -S - < /Master --noconfirm && pacman -S - < /useful-packages --noconfirm
+	else
+	echo "Skipping"
+	sleep 5
+	continue
+	
+	fi
+}
+
 
 complete() {
 	#Successfully Installed
@@ -213,6 +233,9 @@ oneFuncToRuleThemAll() {
 	sleep 3
 	clear
 	blackArch
+	sleep 3
+	clear
+	hackTools
 	sleep 3
 	clear
 	vimSetup
