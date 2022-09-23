@@ -1,5 +1,5 @@
 # hArch {Hackers Arch} 
-Version 0.1.1
+Version 0.1.2
 
 ![image](https://user-images.githubusercontent.com/49621391/190882386-5ae0fa75-727b-4046-bee2-84947bec3cbf.png)
 
@@ -27,10 +27,7 @@ To install, boot into Arch live ISO and:
     6. ./hArchPost
     7. Hack the Universe!
  
-~~To install all tools after install run: sudo pacman -S - < Master or Install during boot~~
-
-WIP coming soon with Version 0.1.2
-
+The prompt at end will ask to download master toolset or skip. It will add an extra 5-10 min install time. 
 
 If you wish to communicate with me on any updates or bugs! Create an issue or find me on Discord: @Chaotic_Guru#8356 or email me @bughunt3r88@outlook.com
   
