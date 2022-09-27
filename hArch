@@ -86,13 +86,12 @@ getDrive() {
 	sleep 2
 	#https://superuser.com/a/984637
 	sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk $drive
-	g # Clear the in-memory partition table
+	g # Create new GPT Partition
 	n # New partition
 	p # Primary partition
 	1 # First partition
 		# EFI - start at beginning of disk
 	+512M # /boot/EFI
-
 	n
 	p
 	2
@@ -103,6 +102,9 @@ getDrive() {
 	3
 		# ROOT, start immediately after preceding partition
 		# default, use rest of disk space
+	t # change part type
+	3 # part number
+	83 # linux FS
 	p # print the in-memory table
 	w # write changes to disk
 	q # quit
@@ -162,6 +164,9 @@ EOF
 	3
 		# ROOT, start immediately after preceding partition
 		# default, use rest of disk space
+	t # change part type
+	3 # part number
+	83 # linux FS
 	p # print the in-memory table
 	w # write changes to disk
 	q # quit
