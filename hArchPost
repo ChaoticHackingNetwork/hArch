@@ -63,8 +63,7 @@ desktopEnv() {
 				systemctl enable gdm
 				;;
 			"Deepin")
-				pacman -S deepin deepin-extra deepin-kwin lightdm lightdm-deepin-greeter xorg--noconfirm
-				#Sed the greeter to conf - WIP
+				pacman -S deepin deepin-extra lightdm lightdm-deepin-greeter xorg-server xorg-xinit --noconfirm
 				systemctl enable lightdm
 				;;
 			"Enlightenment")
@@ -180,6 +179,7 @@ hackTools() {
 	echo ${NEWLINE}
 	read -p 'Do you want to add the Master Hacking Toolset? [y/n]: ' ht
 	if [[ $ht == 'y' ]]
+	then
 	echo -e "${GREEN}Please Wait... Installing Tools"
 	echo ${NEWLINE}
 	echo "Grab a coffee, play with your pet...${RESET}"
