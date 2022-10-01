@@ -15,7 +15,7 @@ Have an old laptop collecting dust? Throw hArch on it.
 
 But to get the real experience, use bare-metal :) 
 
-The added vimrc file is well... percection
+The added vimrc file is well... perfection
 
 ![image](https://user-images.githubusercontent.com/49621391/193386061-3ff981af-2f7f-4e5e-a1ff-a3ae4dc8cd3f.png)
 
