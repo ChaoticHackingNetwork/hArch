@@ -19,14 +19,13 @@ NEWLINE=$'\n'
 greet() {
 	echo -e "${PURPLE}Chaotic_Guru's hArch Installer${RESET}"
 	echo ${NEWLINE}
-	echo -e "${YELLOW}- Simple${RESET}"
-	echo -e "${GREEN}-- Quick${RESET}"
-	echo -e "${WHITE}--- Efficient${RESET}"
-	echo ""
-	echo "Created by Hackers, for Hackers..."
+	echo -e "${YELLOW}-> Simple${RESET}"
+	echo -e "${GREEN}--> Quick${RESET}"
+	echo -e "${WHITE}---> Efficient${RESET}"
+	echo ${NEWLINE}
 	echo -e ${YELLOW}
-	echo ""
-	echo ""
+	echo ${NEWLINE}
+	echo ${NEWLINE}
 	echo " ██░ ██  ▄▄▄       ██▀███   ▄████▄   ██░ ██     ██▓     ██▓ ███▄    █  █    ██ ▒██   ██▒"
 	echo "▓██░ ██▒▒████▄    ▓██ ▒ ██▒▒██▀ ▀█  ▓██░ ██▒   ▓██▒    ▓██▒ ██ ▀█   █  ██  ▓██▒▒▒ █ █ ▒░"
 	echo "▒██▀▀██░▒██  ▀█▄  ▓██ ░▄█ ▒▒▓█    ▄ ▒██▀▀██░   ▒██░    ▒██▒▓██  ▀█ ██▒▓██  ▒██░░░  █   ░"
@@ -38,15 +37,18 @@ greet() {
 	echo " ░  ░  ░      ░  ░   ░     ░ ░       ░  ░  ░       ░  ░ ░           ░    ░      ░    ░  "
 	echo "                           ░                                                            "
 	echo -e "${RESET}"
-	echo ""
-	echo ""
+	echo ${NEWLINE}
+	echo ${NEWLINE}
 }
 
 checkNet() {
+	echo ${NEWLINE}
+	echo ${NEWLINE}
 	echo -e "${YELLOW}Checking Internet Connection...${NEWLINE}"
-	if nc -zw1 google.com 443
+	if nc -zw1 archlinux.org 443
 	then
-  	echo -e "${GREEN}BOOM BABY!.. Firing up Scripting Engines...${RESET}"
+  	echo -e "${GREEN}Bada Bing Bada Boom.. Firing up Scripting Engines...${RESET}"
+	timedatectl set-ntp true
 	else
 	echo -e "${RED}Check Internet connection, something went wrong${RESET}"
 	exit
@@ -56,33 +58,31 @@ checkNet() {
 
 installer() {
 	echo ${NEWLINE}
+	echo ${NEWLINE}
 	echo -e "${GREEN}[!] Installing base system...${RESET}${NEWLINE}"
 	pacstrap /mnt base base-devel linux linux-firmware vi vim nano
 	#Generate fstab
 	genfstab -U /mnt >> /mnt/etc/fstab
-	mountpoints=$(cat /mnt/etc/fstab)
-	echo -e "${GREEN}New Mount Points created... ${NEWLINE}${RESET}"
-	echo -e "${YELLOW}$mountpoints${NEWLINE}{$NEWLINE}"
-	echo -e "[!] Finishing last minute setup...${RESET}"
 }
 
 getDrive() {
 	#Find new method to get disk
-	echo ""
-	echo ""
+	echo ${NEWLINE}
+	echo ${NEWLINE}
 	echo -e "${GREEN}Gathering drives...${RESET}${NEWLINE}"
 	local drives=$(lsblk -f)
 	echo -e "${YELLOW}$drives${RESET}${NEWLINE}"
 	echo "Syntax: /dev/sda or /dev/nvme0n1"
 	read -p "Enter Drive to install Harch on: " drive
-	echo ""
+	echo ${NEWLINE}
+	echo ${NEWLINE}
 	echo -e "${GREEN}[*] Modifying $drive... HANG TIGHT!!!${RESET}${NEWLINE}"
 	sleep 3
 	ls /sys/firmware/efi
 	if [[ -d "/sys/firmware/efi" ]]
 	then
 	echo -e "${YELLOW}[*] UEFI System Deteceted!${RESET}"
-	echo "" 
+	echo ${NEWLINE}
 	sleep 2
 	#https://superuser.com/a/984637
 	sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk $drive
@@ -152,20 +152,15 @@ EOF
 	n # New partition
 	p # Primary partition
 	1 # First partition
-		# EFI - start at beginning of disk
-	+512M # /boot
-	n
-	p
-	2
-		# SWAP - start immediately after preceding partition
-	+8G
+		# BIOS - start at beginning of disk
+	+8G # /SWAP
 	n 
 	p
-	3
+	2
 		# ROOT, start immediately after preceding partition
 		# default, use rest of disk space
 	t # change part type
-	3 # part number
+	2 # part number
 	83 # linux FS
 	p # print the in-memory table
 	w # write changes to disk
@@ -173,9 +168,8 @@ EOF
 EOF
 
 		#Format partitions
-		BOOT="1"
-		SWAP="2"
-		HOME="3"
+		SWAP="1"
+		HOME="2"
 		HOMEDRIVE=$drive$HOME
 		mkfs.ext4 $HOMEDRIVE
 
@@ -187,17 +181,14 @@ EOF
 		mkswap $SWAPDRIVE
 		swapon $SWAPDRIVE
 		
-		#Setup Boot Drive
-		BOOTDRIVE=$drive$BOOT
-		mkdir -p /mnt/boot
-		mkfs.ext4 $BOOTDRIVE
-		mount $BOOTDRIVE /mnt/boot
 
 	fi
 }
 
 lastMinSetup() {
 	#Finish last minute setup
+	echo ${NEWLINE}
+	echo ${NEWLINE}
 	echo 0 > /proc/sys/kernel/hung_task_timeout_secs
 	curl -O 'https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/hArchPost'
 	chmod +x hArchPost
