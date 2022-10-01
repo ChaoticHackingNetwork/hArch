@@ -19,7 +19,9 @@ The added vimrc file is well... percection
 
 ![image](https://user-images.githubusercontent.com/49621391/193386061-3ff981af-2f7f-4e5e-a1ff-a3ae4dc8cd3f.png)
 
-Vim is the only IDE youll ever need...
+Vim is the only IDE youll ever need, and this gets you going! Run vim on startup to execute plugin installation.
+
+Checkout - https://realpython.com/vim-and-python-a-match-made-in-heaven/ - if you don't believe me
 __________________________________________________________________________________________________________________________________________________________________
 
 To install, boot into Arch live ISO and:
