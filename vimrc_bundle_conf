@@ -18,6 +18,12 @@
     Plugin 'Syntastic' "uber awesome syntax and errors highlighter
     Plugin 'altercation/vim-colors-solarized' "T-H-E colorscheme
     Plugin 'https://github.com/tpope/vim-fugitive' "So awesome, it should be illegal 
+    Plugin 'tmhedberg/SimpylFold' "Gotta have that fold
+    Plugin 'jnurmine/Zenburn'
+    Plugin 'flazz/vim-colorschemes' "More for you...
+    Plugin 'scrooloose/nerdtree'
+    Plugin 'jistr/vim-nerdtree-tabs'
+    Plugin 'kien/ctrlp.vim'
     "...All your other bundles...
     if iCanHazVundle == 0
         echo "Installing Vundles, please ignore key map error messages"
@@ -28,7 +34,24 @@
     call vundle#end() 
     "must be last
     filetype plugin indent on " load filetype plugins/indent settings
-    colorscheme solarized
+    if has('gui_running')
+	    set background=dark
+	    colorscheme molokai
+    else
+	    colorscheme zenburn
+    endif
     syntax on                      " enable syntax
- 
+    "split navigations
+    nnoremap <C-J> <C-W><C-J>
+    nnoremap <C-K> <C-W><C-K>
+    nnoremap <C-L> <C-W><C-L> 
+    nnoremap <C-H> <C-W><C-H>
+
+    "Enable folding
+    set foldmethod=indent
+    set foldlevel=99
+    nnoremap <space> za
+
+    set nu
+
 " Setting up Vundle - the vim plugin bundler end
