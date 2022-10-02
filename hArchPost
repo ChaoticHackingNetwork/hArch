@@ -116,9 +116,10 @@ vidDriver() {
 			pacman -S nvidia nvidia-settings nvidia-utils glxinfo nvtop --noconfirm
 			curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/nvidia.hook
 			curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/20-nvidia.conf
-			mv /nvidia.hook /etcpacman.d/hooks
+			mv /nvidia.hook /etc/pacman.d/hooks
 			mv /20-nvidia.conf /etc/X11/xorg.conf.d/
 			bash -c “echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf”
+			# Add changes to mkinitcpio.conf - WIP
 			# If issues, try:
 			# xrandr --setprovideroutputsource modesetting NVIDIA-0
 			# xrandr --auto
