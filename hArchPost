@@ -113,7 +113,12 @@ vidDriver() {
 
 		*"$NVD"*)
 			echo -e "${GREEN}[!] Installing NVIDIA Drivers...${RESET}"
-			pacman -S nvidia nvidia-settings nvidia-utils glxinfo --noconfirm
+			pacman -S nvidia nvidia-settings nvidia-utils glxinfo nvtop --noconfirm
+			curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/nvidia.hook
+			curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/20-nvidia.conf
+			mv /nvidia.hook /etcpacman.d/hooks
+			mv /20-nvidia.conf /etc/X11/xorg.conf.d/
+			bash -c “echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf”
 			;;
 		*)
 			echo -e "${YELLOW}Unable to determine Graphics info.. Installing default drivers${RESET}"
