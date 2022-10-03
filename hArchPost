@@ -21,19 +21,22 @@ installer() {
 	echo ${NEWLINE}
 	echo ${NEWLINE}
 	echo -e "${YELLOW}[*] Installing some handy packages...${RESET}"
-	pacman -S dkms linux-headers chromium firefox discord dhcpcd iwd mlocate cmake neofetch pulseaudio cherrytree git net-tools dnsutils terminator zsh git fish leafpad --noconfirm
+	pacman -S dkms linux-headers chromium firefox discord dhcpcd iwd mlocate cmake neofetch pulseaudio cherrytree git net-tools dnsutils terminator zsh git fish leafpad --needed --noconfirm
+	# Basic Fonts
+	pacman -S noto-fonts ttf-ubuntu-font-family ttf-dejavu ttf-freefont ttf-liberation ttf-droid ttf-roboto terminus-font rxvt-unicode ranger rofi dmenu --needed --noconfirm
+	hwclock —-systohc
 }
 
 desktopEnv() {
 	#WIP - Choose DE - If Mate and Nvidia graphics, check comp manager
 	echo -e "${GREEN}[!] Choose a Desktop Enviornment${RESET}"
-	echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 7 to continue${RESET}"
-	DEs=("Mate" "KDE" "Gnome" "Cinnamon" "Deepin" "Enlightenment" "Skip")
+	echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 7 to continue if prompt returns${RESET}"
+	DEs=("Mate" "KDE" "Gnome" "Cinnamon" "Deepin" "Enlightenment" "i3" "Skip")
 	select opt in "${DEs[@]}"
 	do
 		case $opt in 
 			"Mate")
-				pacman -S mate mate-extra lightdm lightdm-gtk-greeter xorg-server xorg-xinit --noconfirm
+				pacman -S mate mate-extra lightdm lightdm-gtk-greeter xorg-server xorg-xinit --needed --noconfirm
 				#Disable compositing if nvidia graphics
 				NVD='NVIDIA'
 				card=$(lspci -vmm | grep VGA -A6)
@@ -46,36 +49,38 @@ desktopEnv() {
 				systemctl enable lightdm
 				;;
 			"KDE")
-				pacman -S plasma-meta sddm plasma-desktop xorg-server xorg-xinit --noconfirm
+				pacman -S plasma-meta sddm plasma-desktop xorg-server xorg-apps xorg-xinit --needed --noconfirm
 				#If nvidia graphics, add stacked compositer
 				NVD='NVIDIA'
 				card=$(lspci -vmm | grep VGA -A6)
 				case $card in 
 					*"$NVD"*)
-						pacman -S kwin plasma-wayland-session --noconfirm
+						pacman -S kwin plasma-wayland-session --needed --noconfirm
 						;;
 				esac
 				systemctl enable sddm
 				;;
 			"Gnome")
-				pacman -S gnome gnome-extra gdm xorg-server xorg-xinit --noconfirm
+				pacman -S gnome gnome-extra gdm xorg-server xorg-apps xorg-xinit --needed --noconfirm
 				systemctl enable gdm
 				;;
 			"Cinnamon")
-				pacman -S cinnamon metacity gnome-shell gdm xorg-server xorg-xinit --noconfirm
+				pacman -S cinnamon metacity gnome-shell gdm xorg-server xorg-apps xorg-xinit --needed --noconfirm
 				systemctl enable gdm
 				;;
 			"Deepin")
-				pacman -S deepin deepin-extra lightdm lightdm-deepin-greeter xorg-server xorg-xinit --noconfirm
+				pacman -S deepin deepin-extra lightdm lightdm-deepin-greeter xorg-server xorg-apps xorg-xinit --needed --noconfirm
 				systemctl enable lightdm
 				;;
 			"Enlightenment")
-				pacman -S enlightenment terminology xorg-server xorg-xinit lxdm --noconfirm
+				pacman -S enlightenment terminology xorg-server xorg-apps xorg-xinit lxdm --needed --noconfirm
 				systemctl enable lxdm
 				;;
+			"i3")
+				pacman -S i3-gaps i3blocks i3lock numlockx gdm xorg-server xorg-apps xorg-xinit --needed --noconfirm
+				systemctl enable gdm
 			"Skip")
 				break
-				;;
 			*) echo -e "${RED}Invalid Option, Try Again...${RESET}"
 		esac
 	done
