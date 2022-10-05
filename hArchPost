@@ -30,7 +30,7 @@ installer() {
 desktopEnv() {
 	#WIP - Choose DE - If Mate and Nvidia graphics, check comp manager
 	echo -e "${GREEN}[!] Choose a Desktop Enviornment${RESET}"
-	echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 7 to continue if prompt returns${RESET}"
+	echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
 	DEs=("Mate" "KDE" "Gnome" "Cinnamon" "Deepin" "Enlightenment" "i3" "Skip")
 	select opt in "${DEs[@]}"
 	do
@@ -47,6 +47,7 @@ desktopEnv() {
 						;;
 				esac
 				systemctl enable lightdm
+				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
 				;;
 			"KDE")
 				pacman -S plasma-meta sddm plasma-desktop xorg-server xorg-apps xorg-xinit --needed --noconfirm
@@ -57,34 +58,35 @@ desktopEnv() {
 					*"$NVD"*)
 						pacman -S kwin plasma-wayland-session --needed --noconfirm
 						;;
+				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
 				esac
 				systemctl enable sddm
-				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 7 to continue if prompt returns${RESET}"
+				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
 				;;
 			"Gnome")
 				pacman -S gnome gnome-extra gdm xorg-server xorg-apps xorg-xinit --needed --noconfirm
 				systemctl enable gdm
-				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 7 to continue if prompt returns${RESET}"
+				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
 				;;
 			"Cinnamon")
 				pacman -S cinnamon metacity gnome-shell gdm xorg-server xorg-apps xorg-xinit --needed --noconfirm
 				systemctl enable gdm
-				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 7 to continue if prompt returns${RESET}"
+				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
 				;;
 			"Deepin")
 				pacman -S deepin deepin-extra lightdm lightdm-deepin-greeter xorg-server xorg-apps xorg-xinit --needed --noconfirm
 				systemctl enable lightdm
-				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 7 to continue if prompt returns${RESET}"
+				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
 				;;
 			"Enlightenment")
 				pacman -S enlightenment terminology xorg-server xorg-apps xorg-xinit lxdm --needed --noconfirm
 				systemctl enable lxdm
-				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 7 to continue if prompt returns${RESET}"
+				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
 				;;
 			"i3")
 				pacman -S i3-gaps i3blocks i3lock numlockx gdm xorg-server xorg-apps xorg-xinit --needed --noconfirm
 				systemctl enable gdm
-				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 7 to continue if prompt returns${RESET}"
+				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
 				;;
 			"Skip")
 				break
