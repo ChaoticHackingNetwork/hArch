@@ -58,7 +58,6 @@ desktopEnv() {
 					*"$NVD"*)
 						pacman -S kwin plasma-wayland-session --needed --noconfirm
 						;;
-				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
 				esac
 				systemctl enable sddm
 				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
