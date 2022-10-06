@@ -37,5 +37,12 @@ To install, boot into Arch live ISO and:
  
 The prompt at end will ask to download master toolset or skip. It will add an extra 5-10 min install time. 
 
+### To-Do List
+- [x] vimrc completed
+- [x] Tested bare-metal & Virtual
+- [ ] User defined tool set
+- [ ] Disk encryption 
+- [ ] url shortener
+
 If you wish to communicate with me on any updates or bugs! Create an issue or find me on Discord: @Chaotic_Guru#8356 or email me @bughunt3r88@outlook.com
   
