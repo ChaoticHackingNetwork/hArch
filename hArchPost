@@ -232,6 +232,8 @@ hackTools() {
 	echo -e "${YELLOW}Installing Master Toolset... Hack the Universe!${RESET}"
 	pacman -S - < /Master --noconfirm && pacman -S - < /useful-packages --noconfirm
 	else
+	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/Master
+	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/useful-packages
 	echo "Skipping"
 	sleep 5
 	
