@@ -5,7 +5,7 @@
 # Author    : Chaotic_Guru                                       |
 # Github    : https://github.com/ChaoticHackingNetwork           |
 # Discord   : https://discord.gg/nv445EX (ChaoticHackingNetwork) |
-# Version   : 0.1.2		                                 |
+# Version   : 0.1.3		                                 |
 # ---------------------------------------------------------------
 
 GREEN='\033[0;32m'
@@ -20,17 +20,18 @@ installer() {
 	#Installs needed packages
 	echo ${NEWLINE}
 	echo ${NEWLINE}
-	echo -e "${YELLOW}[*] Installing some handy packages...${RESET}"
-	pacman -S dkms linux-headers chromium firefox discord dhcpcd iwd mlocate cmake neofetch pulseaudio cherrytree git net-tools dnsutils terminator zsh git fish leafpad --needed --noconfirm
+	echo -e "[${YELLOW}INFO${RESET}] Installing some handy packages...${NEWLINE}"
+	pacman -S dkms linux-headers chromium firefox discord dhcpcd iwd mlocate cmake ntp neofetch pulseaudio cherrytree git net-tools dnsutils terminator zsh git fish leafpad --needed --noconfirm
 	# Basic Fonts
 	pacman -S noto-fonts ttf-ubuntu-font-family ttf-dejavu ttf-freefont ttf-liberation ttf-droid ttf-roboto terminus-font rxvt-unicode ranger rofi dmenu --needed --noconfirm
+	timedatectl set-ntp true
 	hwclock —-systohc
 }
 
 desktopEnv() {
 	#WIP - Choose DE - If Mate and Nvidia graphics, check comp manager
-	echo -e "${GREEN}[!] Choose a Desktop Enviornment${RESET}"
-	echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
+	echo -e "[${GREEN}USER${RESET}] Choose a Desktop Enviornment"
+	echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${NEWLINE}"
 	DEs=("Mate" "KDE" "Gnome" "Cinnamon" "Deepin" "Enlightenment" "i3" "Skip")
 	select opt in "${DEs[@]}"
 	do
@@ -47,7 +48,7 @@ desktopEnv() {
 						;;
 				esac
 				systemctl enable lightdm
-				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
+				echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
 				;;
 			"KDE")
 				pacman -S plasma-meta sddm plasma-desktop xorg-server xorg-apps xorg-xinit --needed --noconfirm
@@ -60,37 +61,37 @@ desktopEnv() {
 						;;
 				esac
 				systemctl enable sddm
-				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
+				echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
 				;;
 			"Gnome")
 				pacman -S gnome gnome-extra gdm xorg-server xorg-apps xorg-xinit --needed --noconfirm
 				systemctl enable gdm
-				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
+				echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
 				;;
 			"Cinnamon")
 				pacman -S cinnamon metacity gnome-shell gdm xorg-server xorg-apps xorg-xinit --needed --noconfirm
 				systemctl enable gdm
-				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
+				echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
 				;;
 			"Deepin")
 				pacman -S deepin deepin-extra lightdm lightdm-deepin-greeter xorg-server xorg-apps xorg-xinit --needed --noconfirm
 				systemctl enable lightdm
-				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
+				echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
 				;;
 			"Enlightenment")
 				pacman -S enlightenment terminology xorg-server xorg-apps xorg-xinit lxdm --needed --noconfirm
 				systemctl enable lxdm
-				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
+				echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
 				;;
 			"i3")
 				pacman -S i3-gaps i3blocks i3lock numlockx gdm xorg-server xorg-apps xorg-xinit --needed --noconfirm
 				systemctl enable gdm
-				echo -e "${YELLOW}Syntax: Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${RESET}"
+				echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
 				;;
 			"Skip")
 				break
 				;;
-			*) echo -e "${RED}Invalid Option, Try Again...${RESET}"
+			*) echo -e "[${RED}ERROR${RESET}]Invalid Option, Try Again..."
 		esac
 	done
 
@@ -100,7 +101,7 @@ desktopEnv() {
 sublimeInstaller() {
 	echo ${NEWLINE}
 	echo ${NEWLINE}
-	echo -e "${GREEN}Installing Sublime Text...${RESET}"
+	echo -e "[${YELLOW}SYNTAX${RESET}] Installing Sublime Text...${NEWLINE}"
 	curl -O https://download.sublimetext.com/sublimehq-pub.gpg && pacman-key --add sublimehq-pub.gpg && pacman-key --lsign-key 8A8F901A && rm sublimehq-pub.gpg
 	sleep 3
 	echo -e "\n[sublime-text]\nServer = https://download.sublimetext.com/arch/stable/x86_64" | tee -a /etc/pacman.conf
@@ -111,22 +112,21 @@ sublimeInstaller() {
 vidDriver() {
 	echo ${NEWLINE}
 	echo ${NEWLINE}
-	echo -e "${GREEN}[*] Gathering Graphics info...${RESET}"
+	echo -e "[${YELLOW}INFO${RESET}] Gathering Graphics info..."
 	echo ${NEWLINE}
 	echo ${NEWLINE}
-	echo -e "${YELLOW}[!] Installing drivers...${RESET}"
 	sleep 2
 	str=$(lspci -vmm | grep VGA -A6)
 	AMD='AMD'
 	NVD='NVIDIA'
 	case $str in
 		*"$AMD"*)
-			echo -e "${YELLOW}[!] Installing AMD Drivers...${RESET}"
+			echo -e "[${YELLOW}INFO${RESET}] Installing AMD Drivers...${NEWLINE}"
 			pacman -S xf86-video-ati xf86-video-amdgpu mesa --noconfirm
 			;;
 
 		*"$NVD"*)
-			echo -e "${GREEN}[!] Installing NVIDIA Drivers...${RESET}"
+			echo -e "[${YELLOW}INFO${RESET}] Installing NVIDIA Drivers...${NEWLINE}"
 			pacman -S nvidia nvidia-settings nvidia-utils glxinfo nvtop --noconfirm
 			curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/nvidia.hook
 			curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/20-nvidia.conf
@@ -139,8 +139,8 @@ vidDriver() {
 			# xrandr --auto
 			;;
 		*)
-			echo -e "${YELLOW}Unable to determine Graphics info.. Installing default drivers${RESET}"
-			pacman -S xf86-video-fbdev
+			echo -e "[${YELLOW}INFO${RESET}] Unable to determine Graphics info.. Installing default drivers"
+			pacman -S xf86-video-fbdev --noconfirm
 	esac
 
 }
@@ -149,10 +149,10 @@ userInfo() {
 	#Set root password
 	echo ${NEWLINE}
 	echo ${NEWLINE}
-	echo -e "${YELLOW}[!] Please set ROOT password!!!${RESET}"
+	echo -e "[${GREEN}USER${RESET}] Please set ROOT password!!!"
 	passwd
 	#Create a new user
-	read -p "[*] Enter a new Username: " username
+	read -p "[${GREEN}USER${RESET}] Enter Username: " username
 	echo ${NEWLINE}
 	echo ${NEWLINE}
 	echo -e "${GREEN}------> hArch welcomes you $username! <------${RESET}"
@@ -161,19 +161,19 @@ userInfo() {
 	useradd -mg users -G wheel,power,storage -s /usr/bin/fish $username
 	echo '%wheel ALL=(ALL:ALL) ALL' >> /etc/sudoers.d/wheel_group
     	chmod 440 /etc/sudoers.d/wheel_group
-	echo -e "${YELLOW}[!] Please set your password now!${RESET}"
+	echo -e "[${GREEN}USER${RESET}] Please set your password now!"
 	passwd $username
 }
 
 booter() {
 	echo ${NEWLINE}
 	echo ${NEWLINE}
-	echo -e "${GREEN}[*] Setting Booterloader...${RESET}"
+	echo -e "[${YELLOW}INFO${RESET}] Setting Booterloader...${NEWLINE}"
 	drives=$(lsblk -f)
-	echo -e "${YELLOW}$drives${RESET}${NEWLINE}"
-	echo "If BIOS, attach bootloader to disk: ex- /dev/sda"
-	echo "If UEFI, attach bootloader to partition: ex- /dev/nvme0n1p1"
-	read -p "Enter Drive to install Booterloader [Example: /dev/nvme0n1p1]: " drive
+	echo -e "$drives${NEWLINE}"
+	echo "[${YELLOW}SYNTAX${RESET}] If BIOS, attach bootloader to disk: ex- /dev/sda"
+	echo "[${YELLOW}SYNTAX${RESET}] If UEFI, attach bootloader to partition: ex- /dev/nvme0n1p1"
+	read -p "[${GREEN}USER${RESET}] Enter Drive to install Booterloader [Example: /dev/nvme0n1p1]: " drive
 	if [[ -d "/sys/firmware/efi" ]]
 	then
 	pacman -S efibootmgr grub dosfstools mtools os-prober --noconfirm
@@ -193,7 +193,7 @@ blackArch() {
 	#Install BlackArch Mirror & download tools list
 	echo ${NEWLINE}
 	echo ${NEWLINE}
-	echo -e "${GREEN}Installing BlackArch Repo... HANG TIGHT!!!${RESET}"
+	echo -e "[${YELLOW}INFO${RESET}] Installing BlackArch Repo...${NEWLINE}"
 	curl -O https://blackarch.org/strap.sh
 	chmod +x strap.sh
 	./strap.sh
@@ -205,14 +205,14 @@ blackArch() {
 vimSetup() {
 	echo ${NEWLINE}
 	echo ${NEWLINE}
-	read -p 'Do you want to add Bunle to VIM? [y/n]: ' vim
-	if [[ $vim == 'y' ]]
+	read -p "[${GREEN}USER${RESET}] Do you want to add Bunle to VIM? [y/n]: " vim
+	if [[ $vim == 'y' ]] || [[ $vim == 'Y' ]]
 	then 
 	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/vimrc_bundle_conf
 	users=$(ls /home)
 	mv vimrc_bundle_conf /home/$users/.vimrc
 	else
-	echo "Skipping"
+	echo "[${YELLOW}SKIPPING${RESET}]"
 	
 	fi
 }
@@ -221,20 +221,19 @@ hackTools() {
 	echo ${NEWLINE}
 	echo ${NEWLINE}
 	read -p 'Do you want to add the Master Hacking Toolset? [y/n]: ' ht
-	if [[ $ht == 'y' ]]
+	if [[ $ht == 'y' ]] || [[ $ht == 'Y' ]]
 	then
-	echo -e "${GREEN}Please Wait... Installing Tools"
+	echo -e "[${YELLOW}INFO${RESET}] Please Wait... Installing Tools"
 	echo ${NEWLINE}
 	echo "Grab a coffee, play with your pet...${RESET}"
 	echo ${NEWLINE}
 	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/Master
 	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/useful-packages
-	echo -e "${YELLOW}Installing Master Toolset... Hack the Universe!${RESET}"
 	pacman -S - < /Master --noconfirm && pacman -S - < /useful-packages --noconfirm
 	else
 	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/Master
 	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/useful-packages
-	echo "Skipping"
+	echo "[${YELLOW}SKIPPING${RESET}]"
 	sleep 5
 	
 	fi
@@ -246,16 +245,16 @@ complete() {
 	neofetch
 	echo ${NEWLINE}
 	echo ${NEWLINE}
-	echo -e "${GREEN}[!] Harch has been succesfully installed on your system"
+	echo -e "[${YELLOW}INFO${RESET}] hArch has been succesfully installed on your system"
 	echo ${NEWLINE}
-	echo -e "Hack the Universe $username${RESET}"
+	echo -e "${PURPLE}Hack the Universe $username${RESET}"
 	echo ${NEWLINE}
 	echo ${NEWLINE}
-	echo -e "${YELLOW}[!] A reboot should now take place"
-	echo "[!] Run the following commands to reboot properly!"
+	echo -e "[${YELLOW}INFO${RESET}] A reboot should now take place"
+	echo "[${YELLOW}INFO${RESET}] Run the following commands to reboot properly!"
 	echo ${NEWLINE}
-	echo  "[1]: exit"
-	echo  "[2]: umount -a"
+	echo -e "${GREEN}[1]: exit"
+	echo -e "[2]: umount -a"
 	echo -e "[3]: reboot${RESET}"
 
 	exit
