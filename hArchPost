@@ -23,7 +23,7 @@ installer() {
 	sed -i '/#ParallelDownloads/s/^#//g' /etc/pacman.conf
 	echo ${NEWLINE}
 	echo -e "[${YELLOW}INFO${RESET}] Installing some handy packages...${NEWLINE}"
-	pacman -S dkms linux-headers chromium firefox discord dhcpcd iwd mlocate cmake ntp neofetch pulseaudio cherrytree git net-tools dnsutils terminator zsh git fish leafpad --needed --noconfirm
+	pacman -S dkms linux-headers chromium firefox discord dhcpcd iwd mlocate cmake ntp btop neofetch pulseaudio cherrytree git net-tools dnsutils terminator zsh git fish leafpad --needed --noconfirm
 	# Basic Fonts
 	pacman -S noto-fonts ttf-ubuntu-font-family ttf-dejavu ttf-freefont ttf-liberation ttf-droid ttf-roboto terminus-font rxvt-unicode ranger rofi dmenu --needed --noconfirm
 	timedatectl set-ntp true
