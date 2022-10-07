@@ -32,7 +32,8 @@ installer() {
 
 desktopEnv() {
 	#WIP - Choose DE - If Mate and Nvidia graphics, check comp manager
-	echo -e "[${GREEN}USER${RESET}] Choose a Desktop Enviornment"
+	echo -e "[${GREEN}USER_INPUT${RESET}]"
+	echo -e "Choose a Desktop Enviornment"
 	echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${NEWLINE}"
 	DEs=("Mate" "KDE" "Gnome" "Cinnamon" "Deepin" "Enlightenment" "i3" "Skip")
 	select opt in "${DEs[@]}"
@@ -151,10 +152,11 @@ userInfo() {
 	#Set root password
 	echo ${NEWLINE}
 	echo ${NEWLINE}
+	echo -e "[${GREEN}USER_INPUT${RESET}]"
 	echo -e "[${GREEN}USER${RESET}] Please set ROOT password!!!"
 	passwd
 	#Create a new user
-	read -p "[${GREEN}USER${RESET}] Enter Username: " username
+	read -p "Enter Username: " username
 	echo ${NEWLINE}
 	echo ${NEWLINE}
 	echo -e "${GREEN}------> hArch welcomes you $username! <------${RESET}"
@@ -172,10 +174,12 @@ booter() {
 	echo ${NEWLINE}
 	echo -e "[${YELLOW}INFO${RESET}] Setting Booterloader...${NEWLINE}"
 	drives=$(lsblk -f)
+	echo ${NEWLINE}
+	echo -e "[${GREEN}USER_INPUT${RESET}]"
 	echo -e "$drives${NEWLINE}"
 	echo "[${YELLOW}SYNTAX${RESET}] If BIOS, attach bootloader to disk: ex- /dev/sda"
 	echo "[${YELLOW}SYNTAX${RESET}] If UEFI, attach bootloader to partition: ex- /dev/nvme0n1p1"
-	read -p "[${GREEN}USER${RESET}] Enter Drive to install Booterloader [Example: /dev/nvme0n1p1]: " drive
+	read -p "Enter Drive to install Booterloader [Example: /dev/nvme0n1p1]: " drive
 	if [[ -d "/sys/firmware/efi" ]]
 	then
 	pacman -S efibootmgr grub dosfstools mtools os-prober --noconfirm
@@ -214,7 +218,7 @@ vimSetup() {
 	users=$(ls /home)
 	mv vimrc_bundle_conf /home/$users/.vimrc
 	else
-	echo "[${YELLOW}SKIPPING${RESET}]"
+	echo -e "[${YELLOW}SKIPPING${RESET}]"
 	
 	fi
 }
@@ -235,7 +239,7 @@ hackTools() {
 	else
 	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/Master
 	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/useful-packages
-	echo "[${YELLOW}SKIPPING${RESET}]"
+	echo -e "[${YELLOW}SKIPPING${RESET}]"
 	sleep 5
 	
 	fi
