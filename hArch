@@ -47,7 +47,7 @@ checkNet() {
 	echo -e "[${YELLOW}INFO${RESET}]Checking Internet Connection...${NEWLINE}"
 	if nc -zw1 archlinux.org 443
 	then
-  	echo -e "[${GREEN}OK${RESET}] Firing up Scripting Engines..."
+  	echo -e "[${GREEN}INFO${RESET}] Firing up Scripting Engines..."
 	echo -e "[${YELLOW}INFO${RESET}] Enabling Parallel Downloads..."
 	sed -i '/#ParallelDownloads/s/^#//g' /etc/pacman.conf
 	echo -e "[${YELLOW}INFO${RESET}] Syncing time..."
@@ -75,10 +75,11 @@ getDrive() {
 	echo ${NEWLINE}
 	echo -e "[${YELLOW}INFO${RESET}] Gathering drives...${NEWLINE}"
 	lsblk -f
+	echo -e "[${GREEN}USER_INPUT${RESET}]"
 	echo "Syntax: /dev/sda or /dev/nvme0n1"
-	read -p "[${GREEN}USER${RESET}] Enter Drive to prepare: " drive
-	read -p "[${GREEN}USER${RESET}] Do you want to manually partition [y/n]: " manual
-	if [[ $manual == 'y' ]]
+	read -p "Enter Drive to prepare: " drive
+	read -p "Do you want to manually partition [y/n]: " manual
+	if [[ $manual == 'y' ]] || [[ $manual == 'Y' ]]
 	then
 		cfdisk $drive
 	else
