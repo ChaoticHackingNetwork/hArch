@@ -152,14 +152,13 @@ userInfo() {
 	#Set root password
 	echo ${NEWLINE}
 	echo ${NEWLINE}
-	echo -e "[${GREEN}USER_INPUT${RESET}]"
 	echo -e "[${GREEN}USER${RESET}] Please set ROOT password!!!"
 	passwd
 	#Create a new user
 	read -p "Enter Username: " username
 	echo ${NEWLINE}
 	echo ${NEWLINE}
-	echo -e "${GREEN}------> hArch welcomes you $username! <------${RESET}"
+	echo -e "${GREEN}------> Hack the Universe $username! <------${RESET}"
 	echo ${NEWLINE}
 	echo ${NEWLINE}
 	useradd -mg users -G wheel,power,storage -s /usr/bin/fish $username
@@ -177,8 +176,8 @@ booter() {
 	echo ${NEWLINE}
 	echo -e "[${GREEN}USER_INPUT${RESET}]"
 	echo -e "$drives${NEWLINE}"
-	echo "[${YELLOW}SYNTAX${RESET}] If BIOS, attach bootloader to disk: ex- /dev/sda"
-	echo "[${YELLOW}SYNTAX${RESET}] If UEFI, attach bootloader to partition: ex- /dev/nvme0n1p1"
+	echo -e "[${YELLOW}SYNTAX${RESET}] If BIOS, attach bootloader to disk: ex- /dev/sda"
+	echo -e "[${YELLOW}SYNTAX${RESET}] If UEFI, attach bootloader to partition: ex- /dev/nvme0n1p1"
 	read -p "Enter Drive to install Booterloader [Example: /dev/nvme0n1p1]: " drive
 	if [[ -d "/sys/firmware/efi" ]]
 	then
@@ -211,7 +210,7 @@ blackArch() {
 vimSetup() {
 	echo ${NEWLINE}
 	echo ${NEWLINE}
-	read -p "[${GREEN}USER${RESET}] Do you want to add Bunle to VIM? [y/n]: " vim
+	read -p "Do you want to add Bunle to VIM? [y/n]: " vim
 	if [[ $vim == 'y' ]] || [[ $vim == 'Y' ]]
 	then 
 	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/vimrc_bundle_conf
@@ -257,7 +256,7 @@ complete() {
 	echo ${NEWLINE}
 	echo ${NEWLINE}
 	echo -e "[${YELLOW}INFO${RESET}] A reboot should now take place"
-	echo "[${YELLOW}INFO${RESET}] Run the following commands to reboot properly!"
+	echo -e "[${YELLOW}INFO${RESET}] Run the following commands to reboot properly!"
 	echo ${NEWLINE}
 	echo -e "${GREEN}[1]: exit"
 	echo -e "[2]: umount -a"
