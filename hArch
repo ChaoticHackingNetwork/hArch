@@ -44,10 +44,10 @@ greet() {
 checkNet() {
 	echo ${NEWLINE}
 	echo ${NEWLINE}
-	echo -e "[${YELLOW}INFO${RESET}]Checking Internet Connection...${NEWLINE}"
+	echo -e "[${YELLOW}INFO${RESET}] Checking Internet Connection...${NEWLINE}"
 	if nc -zw1 archlinux.org 443
 	then
-  	echo -e "[${GREEN}INFO${RESET}] Firing up Scripting Engines..."
+  	echo -e "[${YELLOW}INFO${RESET}] Firing up Scripting Engines..."
 	echo -e "[${YELLOW}INFO${RESET}] Enabling Parallel Downloads..."
 	sed -i '/#ParallelDownloads/s/^#//g' /etc/pacman.conf
 	echo -e "[${YELLOW}INFO${RESET}] Syncing time..."
@@ -82,8 +82,8 @@ getDrive() {
 	if [[ $manual == 'y' ]] || [[ $manual == 'Y' ]]
 	then
 		cfdisk $drive
-		echo -e "[${YELLOW}INFO${RESET}] Executing BASH..."
-		echo -e "[${YELLOW}INFO${RESET}] Make your filesystems and mount your partitions..."
+		echo -e "[${YELLOW}INFO${RESET}] Entering BASH shell..."
+		echo -e "[${YELLOW}INFO${RESET}] Make your filesystem and mount /mnt..."
 		echo -e "[${YELLOW}INFO${RESET}] Type ${GREEN}exit${RESET} once finished..."
 		bash
 	else
