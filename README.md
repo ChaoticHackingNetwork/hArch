@@ -44,8 +44,8 @@ The prompt at end will ask to download master toolset or skip. It will add an ex
 - [x] Better script UI
 - [x] Parallel Downloads
 - [ ] User defined tool set
-- [ ] Disk encryption 
-- [ ] url shortener
+- [ ] Disk encryption during install
+- [ ] URL shortener
 
 If you wish to communicate with me on any updates or bugs! Create an issue or find me on Discord: @Chaotic_Guru#8356 or email me @bughunt3r88@outlook.com
   
