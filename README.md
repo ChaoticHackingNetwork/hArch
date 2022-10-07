@@ -40,6 +40,9 @@ The prompt at end will ask to download master toolset or skip. It will add an ex
 ### To-Do List
 - [x] vimrc completed
 - [x] Tested bare-metal & Virtual
+- [x] Manual partitioning if desired
+- [x] Better script UI
+- [x] Parallel Downloads
 - [ ] User defined tool set
 - [ ] Disk encryption 
 - [ ] url shortener
