@@ -82,6 +82,10 @@ getDrive() {
 	if [[ $manual == 'y' ]] || [[ $manual == 'Y' ]]
 	then
 		cfdisk $drive
+		echo -e "[${YELLOW}INFO${RESET}] Executing BASH..."
+		echo -e "[${YELLOW}INFO${RESET}] Make your filesystems and mount your partitions..."
+		echo -e "[${YELLOW}INFO${RESET}] Type ${GREEN}exit${RESET} once finished..."
+		
 	else
 		echo ${NEWLINE}
 		echo ${NEWLINE}
