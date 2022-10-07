@@ -85,7 +85,7 @@ getDrive() {
 		echo -e "[${YELLOW}INFO${RESET}] Executing BASH..."
 		echo -e "[${YELLOW}INFO${RESET}] Make your filesystems and mount your partitions..."
 		echo -e "[${YELLOW}INFO${RESET}] Type ${GREEN}exit${RESET} once finished..."
-		
+		bash
 	else
 		echo ${NEWLINE}
 		echo ${NEWLINE}
