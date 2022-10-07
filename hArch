@@ -203,7 +203,7 @@ lastMinSetup() {
 	chmod +x hArchPost
 	mv hArchPost /mnt
 	echo ${NEWLINE}
-	echo -e "[${YELLOW}INFO${RESET}] Time to enter CHROOT
+	echo -e "[${YELLOW}INFO${RESET}] Time to enter CHROOT"
 	echo -e "[${YELLOW}INFO${RESET}] The final script has been installed and move to your new root directory"
 	echo -e "[${YELLOW}INFO${RESET}] Run these commands to finish setup"
 	echo ${NEWLLINE}
