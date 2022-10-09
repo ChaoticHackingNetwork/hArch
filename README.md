@@ -7,13 +7,13 @@ Version 0.1.3
 
 A simplistic Arch build, a lightweight hacker distro... SPEED that is what hArch gurantees. Spin up a hacking VM within minutes
 
-Harch is intended preferably for Security Researchers but open to anyone, it is geared towards those who want to get into Penetration Testing/Reverse Engineering or even learn Linux but have an old or slow; maybe even Ancient piece of Technology. The tools (Downloaded during install or after, your choice) are many of the known but widely used tools out there. The lightweight Arch design is ideal for bringing the older computers to life!
+Harch is intended preferably for Security Researchers but open to anyone, it is geared towards those who want to get into Penetration Testing/Reverse Engineering or even learn Linux but have an old or slow; maybe even Ancient piece of Technology. The tools (Downloaded during install or after, your choice) are many of the known but widely used tools out there. The lightweight Arch distro is ideal for bringing the older computers to life!
 
 Have an old laptop collecting dust? Throw hArch on it.
  
- **Works great with HypverV or Virtualbox** 
-
 But to get the real experience, use bare-metal :) 
+
+ **Works great with HypverV or Virtualbox** 
 
 The added vimrc file is well... perfection
 
@@ -42,6 +42,7 @@ The prompt at end will ask to download master toolset or skip. It will add an ex
 - [x] Tested bare-metal & Virtual
 - [x] Manual partitioning if desired
 - [x] Better script UI
+- [x] Add Sublime Text
 - [x] Parallel Downloads
 - [ ] User defined tool set
 - [ ] Kernel choice
