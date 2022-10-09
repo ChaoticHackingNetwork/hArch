@@ -44,6 +44,7 @@ The prompt at end will ask to download master toolset or skip. It will add an ex
 - [x] Better script UI
 - [x] Parallel Downloads
 - [ ] User defined tool set
+- [ ] Kernel choice
 - [ ] Disk encryption during install
 - [ ] URL shortener
 
