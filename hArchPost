@@ -23,7 +23,7 @@ installer() {
 	sed -i '/#ParallelDownloads/s/^#//g' /etc/pacman.conf
 	echo ${NEWLINE}
 	echo -e "[${YELLOW}INFO${RESET}] Installing some handy packages...${NEWLINE}"
-	pacman -S dkms linux-headers dhcpcd iwd mlocate cmake ntp neofetch pulseaudio git net-tools dnsutils zsh git fish --needed --noconfirm
+	pacman -S dkms linux-headers dhcpcd iwd mlocate cmake ntp neofetch pulseaudio net-tools dnsutils git fish --needed --noconfirm
 	# Basic Fonts
 	pacman -S noto-fonts ttf-ubuntu-font-family ttf-dejavu ttf-freefont ttf-liberation ttf-droid ttf-roboto terminus-font rxvt-unicode ranger rofi dmenu --needed --noconfirm
 	timedatectl set-ntp true
@@ -41,15 +41,6 @@ desktopEnv() {
 		case $opt in 
 			"Mate")
 				pacman -S mate mate-extra lightdm lightdm-gtk-greeter xorg-server xorg-xinit --needed --noconfirm
-				#Disable compositing if nvidia graphics
-				NVD='NVIDIA'
-				card=$(lspci -vmm | grep VGA -A6)
-				case $card in 
-					*"$NVD"*)
-						#Fixes screen tearing for mulit-head or hybrid graphics
-						echo "WIP"
-						;;
-				esac
 				systemctl enable lightdm
 				echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
 				;;
