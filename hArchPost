@@ -116,6 +116,7 @@ vidDriver() {
 			pacman -S nvidia nvidia-settings nvidia-utils glxinfo nvtop --noconfirm
 			curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/nvidia.hook
 			curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/20-nvidia.conf
+			mkdir -p /etc/pacman.d/hooks
 			mv /nvidia.hook /etc/pacman.d/hooks
 			echo "blacklist nouveau" > /etc/modprobe.d/blacklist-nvidia-nouveau.conf
 			# Add changes to mkinitcpio.conf - WIP
