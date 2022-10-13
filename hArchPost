@@ -46,14 +46,6 @@ desktopEnv() {
 				;;
 			"KDE")
 				pacman -S plasma-meta sddm plasma-desktop xorg-server xorg-apps xorg-xinit --needed --noconfirm
-				#If nvidia graphics, add stacked compositer
-				NVD='NVIDIA'
-				card=$(lspci -vmm | grep VGA -A6)
-				case $card in 
-					*"$NVD"*)
-						pacman -S kwin plasma-wayland-session --needed --noconfirm
-						;;
-				esac
 				systemctl enable sddm
 				echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
 				;;
@@ -125,8 +117,7 @@ vidDriver() {
 			curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/nvidia.hook
 			curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/20-nvidia.conf
 			mv /nvidia.hook /etc/pacman.d/hooks
-			mv /20-nvidia.conf /etc/X11/xorg.conf.d/
-			bash -c “echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf”
+			echo "blacklist nouveau" > /etc/modprobe.d/blacklist-nvidia-nouveau.conf
 			# Add changes to mkinitcpio.conf - WIP
 			# If issues, try:
 			# xrandr --setprovideroutputsource modesetting NVIDIA-0
@@ -238,6 +229,7 @@ hackTools() {
 
 complete() {
 	#Successfully Installed
+	mv /20-nvidia.conf /etc/X11/xorg.conf.d/
 	neofetch
 	echo ${NEWLINE}
 	echo ${NEWLINE}
