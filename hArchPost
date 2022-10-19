@@ -22,6 +22,7 @@ installer() {
 	echo -e "[${YELLOW}INFO${RESET}] Enabling Parallel Downloads..."
 	sed -i '/#ParallelDownloads/s/^#//g' /etc/pacman.conf
 	echo ${NEWLINE}
+	echo -e "[${GREEN}USER_INPUT${RESET}]"
 	read -p "Enter Hostname: " hostname
 	hostnamectl set-hostname $hostname
 	echo ${NEWLINE}
