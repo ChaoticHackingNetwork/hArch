@@ -1,5 +1,5 @@
 # hArch {Hackers Arch} 
-Version 0.1.3
+Version 0.1.3-Beta
 
 ![image](https://user-images.githubusercontent.com/49621391/193427466-3750395a-5dab-40d9-8457-87832c460c0a.png)
 
