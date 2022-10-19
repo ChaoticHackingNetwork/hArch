@@ -11,7 +11,7 @@ Harch is intended preferably for Security Researchers but open to anyone, it is 
 
 Have an old laptop collecting dust? Throw hArch on it. By Default, hArch does not start with Networking Enabled. 
  
-But to get the real experience, use bare-metal :) 
+Too get the real experience, use bare-metal :) 
 
  **Works great with HypverV or Virtualbox** 
 
