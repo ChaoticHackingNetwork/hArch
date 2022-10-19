@@ -22,6 +22,9 @@ installer() {
 	echo -e "[${YELLOW}INFO${RESET}] Enabling Parallel Downloads..."
 	sed -i '/#ParallelDownloads/s/^#//g' /etc/pacman.conf
 	echo ${NEWLINE}
+	read -p "Enter Hostname: " hostname
+	hostnamectl set-hostname $hostname
+	echo ${NEWLINE}
 	echo -e "[${YELLOW}INFO${RESET}] Installing some handy packages...${NEWLINE}"
 	pacman -S dkms linux-headers dhcpcd iwd mlocate cmake ntp neofetch pulseaudio net-tools dnsutils git fish --needed --noconfirm
 	# Basic Fonts
