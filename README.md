@@ -17,7 +17,8 @@ But to get the real experience, use bare-metal :)
 
 The added vimrc file is well... perfection
 
-![image](https://user-images.githubusercontent.com/49621391/193386061-3ff981af-2f7f-4e5e-a1ff-a3ae4dc8cd3f.png)
+![image](https://user-images.githubusercontent.com/49621391/196594832-74b20764-ea73-40ec-ba0e-dc4f9e2318c2.png)
+
 
 Vim is the only IDE youll ever need, and this gets you going! Run vim on startup to execute plugin installation.
 
