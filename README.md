@@ -5,7 +5,7 @@ Version 0.1.3-Beta
 
 
 
-A simplistic Arch build, a lightweight hacker distro... SPEED that is what hArch gurantees. Spin up a hacking VM within minutes
+A simplistic Arch build, a lightweight hacker distro... SPEED that is what hArch gurantees. Spin up a hacking VM within minutes **Internet Speed Dependent**
 
 Harch is intended preferably for Security Researchers but open to anyone, it is geared towards those who want to get into Penetration Testing/Reverse Engineering or even learn Linux but have an old or slow; maybe even Ancient piece of Technology. The tools (Downloaded during install or after, your choice) are many of the known but widely used tools out there. The lightweight Arch distro is ideal for bringing the older computers to life!
 
