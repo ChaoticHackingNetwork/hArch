@@ -19,8 +19,6 @@ Have an old laptop collecting dust? Throw hArch on it. By Default, hArch does no
    
 
 **Works great with HypverV or Virtualbox** 
- 
-Too get the real experience, use bare-metal :) 
 
 The added vimrc file is well... perfection
 
