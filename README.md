@@ -5,15 +5,19 @@ Version 0.1.3-Beta
 
 
 
-A simplistic Arch build, a lightweight hacker distro... SPEED that is what hArch gurantees. Spin up a hacking VM within minutes **Internet Speed Dependent**
+A simplistic Arch build, and a lightweight hacker distro... SPEED is what hArch gurantees. Spin up a hacking VM within minutes **Internet Speed Dependent**
 
 Harch is intended preferably for Security Researchers but open to anyone, it is geared towards those who want to get into Penetration Testing/Reverse Engineering or even learn Linux but have an old or slow; maybe even Ancient piece of Technology. The tools (Downloaded during install or after, your choice) are many of the known but widely used tools out there. The lightweight Arch distro is ideal for bringing the older computers to life!
 
 Have an old laptop collecting dust? Throw hArch on it. By Default, hArch does not start with Networking Enabled. 
+
+   systemctl enable dhcpcd #Enable Ethernet on Startup
+   systemctl enable iwd    #Enable WiFi on Startup\
+   
+
+**Works great with HypverV or Virtualbox** 
  
 Too get the real experience, use bare-metal :) 
-
- **Works great with HypverV or Virtualbox** 
 
 The added vimrc file is well... perfection
 
