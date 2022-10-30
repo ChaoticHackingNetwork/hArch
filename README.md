@@ -9,7 +9,7 @@ A simplistic Arch build, and a lightweight hacker distro... SPEED is what hArch 
 
 Harch is intended preferably for Security Researchers but open to anyone, it is geared towards those who want to get into Penetration Testing/Reverse Engineering or even learn Linux but have an old or slow; maybe even Ancient piece of Technology. The tools (Downloaded during install or after, your choice) are many of the known but widely used tools out there. The lightweight Arch distro is ideal for bringing the older computers to life!
 
-Have an old laptop collecting dust? Throw hArch on it. By Default, hArch does not start with Networking Enabled. 
+Have an old laptop collecting dust? Throw hArch on it. By Default, Networking is not Enabled. 
 
       systemctl enable dhcpcd #Enable Ethernet on Startup
       
