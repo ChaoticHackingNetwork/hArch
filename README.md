@@ -11,8 +11,11 @@ Harch is intended preferably for Security Researchers but open to anyone, it is 
 
 Have an old laptop collecting dust? Throw hArch on it. By Default, hArch does not start with Networking Enabled. 
 
-   systemctl enable dhcpcd #Enable Ethernet on Startup
-   systemctl enable iwd    #Enable WiFi on Startup\
+      systemctl enable dhcpcd #Enable Ethernet on Startup
+      
+      sudo iwctl station list #List Networks
+      sudo iwctl connect <SSID>
+      systemctl enable iwd    #Enable WiFi on Startup
    
 
 **Works great with HypverV or Virtualbox** 
