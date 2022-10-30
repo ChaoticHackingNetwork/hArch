@@ -22,7 +22,7 @@ The added vimrc file is well... perfection
 
 
 
-Vim is the only IDE youll ever need, and this gets you going! Run vim on startup to execute plugin installation.
+Vim is the only IDE/text editor youll ever need,(Unless you too like Sublime :). Run vim on startup to execute plugin installation.
 
 Checkout - https://realpython.com/vim-and-python-a-match-made-in-heaven/ - if you don't believe me
 __________________________________________________________________________________________________________________________________________________________________
