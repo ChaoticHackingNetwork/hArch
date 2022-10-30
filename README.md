@@ -13,8 +13,8 @@ Have an old laptop collecting dust? Throw hArch on it. By Default, hArch does no
 
       systemctl enable dhcpcd #Enable Ethernet on Startup
       
-      sudo iwctl station list #List Networks
-      sudo iwctl connect <SSID>
+      iwctl station list      #List Networks
+      iwctl connect <SSID>    #Connect
       systemctl enable iwd    #Enable WiFi on Startup
    
 
