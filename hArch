@@ -61,10 +61,18 @@ checkNet() {
 
 installer() {
 	echo ${NEWLINE}
+	echo -e "[${GREEN}USER_INPUT${RESET}]"
+	read -p "Hardened Kernel? [Y/n]: " kernel
+	if [[ $kernel == 'y' ]] || [[ $kernel == 'Y' ]]
+	then
+	echo -e "[${YELLOW}INFO${RESET}] Installing base system...${NEWLINE}"
+	pacstrap /mnt base base-devel linux-hardened linux-firmware linux-headers vim nano
+	else
 	echo ${NEWLINE}
 	echo -e "[${YELLOW}INFO${RESET}] Installing base system...${NEWLINE}"
-	sleep 2
-	pacstrap /mnt base base-devel linux linux-firmware vi vim nano
+	pacstrap /mnt base base-devel linux linux-firmware linux-headers vim nano
+	
+	fi
 	#Generate fstab
 	genfstab -U /mnt >> /mnt/etc/fstab
 }
