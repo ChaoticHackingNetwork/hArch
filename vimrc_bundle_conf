@@ -14,7 +14,6 @@
     set rtp+=~/.vim/bundle/vundle/
     call vundle#begin()
     Plugin 'VundleVim/Vundle.vim'
-    "Add your bundles here
     Plugin 'Syntastic' "uber awesome syntax and errors highlighter
     Plugin 'altercation/vim-colors-solarized' "T-H-E colorscheme
     Plugin 'https://github.com/tpope/vim-fugitive' "So awesome, it should be illegal 
@@ -24,7 +23,6 @@
     Plugin 'scrooloose/nerdtree'
     Plugin 'jistr/vim-nerdtree-tabs'
     Plugin 'kien/ctrlp.vim'
-    "...All your other bundles...
     if iCanHazVundle == 0
         echo "Installing Vundles, please ignore key map error messages"
         echo ""
