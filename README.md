@@ -1,7 +1,8 @@
 # hArch {Hackers Arch} 
 Version 0.1.3-Beta
 
-![image](https://user-images.githubusercontent.com/49621391/193427466-3750395a-5dab-40d9-8457-87832c460c0a.png)
+![image](https://user-images.githubusercontent.com/49621391/200466477-b8748c44-53d5-4a98-b5c3-e9af8f4ee700.png)
+
 
 
 
