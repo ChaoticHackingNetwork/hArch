@@ -12,7 +12,7 @@ Harch is intended preferably for Security Researchers but open to anyone, it is 
 
 Have an old laptop collecting dust? Throw hArch on it. By Default, Networking is not Enabled. 
 
-      systemctl enable dhcpcd #Enable Ethernet on Startup
+      systemctl enable dhcpcd                  #Enable Ethernet on Startup
       
       iwctl station list                       #List WiFi Devices
       iwctl station wlan0 scan                 #Scan for WiFI
