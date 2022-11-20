@@ -14,9 +14,11 @@ Have an old laptop collecting dust? Throw hArch on it. By Default, Networking is
 
       systemctl enable dhcpcd #Enable Ethernet on Startup
       
-      iwctl station list      #List Networks
-      iwctl connect <SSID>    #Connect
-      systemctl enable iwd    #Enable WiFi on Startup
+      iwctl station list                       #List WiFi Devices
+      iwctl station wlan0 scan                 #Scan for WiFI
+      iwctl station wlan0 get-networks         #List SSID
+      iwctl station connect <SSID>             #Connect
+      systemctl enable iwd                     #Enable WiFi on Startup
    
 
 **Works great with HypverV or Virtualbox** 
