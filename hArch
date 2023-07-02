@@ -183,7 +183,7 @@ EOF
 		p # print the in-memory table
 		w # write changes to disk
 		q # quit
-		EOF
+EOF
 
             	# Format partitions
             	SWAP="1"
