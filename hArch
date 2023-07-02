@@ -205,7 +205,6 @@ EOF
         	read -p "Enable disk encryption? [y/n]: " encrypt
         	if [[ $encrypt == 'y' ]] || [[ $encrypt == 'Y' ]]; then
             	echo -e "[${YELLOW}INFO${RESET}] Encrypting the drive...${NEWLINE}"
-            	read -s -p "Enter encryption passphrase: " passphrase
             	echo ${NEWLINE}
            	echo -e "[${YELLOW}INFO${RESET}] Creating encrypted partition...${NEWLINE}"
             	cryptsetup luksFormat -c aes-xts-plain64 -s 512 -h sha512 $HOMEDRIVE
