@@ -78,134 +78,151 @@ installer() {
 }
 
 getDrive() {
-	#Find new method to get disk
-	echo ${NEWLINE}
-	echo ${NEWLINE}
-	echo -e "[${YELLOW}INFO${RESET}] Gathering drives...${NEWLINE}"
-	lsblk -f
-	echo -e "[${GREEN}USER_INPUT${RESET}]"
-	echo "Syntax: /dev/sda or /dev/nvme0n1"
-	read -p "Enter Drive to prepare: " drive
-	read -p "Do you want to manually partition [y/n]: " manual
-	if [[ $manual == 'y' ]] || [[ $manual == 'Y' ]]
-	then
-		cfdisk $drive
-		echo -e "[${YELLOW}INFO${RESET}] Entering BASH shell..."
-		echo -e "[${YELLOW}INFO${RESET}] Make your filesystem and mount /mnt..."
-		echo -e "[${YELLOW}INFO${RESET}] Type ${GREEN}exit${RESET} once finished..."
-		bash
-	else
-		echo ${NEWLINE}
-		echo ${NEWLINE}
-		echo -e "[${YELLOW}INFO${RESET}] Modifying $drive... HANG TIGHT!!!${NEWLINE}"
-		sleep 3
-		ls /sys/firmware/efi
-		if [[ -d "/sys/firmware/efi" ]]
-		then
-			echo -e "[${YELLOW}INFO${RESET}] UEFI System Deteceted!${NEWLINE}"
-			echo ${NEWLINE}
-			sleep 2
-			#https://superuser.com/a/984637
-			sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk $drive
-			g # Create new GPT Partition
-			n # New partition
-			p # Primary partition
-			1 # First partition
-				# EFI - start at beginning of disk
-			+512M # /boot/EFI
-			n
-			p
-			2
-				# SWAP - start immediately after preceding partition
-			+8G
-			n 
-			p
-			3
-				# ROOT, start immediately after preceding partition
-				# default, use rest of disk space
-			t # change part type
-			3 # part number
-			83 # linux FS
-			p # print the in-memory table
-			w # write changes to disk
-			q # quit
+    echo ${NEWLINE}
+    echo ${NEWLINE}
+    echo -e "[${YELLOW}INFO${RESET}] Gathering drives...${NEWLINE}"
+    lsblk -f
+    echo -e "[${GREEN}USER_INPUT${RESET}]"
+    echo "Syntax: /dev/sda or /dev/nvme0n1"
+    read -p "Enter Drive to prepare: " drive
+    read -p "Do you want to manually partition [y/n]: " manual
+    if [[ $manual == 'y' ]] || [[ $manual == 'Y' ]]; then
+        cfdisk $drive
+        echo -e "[${YELLOW}INFO${RESET}] Entering BASH shell..."
+        echo -e "[${YELLOW}INFO${RESET}] Make your filesystem and mount /mnt..."
+        echo -e "[${YELLOW}INFO${RESET}] Type ${GREEN}exit${RESET} once finished..."
+        bash
+    else
+        echo ${NEWLINE}
+        echo ${NEWLINE}
+        echo -e "[${YELLOW}INFO${RESET}] Modifying $drive... HANG TIGHT!!!${NEWLINE}"
+        sleep 3
+        ls /sys/firmware/efi
+        if [[ -d "/sys/firmware/efi" ]]; then
+            echo -e "[${YELLOW}INFO${RESET}] UEFI System Detected!${NEWLINE}"
+            echo ${NEWLINE}
+            sleep 2
+            # https://superuser.com/a/984637
+            sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' <<EOF | fdisk $drive
+		g # Create new GPT Partition
+		n # New partition
+		p # Primary partition
+		1 # First partition
+		    # EFI - start at beginning of disk
+		+512M # /boot/EFI
+		n
+		p
+		2
+		    # SWAP - start immediately after preceding partition
+		+8G
+		n 
+		p
+		3
+		    # ROOT, start immediately after preceding partition
+		    # default, use rest of disk space
+		t # change part type
+		3 # part number
+		83 # linux FS
+		p # print the in-memory table
+		w # write changes to disk
+		q # quit
+		
+		EOF
 
-EOF
+            # Format partitions
+            if [[ -d /sys/class/nvme ]]; then
+                BOOT="p1"
+                SWAP="p2"
+                HOME="p3"
+                HOMEDRIVE=$drive$HOME
+                mkfs.ext4 $HOMEDRIVE
+            else
+                BOOT="1"
+                SWAP="2"
+                HOME="3"
+                HOMEDRIVE=$drive$HOME
+                mkfs.ext4 $HOMEDRIVE
+            fi
 
-			#Format partitions
-			if [[ -d /sys/class/nvme ]]
-			then
-			BOOT="p1"
-			SWAP="p2"
-			HOME="p3"
-			HOMEDRIVE=$drive$HOME
-			mkfs.ext4 $HOMEDRIVE
-			else
-			BOOT="1"
-			SWAP="2"
-			HOME="3"
-			HOMEDRIVE=$drive$HOME
-			mkfs.ext4 $HOMEDRIVE
+            # Mount partitions
+            mount $HOMEDRIVE /mnt
 
-			fi
+            # Create swap space
+            SWAPDRIVE=$drive$SWAP
+            mkswap $SWAPDRIVE
+            swapon $SWAPDRIVE
 
-			#Mount partitions
-			mount $HOMEDRIVE /mnt
+            # Setup EFI Dir
+            BOOTDRIVE=$drive$BOOT 
+            mkfs.fat -F32 $BOOTDRIVE
+            mkdir -p /mnt/boot/EFI
+            mount $BOOTDRIVE /mnt/boot/EFI
 
-			#Create swap space
-			SWAPDRIVE=$drive$SWAP
-			mkswap $SWAPDRIVE
-			swapon $SWAPDRIVE
+        else
+            echo -e "${YELLOW}[*] BIOS was determined!${RESET}" 
+            echo ""
+            # Create partitions thru fdisk...
+            # https://superuser.com/a/984637
+            sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' <<EOF | fdisk $drive
+		o # Clear the in-memory partition table
+		n # New partition
+		p # Primary partition
+		1 # First partition
+		    # BIOS - start at beginning of disk
+		+8G # /SWAP
+		n 
+		p
+		2
+		    # ROOT, start immediately after preceding partition
+		    # default, use rest of disk space
+		t # change part type
+		2 # part number
+		83 # linux FS
+		p # print the in-memory table
+		w # write changes to disk
+		q # quit
+		EOF
 
-			#Setup EFI Dir
-			BOOTDRIVE=$drive$BOOT 
-			mkfs.fat -F32 $BOOTDRIVE
-			mkdir -p /mnt/boot/EFI
-			mount $BOOTDRIVE /mnt/boot/EFI
+            # Format partitions
+            SWAP="1"
+            HOME="2"
+            HOMEDRIVE=$drive$HOME
+            mkfs.ext4 $HOMEDRIVE
 
-			else
-			echo -e "${YELLOW}[*] BIOS was determined!${RESET}" 
-			echo ""
-			#Create partitions thru fdisk...
-			#https://superuser.com/a/984637
-			sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk $drive
-			o # Clear the in-memory partition table
-			n # New partition
-			p # Primary partition
-			1 # First partition
-				# BIOS - start at beginning of disk
-			+8G # /SWAP
-			n 
-			p
-			2
-				# ROOT, start immediately after preceding partition
-				# default, use rest of disk space
-			t # change part type
-			2 # part number
-			83 # linux FS
-			p # print the in-memory table
-			w # write changes to disk
-			q # quit
-EOF
+            # Mount partitions
+            mount $HOMEDRIVE /mnt
 
-			#Format partitions
-			SWAP="1"
-			HOME="2"
-			HOMEDRIVE=$drive$HOME
-			mkfs.ext4 $HOMEDRIVE
+            # Create swap space
+            SWAPDRIVE=$drive$SWAP
+            mkswap $SWAPDRIVE
+            swapon $SWAPDRIVE
+        fi
 
-			#Mount partitions
-			mount $HOMEDRIVE /mnt
-
-			#Create swap space
-			SWAPDRIVE=$drive$SWAP
-			mkswap $SWAPDRIVE
-			swapon $SWAPDRIVE
-
-
-		fi
-	fi
+        # Enable encryption
+        echo -e "[${GREEN}USER_INPUT${RESET}]"
+        read -p "Enable disk encryption? [y/n]: " encrypt
+        if [[ $encrypt == 'y' ]] || [[ $encrypt == 'Y' ]]; then
+            echo -e "[${YELLOW}INFO${RESET}] Encrypting the drive...${NEWLINE}"
+            read -s -p "Enter encryption passphrase: " passphrase
+            echo ${NEWLINE}
+            echo -e "[${YELLOW}INFO${RESET}] Creating encrypted partition...${NEWLINE}"
+            cryptsetup luksFormat -c aes-xts-plain64 -s 512 -h sha512 $HOMEDRIVE
+            echo -e "[${YELLOW}INFO${RESET}] Opening encrypted partition...${NEWLINE}"
+            cryptsetup open $HOMEDRIVE cryptroot --key-file /dev/random
+            echo -e "[${YELLOW}INFO${RESET}] Formatting encrypted partition...${NEWLINE}"
+            mkfs.ext4 /dev/mapper/cryptroot
+            echo -e "[${YELLOW}INFO${RESET}] Mounting encrypted partition...${NEWLINE}"
+            mount /dev/mapper/cryptroot /mnt
+            echo -e "[${YELLOW}INFO${RESET}] Configuring encryption in /etc/crypttab...${NEWLINE}"
+            echo "cryptroot $HOMEDRIVE /dev/random luks" >> /mnt/etc/crypttab
+            echo -e "[${YELLOW}INFO${RESET}] Configuring encrypted partition in /etc/fstab...${NEWLINE}"
+            sed -i "s#$HOMEDRIVE#/dev/mapper/cryptroot#" /mnt/etc/fstab
+        else
+            echo -e "[${YELLOW}INFO${RESET}] Disk encryption not enabled.${NEWLINE}"
+        fi
+    fi
 }
+
 
 lastMinSetup() {
 	#Finish last minute setup
