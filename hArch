@@ -177,7 +177,7 @@ EOF
 	            	mkdir -p /mnt/boot/EFI
 	            	mount $BOOTDRIVE /mnt/boot/EFI
 
-        	else
+        else
 	            	echo -e "${YELLOW}[*] BIOS was determined!${RESET}" 
 	            	echo ""
 	            	# Create partitions thru fdisk...
