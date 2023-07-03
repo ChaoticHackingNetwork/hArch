@@ -216,7 +216,7 @@ EOF
             # Format partitions
             if [[ -d /sys/class/nvme ]]; then
                 if [[ $diskEncrypt == 'y' ]] || [[ $diskEncrypt == 'Y' ]]; then
-                    partition_and_encrypt
+                    $(partition_and_encrypt)
                     # Mount partitions
                     mount /dev/mapper/root /mnt
                 else
@@ -262,7 +262,7 @@ EOF
                 q # quit
 EOF
                 if [[ $diskEncrypt == 'y' ]] || [[ $diskEncrypt == 'Y' ]]; then
-                    partition_and_encrypt
+                    $(partition_and_encrypt)
                     # Mount partitions
                     mount /dev/mapper/cryptroot /mnt
                     # Create swap space           
