@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-#hArchPost - Post install - Downloadeded after Harch finishes
+# Harch UEFI/BIOS Automated Install (Hackers Arch)
 # ---------------------------------------------------------------
 # Author    : Chaotic_Guru                                       |
 # Github    : https://github.com/ChaoticHackingNetwork           |
 # Discord   : https://discord.gg/nv445EX (ChaoticHackingNetwork) |
-# Version   : 0.1.3		                                 |
+# Version   : 0.1.3 						 |					 
 # ---------------------------------------------------------------
 
 GREEN='\033[0;32m'
@@ -16,282 +16,305 @@ PURPLE='\033[0;35m'
 RESET='\033[0m'
 NEWLINE=$'\n'
 
-installer() {
-	#Installs needed packages
+greet() {
+	echo -e "${PURPLE}Chaotic_Guru's hArch Installer${RESET}"
 	echo ${NEWLINE}
+	echo -e "${YELLOW}-> Simple${RESET}"
+	echo -e "${GREEN}--> Quick${RESET}"
+	echo -e "${WHITE}---> Efficient${RESET}"
+	echo ${NEWLINE}
+	echo -e ${YELLOW}
+	echo ${NEWLINE}
+	echo ${NEWLINE}
+	echo " ██░ ██  ▄▄▄       ██▀███   ▄████▄   ██░ ██     ██▓     ██▓ ███▄    █  █    ██ ▒██   ██▒"
+	echo "▓██░ ██▒▒████▄    ▓██ ▒ ██▒▒██▀ ▀█  ▓██░ ██▒   ▓██▒    ▓██▒ ██ ▀█   █  ██  ▓██▒▒▒ █ █ ▒░"
+	echo "▒██▀▀██░▒██  ▀█▄  ▓██ ░▄█ ▒▒▓█    ▄ ▒██▀▀██░   ▒██░    ▒██▒▓██  ▀█ ██▒▓██  ▒██░░░  █   ░"
+	echo "░▓█ ░██ ░██▄▄▄▄██ ▒██▀▀█▄  ▒▓▓▄ ▄██▒░▓█ ░██    ▒██░    ░██░▓██▒  ▐▌██▒▓▓█  ░██░ ░ █ █ ▒ "
+	echo "░▓█▒░██▓ ▓█   ▓██▒░██▓ ▒██▒▒ ▓███▀ ░░▓█▒░██▓   ░██████▒░██░▒██░   ▓██░▒▒█████▓ ▒██▒ ▒██▒"
+	echo " ▒ ░░▒░▒ ▒▒   ▓▒█░░ ▒▓ ░▒▓░░ ░▒ ▒  ░ ▒ ░░▒░▒   ░ ▒░▓  ░░▓  ░ ▒░   ▒ ▒ ░▒▓▒ ▒ ▒ ▒▒ ░ ░▓ ░"
+	echo " ▒ ░▒░ ░  ▒   ▒▒ ░  ░▒ ░ ▒░  ░  ▒    ▒ ░▒░ ░   ░ ░ ▒  ░ ▒ ░░ ░░   ░ ▒░░░▒░ ░ ░ ░░   ░▒ ░"
+	echo " ░  ░░ ░  ░   ▒     ░░   ░ ░         ░  ░░ ░     ░ ░    ▒ ░   ░   ░ ░  ░░░ ░ ░  ░    ░  "
+	echo " ░  ░  ░      ░  ░   ░     ░ ░       ░  ░  ░       ░  ░ ░           ░    ░      ░    ░  "
+	echo "                           ░                                                            "
+	echo -e "${RESET}"
+	echo ${NEWLINE}
+	echo ${NEWLINE}
+}
+
+checkNet() {
+	echo ${NEWLINE}
+	echo ${NEWLINE}
+	echo -e "[${YELLOW}INFO${RESET}] Checking Internet Connection...${NEWLINE}"
+	if nc -zw2 archlinux.org 443
+	then
+  	echo -e "[${YELLOW}INFO${RESET}] Firing up Scripting Engines..."
 	echo -e "[${YELLOW}INFO${RESET}] Enabling Parallel Downloads..."
 	sed -i '/#ParallelDownloads/s/^#//g' /etc/pacman.conf
-	echo ${NEWLINE}
-	echo -e "[${GREEN}USER_INPUT${RESET}]"
-	read -p "Enter Hostname: " hostname
-	hostnamectl set-hostname $hostname
-	echo ${NEWLINE}
-	echo -e "[${YELLOW}INFO${RESET}] Installing some handy packages...${NEWLINE}"
-	pacman -S dkms linux-headers dhcpcd iwd mlocate cmake ntp neofetch pulseaudio net-tools dnsutils git fish --needed --noconfirm
-	# Basic Fonts
-	pacman -S noto-fonts ttf-ubuntu-font-family ttf-dejavu ttf-freefont ttf-liberation ttf-droid ttf-roboto terminus-font rxvt-unicode ranger rofi dmenu --needed --noconfirm
+	echo -e "[${YELLOW}INFO${RESET}] Syncing time..."
 	timedatectl set-ntp true
-	hwclock —-systohc
+	else
+	echo -e "[${RED}ERROR${RESET}] Check Internet connection, something went wrong"
+	exit
+	
+	fi
 }
 
-desktopEnv() {
-	#WIP - Choose DE - If Mate and Nvidia graphics, check comp manager
+installer() {
+	echo ${NEWLINE}
 	echo -e "[${GREEN}USER_INPUT${RESET}]"
-	echo -e "Choose a Desktop Enviornment"
-	echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${NEWLINE}"
-	DEs=("Mate" "KDE" "Gnome" "Cinnamon" "Deepin" "Enlightenment" "i3" "Skip")
-	select opt in "${DEs[@]}"
-	do
-		case $opt in 
-			"Mate")
-				pacman -S mate mate-extra lightdm lightdm-gtk-greeter xorg-server xorg-xinit --needed --noconfirm
-				systemctl enable lightdm
-				echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
-				;;
-			"KDE")
-				pacman -S plasma-meta sddm plasma-desktop xorg-server xorg-apps xorg-xinit --needed --noconfirm
-				systemctl enable sddm
-				echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
-				;;
-			"Gnome")
-				pacman -S gnome gnome-extra gdm xorg-server xorg-apps xorg-xinit --needed --noconfirm
-				systemctl enable gdm
-				echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
-				;;
-			"Cinnamon")
-				pacman -S cinnamon metacity gnome-shell gdm xorg-server xorg-apps xorg-xinit --needed --noconfirm
-				systemctl enable gdm
-				echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
-				;;
-			"Deepin")
-				pacman -S deepin deepin-extra lightdm lightdm-deepin-greeter xorg-server xorg-apps xorg-xinit --needed --noconfirm
-				systemctl enable lightdm
-				echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
-				;;
-			"Enlightenment")
-				pacman -S enlightenment terminology xorg-server xorg-apps xorg-xinit lxdm --needed --noconfirm
-				systemctl enable lxdm
-				echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
-				;;
-			"i3")
-				pacman -S i3-gaps i3blocks i3lock numlockx gdm xorg-server xorg-apps xorg-xinit --needed --noconfirm
-				systemctl enable gdm
-				echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
-				;;
-			"Skip")
-				break
-				;;
-			*) echo -e "[${RED}ERROR${RESET}]Invalid Option, Try Again..."
-		esac
+	read -p "Hardened Kernel? [Y/n]: " kernel
+	if [[ $kernel == 'y' ]] || [[ $kernel == 'Y' ]]
+	then
+	echo -e "[${YELLOW}INFO${RESET}] Installing base system...${NEWLINE}"
+	pacstrap /mnt base base-devel linux-hardened linux-firmware linux-headers vim nano
+	else
+	echo ${NEWLINE}
+	echo -e "[${YELLOW}INFO${RESET}] Installing base system...${NEWLINE}"
+	pacstrap /mnt base base-devel linux linux-firmware linux-headers vim nano
+	
+	fi
+	#Generate fstab
+	genfstab -U /mnt >> /mnt/etc/fstab
+}
+
+getDrive() {
+    echo ${NEWLINE}
+    echo ${NEWLINE}
+    echo -e "[${YELLOW}INFO${RESET}] Gathering drives...${NEWLINE}"
+    lsblk -f
+    echo -e "[${GREEN}USER_INPUT${RESET}]"
+    echo "Syntax: /dev/sda or /dev/nvme0n1"
+    read -p "Enter Drive to prepare: " drive
+    read -p "Do you want too add Disk encryption [y/n]: " diskEncrypt
+    read -p "Do you want to manually partition [y/n]: " manual
+    if [[ $manual == 'y' ]] || [[ $manual == 'Y' ]]; then
+        cfdisk $drive
+        echo -e "[${YELLOW}INFO${RESET}] Entering BASH shell..."
+        echo -e "[${YELLOW}INFO${RESET}] Make your filesystem and mount /mnt..."
+        echo -e "[${YELLOW}INFO${RESET}] Type ${GREEN}exit${RESET} once finished..."
+        bash
+    else
+        echo ${NEWLINE}
+        echo ${NEWLINE}
+        echo -e "[${YELLOW}INFO${RESET}] Modifying $drive... HANG TIGHT!!!${NEWLINE}"
+        sleep 3
+        ls /sys/firmware/efi
+        if [[ -d "/sys/firmware/efi" ]]; then
+            echo -e "[${YELLOW}INFO${RESET}] UEFI System Detected!${NEWLINE}"
+            echo ${NEWLINE}
+            sleep 2
+            # https://superuser.com/a/984637
+            sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' <<EOF | fdisk $drive
+            g # Create new GPT Partition
+            n # New partition
+            p # Primary partition
+            1 # First partition
+                # EFI - start at beginning of disk
+            +512M # /boot/EFI
+            n
+            p
+            2
+                # SWAP - start immediately after preceding partition
+            +8G
+            n 
+            p
+            3
+                # ROOT, start immediately after preceding partition
+                # default, use rest of disk space
+            t # change part type
+            3 # part number
+            83 # linux FS
+            p # print the in-memory table
+            w # write changes to disk
+            q # quit
+EOF
+            # Format partitions
+            if [[ -d /sys/class/nvme ]]; then
+                if [[ $diskEncrypt == 'y' ]] || [[ $diskEncrypt == 'Y' ]]; then
+                    partition_and_encrypt
+                    # Mount partitions
+                    mount /dev/mapper/root /mnt
+                else
+                    BOOT="1"
+                    SWAP="2"
+                    HOME="3"
+                    HOMEDRIVE="$drive$HOME"
+                    mkfs.ext4 "$HOMEDRIVE"
+                    # Mount partitions
+                    mount "$HOMEDRIVE" /mnt
+                    # Create swap space
+                    SWAPDRIVE="$drive$SWAP"
+                    mkswap "$SWAPDRIVE"
+                    swapon "$SWAPDRIVE"
+                    # Setup EFI Dir
+                    BOOTDRIVE="$drive$BOOT"
+                    mkfs.fat -F32 "$BOOTDRIVE"
+                    mkdir -p /mnt/boot/EFI
+                    mount "$BOOTDRIVE" /mnt/boot/EFI
+                fi
+            else
+                echo -e "${YELLOW}[*] BIOS was determined!${RESET}" 
+                echo ""
+                # Create partitions thru fdisk...
+                # https://superuser.com/a/984637
+                sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' <<EOF | fdisk $drive
+                o # Clear the in-memory partition table
+                n # New partition
+                p # Primary partition
+                1 # First partition
+                    # BIOS - start at beginning of disk
+                +8G # /SWAP
+                n 
+                p
+                2
+                    # ROOT, start immediately after preceding partition
+                    # default, use rest of disk space
+                t # change part type
+                2 # part number
+                83 # linux FS
+                p # print the in-memory table
+                w # write changes to disk
+                q # quit
+EOF
+                if [[ $diskEncrypt == 'y' ]] || [[ $diskEncrypt == 'Y' ]]; then
+                    partition_and_encrypt
+                    # Mount partitions
+                    mount /dev/mapper/cryptroot /mnt
+                    # Create swap space           
+                else
+                    # Format partitions
+                    SWAP="1"
+                    HOME="2"
+                    HOMEDRIVE="$drive$HOME"
+                    mkfs.ext4 "$HOMEDRIVE"
+                    # Mount partitions
+                    mount "$HOMEDRIVE" /mnt
+                    # Create swap space
+                    SWAPDRIVE="$drive$SWAP"
+                    mkswap "$SWAPDRIVE"
+                    swapon "$SWAPDRIVE"
+                fi
+            fi
+        fi
+    fi
+}
+
+
+partition_and_encrypt() {
+	  echo -e "${GREEN}[*] Partitioning and encrypting the disk...${RESET}"
+	  read -ep "Enter your SSD device path [Default: /dev/nvme0n1]: " dev_path
+
+	  # Set default value if dev_path is empty
+	  if [[ -z "$dev_path" ]]; then
+	    dev_path="/dev/nvme0n1"
+	  fi
+
+	  if [[ ! -b "$dev_path" ]]; then
+	    echo "Invalid device path. Please provide a valid SSD device path."
+	    exit 1
+	  fi
+
+	  echo -e "${GREEN}[*] Creating partitions on $dev_path...${RESET}"
+	  if ! parted --script "$dev_path" mklabel gpt mkpart ESP fat32 1MiB 512MiB set 1 boot on mkpart primary 512MiB 100%; then
+	    echo "Failed to create partitions on $dev_path. Please check your system configuration and try again."
+	    exit 1
+	  fi
+
+	  echo -e "${GREEN}[*] Formatting the ESP partition...${RESET}"
+	  if ! mkfs.fat -F32 "${dev_path}p1"; then
+	    echo "Failed to format the ESP partition. Please check your system configuration and try again."
+	    exit 1
+	  fi
+
+	  echo -e "${GREEN}[*] Creating LUKS container on ${dev_path}p2...${RESET}"
+	  if ! cryptsetup luksFormat --type luks2 --hash sha512 --key-size 512 --iter-time 5000 --pbkdf argon2id --cipher aes-xts-plain64 "${dev_path}p2"; then
+	    echo "Failed to create LUKS container on ${dev_path}p2. Please check your system configuration and try again."
+	    exit 1
+	  fi
+
+	  echo -e "${GREEN}[*] Opening LUKS container on ${dev_path}p2 as cryptroot...${RESET}"
+	  if ! cryptsetup open --type luks "${dev_path}p2" cryptroot; then
+	    echo "Failed to open LUKS container on ${dev_path}p2. Please check your system configuration and try again."
+	    exit 1
+	  fi
+
+	  echo -e "${GREEN}[*] Verifying the device mapping for encryption...${RESET}"
+	  if ! cryptsetup status cryptroot; then
+	    echo "Failed to verify the device mapping for encryption. Please check your system configuration and try again."
+	    exit 1
+	  fi
+
+	  echo -e "${GREEN}[*] Adding encryption key to cryptroot...${RESET}"
+	  if ! { echo "$encryption_password"; echo "$encryption_password"; echo "$encryption_password"; } | cryptsetup luksAddKey "${dev_path}p2" -; then
+	    echo "Failed to add encryption key to cryptroot. Please check your system configuration and try again."
+	    exit 1
+	  fi
+
+	  echo -e "${GREEN}[*] Filling encrypted partition with random data...${RESET}"
+	  random_data_file="/tmp/random_data"
+	  chunk_size="10M"
+	  # Get the size of the encrypted partition
+	  total_size=$(blockdev --getsize64 /dev/mapper/cryptroot)
+
+	if [[ -z "$total_size" ]]; then
+		echo "Failed to retrieve the size of the encrypted partition. Please check your system configuration."
+		exit 1
+	fi
+
+	chunk_size_bytes=$((1024 * 1024 * ${chunk_size%[A-Z]*}))
+	total_chunks=$(( (total_size + chunk_size_bytes - 1) / chunk_size_bytes ))
+
+	for ((i = 0; i < total_chunks; i++)); do
+	  dd if=/dev/urandom of="$random_data_file" bs="$chunk_size" count=1 status=none
+	  dd if="$random_data_file" of=/dev/mapper/cryptroot bs="$chunk_size" status=none
 	done
 
-}
+	rm "$random_data_file"
 
+	echo -e "${GREEN}[*] Encrypted partition filled with random data successfully.${RESET}"
 
-sublimeInstaller() {
-	echo ${NEWLINE}
-	echo ${NEWLINE}
-	read -p "Do you want to add Sublime Text? [y/n]: " subl
-	if [[ $subl == 'y' ]] || [[ $subl == 'Y' ]]
-	then 
-	echo -e "[${YELLOW}SYNTAX${RESET}] Installing Sublime Text...${NEWLINE}"
-	curl -O https://download.sublimetext.com/sublimehq-pub.gpg && pacman-key --add sublimehq-pub.gpg && pacman-key --lsign-key 8A8F901A && rm sublimehq-pub.gpg
-	sleep 3
-	echo -e "\n[sublime-text]\nServer = https://download.sublimetext.com/arch/stable/x86_64" | tee -a /etc/pacman.conf
-	sleep 3
-	pacman -Syu sublime-text --noconfirm
+	echo -e "${GREEN}[*] Formatting encrypted partition to Btrfs filesystem...${RESET}"
+	if mkfs.btrfs /dev/mapper/cryptroot; then
+	  echo -e "${GREEN}[+] Encrypted partition formatted to Btrfs filesystem successfully.${RESET}"
 	else
-	echo -e "[${YELLOW}INFO${RESET}]Skipping"
-	
+	  echo "Failed to format encrypted partition to Btrfs filesystem. Please check your system configuration and try again."
+	  read -p "Press 'e' to exit or any other key to continue: " choice
+	  if [[ "$choice" == "e" ]]; then
+	    exit 1
+	  fi
 	fi
+
+
+
+lastMinSetup() {
+	#Finish last minute setup
+	echo ${NEWLINE}
+	echo ${NEWLINE}
+	echo 0 > /proc/sys/kernel/hung_task_timeout_secs
+	curl -O 'https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/hArchPost'
+	chmod +x hArchPost
+	mv hArchPost /mnt
+	echo ${NEWLINE}
+	echo -e "[${YELLOW}INFO${RESET}] Time to enter CHROOT"
+	echo -e "[${YELLOW}INFO${RESET}] The final script has been installed and move to your new root directory"
+	echo -e "[${YELLOW}INFO${RESET}] Run these commands to finish setup"
+	echo ${NEWLLINE}
+	echo ${NEWLLINE}
+	echo -e "${GREEN}[1] arch-chroot /mnt"
+	echo -e "[2] ./hArchPost${RESET}"
+	echo ${NEWLINE}
 }
 
-vidDriver() {
-	echo ${NEWLINE}
-	echo ${NEWLINE}
-	echo -e "[${YELLOW}INFO${RESET}] Gathering Graphics info..."
-	echo ${NEWLINE}
-	echo ${NEWLINE}
-	sleep 2
-	str=$(lspci -vmm | grep VGA -A6)
-	AMD='AMD'
-	NVD='NVIDIA'
-	case $str in
-		*"$AMD"*)
-			echo -e "[${YELLOW}INFO${RESET}] Installing AMD Drivers...${NEWLINE}"
-			pacman -S xf86-video-ati xf86-video-amdgpu mesa --noconfirm
-			;;
-
-		*"$NVD"*)
-			echo -e "[${YELLOW}INFO${RESET}] Installing NVIDIA Drivers...${NEWLINE}"
-			pacman -S nvidia nvidia-settings nvidia-utils glxinfo nvtop --noconfirm
-			curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/nvidia.hook
-			curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/20-nvidia.conf
-			mkdir -p /etc/pacman.d/hooks
-			mv /nvidia.hook /etc/pacman.d/hooks
-			echo "blacklist nouveau" > /etc/modprobe.d/blacklist-nvidia-nouveau.conf
-			# Add changes to mkinitcpio.conf - WIP
-			# If issues, try:
-			# xrandr --setprovideroutputsource modesetting NVIDIA-0
-			# xrandr --auto
-			;;
-		*)
-			echo -e "[${YELLOW}INFO${RESET}] Unable to determine Graphics info.. Installing default drivers"
-			pacman -S xf86-video-fbdev --noconfirm
-	esac
-
-}
-
-userInfo() {
-	#Set root password
-	echo ${NEWLINE}
-	echo ${NEWLINE}
-	echo -e "[${GREEN}USER${RESET}] Please set ROOT password!!!"
-	passwd
-	#Create a new user
-	read -p "Enter Username: " username
-	echo ${NEWLINE}
-	echo ${NEWLINE}
-	echo -e "${GREEN}------> Hack the Universe $username! <------${RESET}"
-	echo ${NEWLINE}
-	echo ${NEWLINE}
-	useradd -mg users -G wheel,power,storage -s /usr/bin/fish $username
-	echo '%wheel ALL=(ALL:ALL) ALL' >> /etc/sudoers.d/wheel_group
-    	chmod 440 /etc/sudoers.d/wheel_group
-	echo -e "[${GREEN}USER${RESET}] Please set your password now!"
-	passwd $username
-}
-
-booter() {
-	echo ${NEWLINE}
-	echo ${NEWLINE}
-	echo -e "[${YELLOW}INFO${RESET}] Setting Booterloader...${NEWLINE}"
-	drives=$(lsblk -f)
-	echo ${NEWLINE}
-	echo -e "[${GREEN}USER_INPUT${RESET}]"
-	echo -e "$drives${NEWLINE}"
-	echo -e "[${YELLOW}SYNTAX${RESET}] If BIOS, attach bootloader to disk: ex- /dev/sda"
-	echo -e "[${YELLOW}SYNTAX${RESET}] If UEFI, attach bootloader to partition: ex- /dev/nvme0n1p1"
-	read -p "Enter Drive to install Booterloader [Example: /dev/nvme0n1p1]: " drive
-	if [[ -d "/sys/firmware/efi" ]]
-	then
-	pacman -S efibootmgr grub dosfstools mtools os-prober --noconfirm
-	grub-install --target=x86_64-efi --bootloader-id=HARCH_UEFI --efi-directory=/boot/EFI --recheck
-	grub-mkconfig -o /boot/grub/grub.cfg
-	mkinitcpio -p linux
-	else
-	pacman -S grub --noconfirm
-	grub-install --target=i386-pc $drive --recheck
-	grub-mkconfig -o /boot/grub/grub.cfg
-	mkinitcpio -p linux
-
-	fi
-}
-
-blackArch() {
-	#Install BlackArch Mirror & download tools list
-	echo ${NEWLINE}
-	echo ${NEWLINE}
-	echo -e "[${YELLOW}INFO${RESET}] Installing BlackArch Repo...${NEWLINE}"
-	curl -O https://blackarch.org/strap.sh
-	chmod +x strap.sh
-	./strap.sh
-	sleep 3
-	pacman -Syu --noconfirm
-	
-}
-
-vimSetup() {
-	echo ${NEWLINE}
-	echo ${NEWLINE}
-	read -p "Do you want to add Bunle to VIM? [y/n]: " vim
-	if [[ $vim == 'y' ]] || [[ $vim == 'Y' ]]
-	then 
-	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/vimrc_bundle_conf
-	users=$(ls /home)
-	mv vimrc_bundle_conf /home/$users/.vimrc
-	else
-	echo -e "[${YELLOW}SKIPPING${RESET}]"
-	
-	fi
-}
-
-hackTools() {
-	echo ${NEWLINE}
-	echo ${NEWLINE}
-	read -p 'Do you want to add the Master Hacking Toolset? [y/n]: ' ht
-	if [[ $ht == 'y' ]] || [[ $ht == 'Y' ]]
-	then
-	echo -e "[${YELLOW}INFO${RESET}] Please Wait... Installing Tools"
-	echo ${NEWLINE}
-	echo "Grab a coffee, play with your pet...${RESET}"
-	echo ${NEWLINE}
-	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/Master
-	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/useful-packages
-	pacman -S - < /Master --noconfirm && pacman -S - < /useful-packages --noconfirm
-	else
-	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/Master
-	curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/useful-packages
-	echo -e "[${YELLOW}SKIPPING${RESET}]"
-	sleep 5
-	
-	fi
-}
-
-
-complete() {
-	#Successfully Installed
-	mv /20-nvidia.conf /etc/X11/xorg.conf.d/
-	neofetch
-	echo ${NEWLINE}
-	echo ${NEWLINE}
-	echo -e "[${YELLOW}INFO${RESET}] hArch has been succesfully installed on your system"
-	echo ${NEWLINE}
-	echo -e "${PURPLE}Hack the Universe $username${RESET}"
-	echo ${NEWLINE}
-	echo ${NEWLINE}
-	echo -e "[${YELLOW}INFO${RESET}] A reboot should now take place"
-	echo -e "[${YELLOW}INFO${RESET}] Run the following commands to reboot properly!"
-	echo ${NEWLINE}
-	echo -e "${GREEN}[1]: exit"
-	echo -e "[2]: umount -a"
-	echo -e "[3]: reboot${RESET}"
-
-	exit
-}
-
-oneFuncToRuleThemAll() {
-	installer
-	sleep 3
-	clear
-	userInfo
-	sleep 3
-	clear
-	vidDriver
-	sleep 3
-	clear
-	booter
-	sleep 3
-	clear
-	sublimeInstaller
-	sleep 3
-	clear
-	blackArch
-	sleep 3
-	clear
-	hackTools
-	sleep 3
-	clear
-	vimSetup
-	sleep 3
-	clear
-	desktopEnv
-	sleep 3
-	clear
-
-	complete
-
-}
-
-
-oneFuncToRuleThemAll
+greet
+sleep 5
+clear
+checkNet
+sleep 5
+clear
+getDrive
+sleep 5
+clear
+installer
+sleep 5
+clear
+lastMinSetup
