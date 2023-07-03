@@ -77,6 +77,91 @@ installer() {
 	genfstab -U /mnt >> /mnt/etc/fstab
 }
 
+partition_and_encrypt() {
+	  echo -e "${GREEN}[*] Partitioning and encrypting the disk...${RESET}"
+	  read -ep "Enter your SSD device path [Default: /dev/nvme0n1]: " dev_path
+
+	  # Set default value if dev_path is empty
+	  if [[ -z "$dev_path" ]]; then
+	    dev_path="/dev/nvme0n1"
+	  fi
+
+	  if [[ ! -b "$dev_path" ]]; then
+	    echo "Invalid device path. Please provide a valid SSD device path."
+	    exit 1
+	  fi
+
+	  echo -e "${GREEN}[*] Creating partitions on $dev_path...${RESET}"
+	  if ! parted --script "$dev_path" mklabel gpt mkpart ESP fat32 1MiB 512MiB set 1 boot on mkpart primary 512MiB 100%; then
+	    echo "Failed to create partitions on $dev_path. Please check your system configuration and try again."
+	    exit 1
+	  fi
+
+	  echo -e "${GREEN}[*] Formatting the ESP partition...${RESET}"
+	  if ! mkfs.fat -F32 "${dev_path}p1"; then
+	    echo "Failed to format the ESP partition. Please check your system configuration and try again."
+	    exit 1
+	  fi
+
+	  echo -e "${GREEN}[*] Creating LUKS container on ${dev_path}p2...${RESET}"
+	  if ! cryptsetup luksFormat --type luks2 --hash sha512 --key-size 512 --iter-time 5000 --pbkdf argon2id --cipher aes-xts-plain64 "${dev_path}p2"; then
+	    echo "Failed to create LUKS container on ${dev_path}p2. Please check your system configuration and try again."
+	    exit 1
+	  fi
+
+	  echo -e "${GREEN}[*] Opening LUKS container on ${dev_path}p2 as cryptroot...${RESET}"
+	  if ! cryptsetup open --type luks "${dev_path}p2" cryptroot; then
+	    echo "Failed to open LUKS container on ${dev_path}p2. Please check your system configuration and try again."
+	    exit 1
+	  fi
+
+	  echo -e "${GREEN}[*] Verifying the device mapping for encryption...${RESET}"
+	  if ! cryptsetup status cryptroot; then
+	    echo "Failed to verify the device mapping for encryption. Please check your system configuration and try again."
+	    exit 1
+	  fi
+
+	  echo -e "${GREEN}[*] Adding encryption key to cryptroot...${RESET}"
+	  if ! { echo "$encryption_password"; echo "$encryption_password"; echo "$encryption_password"; } | cryptsetup luksAddKey "${dev_path}p2" -; then
+	    echo "Failed to add encryption key to cryptroot. Please check your system configuration and try again."
+	    exit 1
+	  fi
+
+	  echo -e "${GREEN}[*] Filling encrypted partition with random data...${RESET}"
+	  random_data_file="/tmp/random_data"
+	  chunk_size="10M"
+	  # Get the size of the encrypted partition
+	  total_size=$(blockdev --getsize64 /dev/mapper/cryptroot)
+
+	if [[ -z "$total_size" ]]; then
+		echo "Failed to retrieve the size of the encrypted partition. Please check your system configuration."
+		exit 1
+	fi
+
+	chunk_size_bytes=$((1024 * 1024 * ${chunk_size%[A-Z]*}))
+	total_chunks=$(( (total_size + chunk_size_bytes - 1) / chunk_size_bytes ))
+
+	for ((i = 0; i < total_chunks; i++)); do
+	  dd if=/dev/urandom of="$random_data_file" bs="$chunk_size" count=1 status=none
+	  dd if="$random_data_file" of=/dev/mapper/cryptroot bs="$chunk_size" status=none
+	done
+
+	rm "$random_data_file"
+
+	echo -e "${GREEN}[*] Encrypted partition filled with random data successfully.${RESET}"
+
+	echo -e "${GREEN}[*] Formatting encrypted partition to Btrfs filesystem...${RESET}"
+	if mkfs.btrfs /dev/mapper/cryptroot; then
+	  echo -e "${GREEN}[+] Encrypted partition formatted to Btrfs filesystem successfully.${RESET}"
+	else
+	  echo "Failed to format encrypted partition to Btrfs filesystem. Please check your system configuration and try again."
+	  read -p "Press 'e' to exit or any other key to continue: " choice
+	  if [[ "$choice" == "e" ]]; then
+	    exit 1
+	  fi
+	fi
+}
+
 getDrive() {
     echo ${NEWLINE}
     echo ${NEWLINE}
@@ -198,91 +283,6 @@ EOF
         fi
     fi
 }
-
-
-partition_and_encrypt() {
-	  echo -e "${GREEN}[*] Partitioning and encrypting the disk...${RESET}"
-	  read -ep "Enter your SSD device path [Default: /dev/nvme0n1]: " dev_path
-
-	  # Set default value if dev_path is empty
-	  if [[ -z "$dev_path" ]]; then
-	    dev_path="/dev/nvme0n1"
-	  fi
-
-	  if [[ ! -b "$dev_path" ]]; then
-	    echo "Invalid device path. Please provide a valid SSD device path."
-	    exit 1
-	  fi
-
-	  echo -e "${GREEN}[*] Creating partitions on $dev_path...${RESET}"
-	  if ! parted --script "$dev_path" mklabel gpt mkpart ESP fat32 1MiB 512MiB set 1 boot on mkpart primary 512MiB 100%; then
-	    echo "Failed to create partitions on $dev_path. Please check your system configuration and try again."
-	    exit 1
-	  fi
-
-	  echo -e "${GREEN}[*] Formatting the ESP partition...${RESET}"
-	  if ! mkfs.fat -F32 "${dev_path}p1"; then
-	    echo "Failed to format the ESP partition. Please check your system configuration and try again."
-	    exit 1
-	  fi
-
-	  echo -e "${GREEN}[*] Creating LUKS container on ${dev_path}p2...${RESET}"
-	  if ! cryptsetup luksFormat --type luks2 --hash sha512 --key-size 512 --iter-time 5000 --pbkdf argon2id --cipher aes-xts-plain64 "${dev_path}p2"; then
-	    echo "Failed to create LUKS container on ${dev_path}p2. Please check your system configuration and try again."
-	    exit 1
-	  fi
-
-	  echo -e "${GREEN}[*] Opening LUKS container on ${dev_path}p2 as cryptroot...${RESET}"
-	  if ! cryptsetup open --type luks "${dev_path}p2" cryptroot; then
-	    echo "Failed to open LUKS container on ${dev_path}p2. Please check your system configuration and try again."
-	    exit 1
-	  fi
-
-	  echo -e "${GREEN}[*] Verifying the device mapping for encryption...${RESET}"
-	  if ! cryptsetup status cryptroot; then
-	    echo "Failed to verify the device mapping for encryption. Please check your system configuration and try again."
-	    exit 1
-	  fi
-
-	  echo -e "${GREEN}[*] Adding encryption key to cryptroot...${RESET}"
-	  if ! { echo "$encryption_password"; echo "$encryption_password"; echo "$encryption_password"; } | cryptsetup luksAddKey "${dev_path}p2" -; then
-	    echo "Failed to add encryption key to cryptroot. Please check your system configuration and try again."
-	    exit 1
-	  fi
-
-	  echo -e "${GREEN}[*] Filling encrypted partition with random data...${RESET}"
-	  random_data_file="/tmp/random_data"
-	  chunk_size="10M"
-	  # Get the size of the encrypted partition
-	  total_size=$(blockdev --getsize64 /dev/mapper/cryptroot)
-
-	if [[ -z "$total_size" ]]; then
-		echo "Failed to retrieve the size of the encrypted partition. Please check your system configuration."
-		exit 1
-	fi
-
-	chunk_size_bytes=$((1024 * 1024 * ${chunk_size%[A-Z]*}))
-	total_chunks=$(( (total_size + chunk_size_bytes - 1) / chunk_size_bytes ))
-
-	for ((i = 0; i < total_chunks; i++)); do
-	  dd if=/dev/urandom of="$random_data_file" bs="$chunk_size" count=1 status=none
-	  dd if="$random_data_file" of=/dev/mapper/cryptroot bs="$chunk_size" status=none
-	done
-
-	rm "$random_data_file"
-
-	echo -e "${GREEN}[*] Encrypted partition filled with random data successfully.${RESET}"
-
-	echo -e "${GREEN}[*] Formatting encrypted partition to Btrfs filesystem...${RESET}"
-	if mkfs.btrfs /dev/mapper/cryptroot; then
-	  echo -e "${GREEN}[+] Encrypted partition formatted to Btrfs filesystem successfully.${RESET}"
-	else
-	  echo "Failed to format encrypted partition to Btrfs filesystem. Please check your system configuration and try again."
-	  read -p "Press 'e' to exit or any other key to continue: " choice
-	  if [[ "$choice" == "e" ]]; then
-	    exit 1
-	  fi
-	fi
 
 
 
