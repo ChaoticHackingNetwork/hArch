@@ -56,7 +56,7 @@ The prompt at end will ask to download master toolset or skip. It will add an ex
 - [x] Add Sublime Text
 - [x] Parallel Downloads
 - [ ] User defined tool set
-- [x] Kernel choice
+- [ ] Kernel choice
 - [ ] Disk encryption during install
 - [ ] URL shortener
 
