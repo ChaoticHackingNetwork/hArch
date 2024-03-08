@@ -161,7 +161,7 @@ auto_partition() {
     printf "%s\n" "${cmd_list[@]}" | fdisk "$drive"
 
     sleep 30
-    print($is_uefi)
+    echo $is_uefi
 
     # New: Formatting and mounting partitions
     if $is_uefi; then
