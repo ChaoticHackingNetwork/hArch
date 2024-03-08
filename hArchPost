@@ -8,6 +8,8 @@
 # Version   : 0.1.3                                              |
 # ---------------------------------------------------------------
 
+
+# Color codes
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 WHITE='\033[0;37m'
@@ -17,93 +19,61 @@ RESET='\033[0m'
 NEWLINE=$'\n'
 
 installer() {
-        #Installs needed packages
-        echo ${NEWLINE}
-        echo -e "[${YELLOW}INFO${RESET}] Enabling Parallel Downloads..."
-        sed -i '/#ParallelDownloads/s/^#//g' /etc/pacman.conf
-        echo ${NEWLINE}
-        echo -e "[${GREEN}USER_INPUT${RESET}]"
-        read -p "Enter Hostname: " hostname
-        hostnamectl set-hostname $hostname
-        echo ${NEWLINE}
-        echo -e "[${YELLOW}INFO${RESET}] Installing some handy packages...${NEWLINE}"
-        pacman -S dkms linux-headers dhcpcd iwd mlocate cmake ntp neofetch pulseaudio net-tools dnsutils git fish --needed --noconfirm
-        # Basic Fonts
-        pacman -S noto-fonts ttf-ubuntu-font-family ttf-dejavu ttf-freefont ttf-liberation ttf-droid ttf-roboto terminus-font rxvt-unicode ranger rofi dmenu --needed --noconfirm
-        timedatectl set-ntp true
-        hwclock —-systohc
+    # Installs needed packages
+    echo "${NEWLINE}"
+    echo -e "[${YELLOW}INFO${RESET}] Enabling Parallel Downloads..."
+    sed -i '/#ParallelDownloads/s/^#//g' /etc/pacman.conf
+    echo "${NEWLINE}"
+    echo -e "[${GREEN}USER_INPUT${RESET}]"
+    read -p "Enter Hostname: " hostname
+    hostnamectl set-hostname "$hostname"
+    echo "${NEWLINE}"
+    echo -e "[${YELLOW}INFO${RESET}] Installing some handy packages...${NEWLINE}"
+    # Install basic packages
+    pacman -S dkms linux-headers dhcpcd iwd mlocate cmake ntp neofetch pulseaudio net-tools dnsutils git fish --needed --noconfirm
+    # Install basic fonts
+    pacman -S noto-fonts ttf-ubuntu-font-family ttf-dejavu ttf-freefont ttf-liberation ttf-droid ttf-roboto terminus-font rxvt-unicode ranger rofi dmenu --needed --noconfirm
+    timedatectl set-ntp true
+    hwclock --systohc
 }
 
 desktopEnv() {
-        #WIP - Choose DE - If Mate and Nvidia graphics, check comp manager
-        echo -e "[${GREEN}USER_INPUT${RESET}]"
-        echo -e "Choose a Desktop Enviornment"
-        echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns${NEWLINE}"
-        DEs=("Mate" "KDE" "Gnome" "Cinnamon" "Deepin" "Enlightenment" "i3" "Skip")
-        select opt in "${DEs[@]}"
-        do
-                case $opt in 
-                        "Mate")
-                                pacman -S mate mate-extra lightdm lightdm-gtk-greeter xorg-server xorg-xinit --needed --noconfirm
-                                systemctl enable lightdm
-                                echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
-                                ;;
-                        "KDE")
-                                pacman -S plasma-meta sddm plasma-desktop xorg-server xorg-apps xorg-xinit --needed --noconfirm
-                                systemctl enable sddm
-                                echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
-                                ;;
-                        "Gnome")
-                                pacman -S gnome gnome-extra gdm xorg-server xorg-apps xorg-xinit --needed --noconfirm
-                                systemctl enable gdm
-                                echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
-                                ;;
-                        "Cinnamon")
-                                pacman -S cinnamon metacity gnome-shell gdm xorg-server xorg-apps xorg-xinit --needed --noconfirm
-                                systemctl enable gdm
-                                echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
-                                ;;
-                        "Deepin")
-                                pacman -S deepin deepin-extra lightdm lightdm-deepin-greeter xorg-server xorg-apps xorg-xinit --needed --noconfirm
-                                systemctl enable lightdm
-                                echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
-                                ;;
-                        "Enlightenment")
-                                pacman -S enlightenment terminology xorg-server xorg-apps xorg-xinit lxdm --needed --noconfirm
-                                systemctl enable lxdm
-                                echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
-                                ;;
-                        "i3")
-                                pacman -S i3-gaps i3blocks i3lock numlockx gdm xorg-server xorg-apps xorg-xinit --needed --noconfirm
-                                systemctl enable gdm
-                                echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding too DE you want, after install enter 8 to continue if prompt returns"
-                                ;;
-                        "Skip")
-                                break
-                                ;;
-                        *) echo -e "[${RED}ERROR${RESET}]Invalid Option, Try Again..."
-                esac
-        done
-
+    # Choose Desktop Environment
+    echo -e "[${GREEN}USER_INPUT${RESET}] Choose a Desktop Environment"
+    echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding to DE you want, after installation, enter 8 to continue if prompt returns${NEWLINE}"
+    DEs=("Mate" "KDE" "Gnome" "Cinnamon" "Deepin" "Enlightenment" "i3" "Skip")
+    select opt in "${DEs[@]}"
+    do
+        case $opt in
+            "Mate" | "KDE" | "Gnome" | "Cinnamon" | "Deepin" | "Enlightenment" | "i3")
+                # Install selected DE
+                pacman -S "$opt" "${opt,,}-extra" "${opt,,}-settings" lightdm "lightdm-${opt,,}-greeter" xorg-server xorg-xinit --needed --noconfirm
+                systemctl enable "lightdm"
+                ;;
+            "Skip")
+                break
+                ;;
+            *)
+                echo -e "[${RED}ERROR${RESET}] Invalid Option, Try Again..."
+                ;;
+        esac
+    done
 }
 
-
 sublimeInstaller() {
-        echo ${NEWLINE}
-        echo ${NEWLINE}
-        read -p "Do you want to add Sublime Text? [y/n]: " subl
-        if [[ $subl == 'y' ]] || [[ $subl == 'Y' ]]
-        then 
+    echo "${NEWLINE}"
+    read -p "Do you want to add Sublime Text? [y/n]: " subl
+    if [[ $subl =~ ^[Yy]$ ]]
+    then 
         echo -e "[${YELLOW}SYNTAX${RESET}] Installing Sublime Text...${NEWLINE}"
         curl -O https://download.sublimetext.com/sublimehq-pub.gpg && pacman-key --add sublimehq-pub.gpg && pacman-key --lsign-key 8A8F901A && rm sublimehq-pub.gpg
         sleep 3
         echo -e "\n[sublime-text]\nServer = https://download.sublimetext.com/arch/stable/x86_64" | tee -a /etc/pacman.conf
         sleep 3
         pacman -Syu sublime-text --noconfirm
-        else
-        echo -e "[${YELLOW}INFO${RESET}]Skipping"
-
-        fi
+    else
+        echo -e "[${YELLOW}INFO${RESET}] Skipping Sublime Text Installation"
+    fi
 }
 
 vidDriver() {

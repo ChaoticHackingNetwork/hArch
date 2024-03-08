@@ -212,7 +212,6 @@ main() {
     lastMinSetup || log_warning "Last minute setup encountered issues."
 
     log_success "Installation completed successfully!"
-    echo -e "Please reboot into your new system with: ${GREEN}reboot${RESET}"
 }
 
 # Start the script
