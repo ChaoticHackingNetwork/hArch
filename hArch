@@ -130,6 +130,7 @@ auto_partition() {
     local is_uefi="$2"
 
     if $is_uefi; then
+        sleep 10
         print_info "UEFI System Detected!"
         local swap_size=$(calculate_swap_size)
         
@@ -143,6 +144,7 @@ auto_partition() {
             "w"                    # Write changes
         )
     else
+        sleep 10
         print_info "BIOS System Detected!"
         local swap_size=$(calculate_swap_size)
         
@@ -157,6 +159,9 @@ auto_partition() {
 
     # Execute commands through fdisk
     printf "%s\n" "${cmd_list[@]}" | fdisk "$drive"
+
+    sleep 30
+    print($is_uefi)
 
     # New: Formatting and mounting partitions
     if $is_uefi; then
