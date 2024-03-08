@@ -48,7 +48,11 @@ log_success() {
 
 # Determine if the system is UEFI or BIOS
 is_uefi_system() {
-    [[ -d "/sys/firmware/efi" ]]
+    if [[ -d "/sys/firmware/efi" ]]; then
+        return 0  # True, it is UEFI
+    else
+        return 1  # False, it is not UEFI
+    fi
 }
 
 greet() {
