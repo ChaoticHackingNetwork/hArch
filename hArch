@@ -138,7 +138,7 @@ auto_partition() {
         cmd_list=(
             "g" "n" "" "" "+512M"  # EFI partition
             "n" "" "" "$swap_size" # Swap partition
-            "n" "" "" ""           # Root partition
+            "n" "p" "" "" ""       # Root partition
             "t" "1" "1"            # Set type of EFI partition to EFI System
             "t" "2" "19"           # Set type of swap to Linux swap (using code 19 for Linux swap)
             "w"                    # Write changes
