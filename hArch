@@ -136,12 +136,13 @@ auto_partition() {
         
         # Command list for UEFI
         cmd_list=(
-            "g" "n" "" "" "+512M"  # EFI partition
-            "n" "" "" "$swap_size" # Swap partition
-            "n" "p" "" "" ""       # Root partition
-            "t" "1" "1"            # Set type of EFI partition to EFI System
-            "t" "2" "19"           # Set type of swap to Linux swap (using code 19 for Linux swap)
-            "w"                    # Write changes
+            "g"                          # Create a new GPT table
+            "n" "" "" "+512M" "y"        # EFI partition
+            "n" "" "" "+${swap_size}" "y"  # Swap partition, assuming fdisk interprets $swap_size correctly
+            "n" "" "" "" "y"             # Root partition, using remaining space
+            "t" "1" "1"                  # Set type of EFI partition to EFI System
+            "t" "2" "19"                 # Set type of swap to Linux swap (using code 19 for Linux swap)
+            "w"                          # Write changes
         )
     else
         sleep 10
@@ -215,9 +216,6 @@ getDrive() {
 
         auto_partition "$drive" "$is_uefi"
 
-        # Additional setup can go here (e.g., formatting partitions, mounting)
-        # This is where you would add your partition formatting and mounting logic,
-        # similar to the original script but using the improved structure.
     fi
 }
 
