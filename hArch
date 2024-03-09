@@ -89,10 +89,7 @@ checkNet() {
   	echo -e "[${YELLOW}INFO${RESET}] Firing up Scripting Engines..."
 	echo -e "[${YELLOW}INFO${RESET}] Enabling Parallel Downloads..."
 	sed -i '/#ParallelDownloads/s/^#//g' /etc/pacman.conf
-	echo -e "[${YELLOW}INFO${RESET}] Syncing time..."
-	timedatectl set-ntp true
 	else
-	echo -e "[${RED}ERROR${RESET}] Check Internet connection, something went wrong"
 	exit
 	
 	fi
