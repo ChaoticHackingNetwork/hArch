@@ -121,6 +121,18 @@ partition_drive() {
             "t" "2" "19"                 # Set type of swap to Linux swap
             "w"                          # Write changes
         )
+
+        # Format partitions
+        mkfs.fat -F32 "${drive}1" # Format EFI partition
+        mkswap "${drive}2"         # Format swap partition
+        mkfs.ext4 "${drive}3"      # Format root partition
+
+        # Mount partitions
+        mount "${drive}3" /mnt
+        mkdir -p /mnt/boot/EFI
+        mount "${drive}1" /mnt/boot/EFI
+        swapon "${drive}2"
+
     else
         # Commands for BIOS
         cmd_list=(
@@ -129,6 +141,15 @@ partition_drive() {
             "t" "1" "82"                      # Set type of first partition to Linux swap
             "w"                               # Write changes
         )
+
+        # Format partitions
+        mkswap "${drive}1"         # Format swap partition
+        mkfs.ext4 "${drive}2"      # Format root partition
+
+        # Mount partitions
+        mount "${drive}2" /mnt
+        swapon "${drive}1"
+        
     fi
 
     # Execute commands through fdisk
