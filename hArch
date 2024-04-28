@@ -61,9 +61,9 @@ checkNet() {
     
     # Check if speedtest-cli is installed
     if ! command -v speedtest-cli &>/dev/null; then
-        log_error "speedtest-cli is not installed. Installing..."
+        print_info "speedtest-cli is not installed. Installing..."
         pacman -Sy
-        python3 -m venv speedTest && cd speedTest/ && ./pip3 install speedtest-cli
+        python3 -m venv speedTest && cd speedTest/bin/ && ./pip3 install speedtest-cli
     fi
     
     # Perform speed test
@@ -102,7 +102,6 @@ calculate_swap_size() {
 }
 
 # Partitioning Function
-#FIXME
 partition_drive() {
     local drive="$1"
     local is_uefi=$(is_uefi_system)
@@ -112,9 +111,9 @@ partition_drive() {
         # Commands for UEFI
         cmd_list=(
             "g"                          # Create a new GPT table
-            "n" "" "" "+512M" "y"        # EFI partition
-            "n" "" "" "+$(calculate_swap_size)" "y"  # Swap partition
-            "n" "" "" "" "y"             # Root partition
+            "n" "" "" "+512M"           # EFI partition
+            "n" "" "" "+$(calculate_swap_size)" # Swap partition
+            "n" "" "" ""                 # Root partition
             "t" "1" "1"                  # Set type of EFI partition to EFI System
             "t" "2" "19"                 # Set type of swap to Linux swap
             "w"                          # Write changes
@@ -132,6 +131,7 @@ partition_drive() {
     # Execute commands through fdisk
     printf "%s\n" "${cmd_list[@]}" | fdisk "$drive"
 }
+
 
 # Installer Function
 installer() {
@@ -167,6 +167,7 @@ main() {
     checkNet
     sleep 1
     print_info "Gathering drives..."
+    lsblk
     local drive=$(prompt_for_input "Enter Drive to prepare (e.g., /dev/sda): ")
     local manual=$(prompt_for_input "Do you want to manually partition [y/n]: ")
 
