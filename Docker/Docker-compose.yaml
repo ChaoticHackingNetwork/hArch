@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  archlinux:
+    build: .
+    container_name: hArch
+
+  dvwa:
+    image: vulnerables/web-dvwa
+    container_name: dvwa
+    ports:
+      - "8080:80"
+    environment:
+      - MYSQL_PASS="password" # Example password, change as needed
+
+  juice-shop:
+    image: bkimminich/juice-shop
+    container_name: juice_shop
+    ports:
+      - "3000:3000"
+
+  webgoat:
+    image: webgoat/goatandwolf
+    container_name: webgoat
+    ports:
+      - "8081:8080"
+      - "9090:9090"
+
