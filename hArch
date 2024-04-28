@@ -58,14 +58,27 @@ greet() {
 # Check Internet Connection
 checkNet() {
     print_info "Checking Internet Connection..."
-    if nc -zw1 archlinux.org 443; then
+    
+    # Check if speedtest-cli is installed
+    if ! command -v speedtest-cli &>/dev/null; then
+        log_error "speedtest-cli is not installed. Installing..."
+        pacman -Sy
+        pacman -S speedtest-cli --noconfirm
+    fi
+    
+    # Perform speed test
+    local speed=$(speedtest-cli --simple | awk '/^Download:/ {print $2}')
+    print_info "Download Speed: $speed Mbps"
+    
+    # Check if download speed is greater than 50 Mbps
+    if (( $(echo "$speed > 50" | bc -l) )); then
         print_info "Enabling Parallel Downloads..."
         sed -i '/#ParallelDownloads/s/^#//g' /etc/pacman.conf
     else
-        log_error "Network setup failed. Exiting."
-        exit 1
+        print_info "Keeping Parallel Downloads Disabled as internet speed is too slow."
     fi
 }
+
 
 # Determine if the system is UEFI or BIOS
 is_uefi_system() {
@@ -89,9 +102,10 @@ calculate_swap_size() {
 }
 
 # Partitioning Function
+#FIXME
 partition_drive() {
     local drive="$1"
-    local is_uefi="$2"
+    local is_uefi=$(is_uefi_system)
     local cmd_list=()
 
     if $is_uefi; then
@@ -159,6 +173,7 @@ main() {
     if [[ $manual == 'y' || $manual == 'Y' ]]; then
         cfdisk "$drive"
         print_info "Entering BASH shell. Make your filesystem and mount /mnt. Type exit once finished."
+        print_info "System is $is_uefi_system"
         bash
     else
         print_info "Modifying $drive... HANG TIGHT!!!"
