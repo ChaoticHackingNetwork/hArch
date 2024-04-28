@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
-# Harch UEFI/BIO Automated Install (Hackers Arch)
+# hArch UEFI/BIOS Installer (Hackers Arch)
 # ---------------------------------------------------------------
-# Author    : Chaotic_Guru                                       |
+# Author    : Chaotic_Guru (Brandon Walker)                      |
 # Github    : https://github.com/ChaoticHackingNetwork           |
-# Version   : 0.1.4 						 					 | 
+# Version   : 0.1.5 Beta                 	 					 | 
 # ---------------------------------------------------------------
 
+
+# Color Constants
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 WHITE='\033[0;37m'
@@ -15,44 +17,17 @@ PURPLE='\033[0;35m'
 RESET='\033[0m'
 NEWLINE=$'\n'
 
-log_info() {
-    echo -e "[INFO] $1"
-}
+# Logging Functions
+log_info() { echo -e "[INFO] $1"; }
+log_warning() { echo -e "[WARNING] $1"; }
+log_error() { echo -e "[ERROR] $1"; }
+print_info() { echo -e "[${YELLOW}INFO${RESET}] $1${NEWLINE}"; }
+log_success() { echo -e "[SUCCESS] $1"; }
 
-log_warning() {
-    echo -e "[WARNING] $1"
-}
-
-log_error() {
-    echo -e "[ERROR] $1"
-}
-
-print_info() {
-    echo -e "[${YELLOW}INFO${RESET}] $1${NEWLINE}"
-}
-
-# Exit script on error with a message
-exit_on_error() {
-    log_error "$1"
-    exit 1
-}
-
+# Prompt for User Input
 prompt_for_input() {
     read -p "$1" response
     echo "$response"
-}
-
-log_success() {
-    echo -e "[SUCCESS] $1"
-}
-
-# Determine if the system is UEFI or BIOS
-is_uefi_system() {
-    if [[ -d "/sys/firmware/efi" ]]; then
-        return 0  # True, it is UEFI
-    else
-        return 1  # False, it is not UEFI
-    fi
 }
 
 greet() {
@@ -80,35 +55,27 @@ greet() {
 	echo ${NEWLINE}
 }
 
+# Check Internet Connection
 checkNet() {
-	echo ${NEWLINE}
-	echo ${NEWLINE}
-	echo -e "[${YELLOW}INFO${RESET}] Checking Internet Connection...${NEWLINE}"
-	if nc -zw1 archlinux.org 443
-	then
-  	echo -e "[${YELLOW}INFO${RESET}] Firing up Scripting Engines..."
-	echo -e "[${YELLOW}INFO${RESET}] Enabling Parallel Downloads..."
-	sed -i '/#ParallelDownloads/s/^#//g' /etc/pacman.conf
-	else
-	exit
-	
-	fi
+    print_info "Checking Internet Connection..."
+    if nc -zw1 archlinux.org 443; then
+        print_info "Enabling Parallel Downloads..."
+        sed -i '/#ParallelDownloads/s/^#//g' /etc/pacman.conf
+    else
+        log_error "Network setup failed. Exiting."
+        exit 1
+    fi
 }
 
-installer() {
-	echo ${NEWLINE}
-	echo ${NEWLINE}
-	echo -e "[${YELLOW}INFO${RESET}] Installing base system...${NEWLINE}"
-	sleep 2
-	pacstrap /mnt base base-devel linux linux-firmware vi vim nano
-	#Generate fstab
-	genfstab -U /mnt >> /mnt/etc/fstab
+# Determine if the system is UEFI or BIOS
+is_uefi_system() {
+    [[ -d "/sys/firmware/efi" ]]
 }
 
-# Function to dynamically calculate swap size based on system RAM
+# Calculate Swap Size Based on System RAM
 calculate_swap_size() {
     local ram_gb=$(free -g | awk '/^Mem:/{print $2}')
-    local swap_size="2G" # Default to 2GB if unable to determine
+    local swap_size="2G" # Default
 
     if ((ram_gb < 4)); then
         swap_size="${ram_gb}G"
@@ -121,34 +88,27 @@ calculate_swap_size() {
     echo "$swap_size"
 }
 
-# Function to perform automatic partitioning and mounting
-auto_partition() {
+# Partitioning Function
+partition_drive() {
     local drive="$1"
     local is_uefi="$2"
+    local cmd_list=()
 
     if $is_uefi; then
-        sleep 10
-        print_info "UEFI System Detected!"
-        local swap_size=$(calculate_swap_size)
-        
-        # Command list for UEFI
+        # Commands for UEFI
         cmd_list=(
             "g"                          # Create a new GPT table
             "n" "" "" "+512M" "y"        # EFI partition
-            "n" "" "" "+${swap_size}" "y"  # Swap partition, assuming fdisk interprets $swap_size correctly
-            "n" "" "" "" "y"             # Root partition, using remaining space
+            "n" "" "" "+$(calculate_swap_size)" "y"  # Swap partition
+            "n" "" "" "" "y"             # Root partition
             "t" "1" "1"                  # Set type of EFI partition to EFI System
-            "t" "2" "19"                 # Set type of swap to Linux swap (using code 19 for Linux swap)
+            "t" "2" "19"                 # Set type of swap to Linux swap
             "w"                          # Write changes
         )
     else
-        sleep 10
-        print_info "BIOS System Detected!"
-        local swap_size=$(calculate_swap_size)
-        
-        # Command list for BIOS
+        # Commands for BIOS
         cmd_list=(
-            "o" "n" "p" "" "" "+${swap_size}" # Swap partition
+            "o" "n" "p" "" "" "+$(calculate_swap_size)" # Swap partition
             "n" "p" "" "" ""                  # Root partition
             "t" "1" "82"                      # Set type of first partition to Linux swap
             "w"                              # Write changes
@@ -157,44 +117,42 @@ auto_partition() {
 
     # Execute commands through fdisk
     printf "%s\n" "${cmd_list[@]}" | fdisk "$drive"
-
-    sleep 30
-    echo $is_uefi
-
-    # New: Formatting and mounting partitions
-    if $is_uefi; then
-        # Formatting partitions
-        print_info "Formatting partitions..."
-        mkfs.fat -F32 "${drive}1"  # EFI partition
-        mkswap "${drive}2"         # Swap partition
-        mkfs.ext4 "${drive}3"      # Root partition
-
-        # Setting up swap
-        swapon "${drive}2"
-
-        # Mounting partitions
-        print_info "Mounting partitions..."
-        mount "${drive}3" /mnt
-        mkdir -p /mnt/boot/EFI
-        mount "${drive}1" /mnt/boot/EFI
-    else
-        # Assuming BIOS setup with no EFI partition, adjust as necessary
-        mkswap "${drive}1"         # Swap partition
-        mkfs.ext4 "${drive}2"      # Root partition
-
-        # Setting up swap
-        swapon "${drive}1"
-
-        # Mounting root partition
-        mount "${drive}2" /mnt
-    fi
 }
 
+# Installer Function
+installer() {
+    print_info "Installing Arch base..."
+    sleep 2
+    pacstrap /mnt base base-devel linux linux-firmware vi vim nano
+    sleep 2
+    #Generate fstab
+    genfstab -U /mnt >> /mnt/etc/fstab
+}
 
-# Main function to get and prepare the drive
-getDrive() {
-    echo -e "${NEWLINE}[${YELLOW}INFO${RESET}] Gathering drives...${NEWLINE}"
-    lsblk -f
+# Last Minute Setup Function
+lastMinSetup() {
+    print_info "Finishing last minute setup..."
+    echo 0 > /proc/sys/kernel/hung_task_timeout_secs
+    curl -O 'https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/hArchPost'
+    chmod +x hArchPost
+    mv hArchPost /mnt
+    print_info "Time to enter CHROOT"
+    print_info "The final script has been installed and moved to your new root directory"
+    print_info "Run these commands to finish setup"
+    echo ${NEWLINE}
+    echo ${NEWLINE}
+    echo -e "${GREEN}[1] arch-chroot /mnt"
+    echo -e "[2] ./hArchPost${RESET}"
+    echo ${NEWLINE}
+}
+
+# Main Installation Flow
+main() {
+    greet
+    sleep 1
+    checkNet
+    sleep 1
+    print_info "Gathering drives..."
     local drive=$(prompt_for_input "Enter Drive to prepare (e.g., /dev/sda): ")
     local manual=$(prompt_for_input "Do you want to manually partition [y/n]: ")
 
@@ -206,47 +164,16 @@ getDrive() {
         print_info "Modifying $drive... HANG TIGHT!!!"
         sleep 3
 
-        local is_uefi=false
-        if is_uefi_system; then
-            is_uefi=true
-        fi
-
-        auto_partition "$drive" "$is_uefi"
-
+        local is_uefi=$(is_uefi_system)
+        partition_drive "$drive" "$is_uefi"
     fi
-}
 
-lastMinSetup() {
-	#Finish last minute setup
-	echo ${NEWLINE}
-	echo ${NEWLINE}
-	echo 0 > /proc/sys/kernel/hung_task_timeout_secs
-	curl -O 'https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/hArchPost'
-	chmod +x hArchPost
-	mv hArchPost /mnt
-	echo ${NEWLINE}
-	echo -e "[${YELLOW}INFO${RESET}] Time to enter CHROOT"
-	echo -e "[${YELLOW}INFO${RESET}] The final script has been installed and move to your new root directory"
-	echo -e "[${YELLOW}INFO${RESET}] Run these commands to finish setup"
-	echo ${NEWLLINE}
-	echo ${NEWLLINE}
-	echo -e "${GREEN}[1] arch-chroot /mnt"
-	echo -e "[2] ./hArchPost${RESET}"
-	echo ${NEWLINE}
-}
-
-# Main installation flow
-main() {
-    greet
-    checkNet || exit_on_error "Network setup failed. Exiting."
-
-    getDrive || exit_on_error "Drive selection or partitioning failed. Exiting."
-
-    installer || exit_on_error "Base system installation failed. Exiting."
-
+    installer || log_error "Base system installation failed. Exiting."
+    
     lastMinSetup || log_warning "Last minute setup encountered issues."
 
-    log_success "Installation completed successfully!"
+    log_success "hArch Installation completed successfully!"
+
 }
 
 # Start the script
