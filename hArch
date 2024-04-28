@@ -63,11 +63,11 @@ checkNet() {
     if ! command -v speedtest-cli &>/dev/null; then
         log_error "speedtest-cli is not installed. Installing..."
         pacman -Sy
-        pacman -S speedtest-cli --noconfirm
+        python3 -m venv speedTest && cd speedTest/ && ./pip3 install speedtest-cli
     fi
     
     # Perform speed test
-    local speed=$(speedtest-cli --simple | awk '/^Download:/ {print $2}')
+    local speed=$(./speedtest-cli --simple | awk '/^Download:/ {print $2}')
     print_info "Download Speed: $speed Mbps"
     
     # Check if download speed is greater than 50 Mbps
