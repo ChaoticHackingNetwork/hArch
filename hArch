@@ -4,7 +4,7 @@
 # ---------------------------------------------------------------
 # Author    : Chaotic_Guru                                       |
 # Github    : https://github.com/ChaoticHackingNetwork           |
-# Version   : 0.1.5 Beta                 	 					 | 
+# Version   : 1.0.0                     	 					 | 
 # ---------------------------------------------------------------
 
 
@@ -18,7 +18,7 @@ RESET='\033[0m'
 NEWLINE=$'\n'
 
 # Logging Functions
-log_info() { echo -e "[INFO] $1"; }
+log_info() { echo -e "[${GREEN}INFO${RESET}] $1"; }
 log_warning() { echo -e "[WARNING] $1"; }
 log_error() { echo -e "[ERROR] $1"; }
 print_info() { echo -e "[${YELLOW}INFO${RESET}] $1${NEWLINE}"; }

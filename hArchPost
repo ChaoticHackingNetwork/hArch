@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-#hArchPost - Post install - Downloadeded after Harch finishes
+#hArchPost - Post install - Downloadeded after hArch finishes
 # ---------------------------------------------------------------
 # Author    : Chaotic_Guru                                       |
 # Github    : https://github.com/ChaoticHackingNetwork           |
-# Version   : 0.1.4                                              |
+# Version   : 1.0.0                                              |
 # ---------------------------------------------------------------
 
 
-# Color codes
+# Color Constants
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 WHITE='\033[0;37m'
@@ -17,35 +17,47 @@ PURPLE='\033[0;35m'
 RESET='\033[0m'
 NEWLINE=$'\n'
 
+# Logging Functions
+log_info() { echo -e "[${GREEN}INFO${RESET}] $1"; }
+log_warning() { echo -e "[WARNING] $1"; }
+log_error() { echo -e "[ERROR] $1"; }
+print_info() { echo -e "[${YELLOW}INFO${RESET}] $1${NEWLINE}"; }
+log_success() { echo -e "[SUCCESS] $1"; }
+
+# Prompt for User Input
+prompt_for_input() {
+    read -p "$1" response
+    echo "$response"
+}
+
 installer() {
-    # Installs needed packages
-    echo "${NEWLINE}"
-    echo -e "[${YELLOW}INFO${RESET}] Enabling Parallel Downloads..."
-    sed -i '/#ParallelDownloads/s/^#//g' /etc/pacman.conf
-    echo "${NEWLINE}"
-    echo -e "[${GREEN}USER_INPUT${RESET}]"
-    read -p "Enter Hostname: " hostname
-    hostnamectl set-hostname "$hostname"
-    echo "${NEWLINE}"
-    echo -e "[${YELLOW}INFO${RESET}] Installing some handy packages...${NEWLINE}"
-    # Install basic packages
+    print_info "What would you like your system name set too..."
+    hostname=$(prompt_for_input "Enter Hostname: ")
+    echo $hostname > /etc/hostname
+    log_info "Installing some handy packages..."
     pacman -S dkms linux-headers dhcpcd iwd mlocate cmake ntp neofetch pulseaudio net-tools dnsutils git fish --needed --noconfirm
-    # Install basic fonts
     pacman -S noto-fonts ttf-ubuntu-font-family ttf-dejavu ttf-freefont ttf-liberation ttf-droid ttf-roboto terminus-font rxvt-unicode ranger rofi dmenu --needed --noconfirm
-    timedatectl set-ntp true
     hwclock --systohc
 }
 
 desktopEnv() {
-    # Choose Desktop Environment
-    echo -e "[${GREEN}USER_INPUT${RESET}] Choose a Desktop Environment"
-    echo -e "[${YELLOW}SYNTAX${RESET}] Select number corresponding to DE you want, after installation, enter 8 to continue if prompt returns${NEWLINE}"
+    log_info "Choosing Desktop Environment"
+    print_info "Select a Desktop Environment:"
+    print_info "1. Mate"
+    print_info "2. KDE"
+    print_info "3. Gnome"
+    print_info "4. Cinnamon"
+    print_info "5. Deepin"
+    print_info "6. Enlightenment"
+    print_info "7. i3"
+    print_info "8. Skip"
+    
     DEs=("Mate" "KDE" "Gnome" "Cinnamon" "Deepin" "Enlightenment" "i3" "Skip")
     select opt in "${DEs[@]}"
     do
         case $opt in
             "Mate" | "KDE" | "Gnome" | "Cinnamon" | "Deepin" | "Enlightenment" | "i3")
-                # Install selected DE
+                log_info "Installing $opt Desktop Environment..."
                 pacman -S "$opt" "${opt,,}-extra" "${opt,,}-settings" lightdm "lightdm-${opt,,}-greeter" xorg-server xorg-xinit --needed --noconfirm
                 systemctl enable "lightdm"
                 ;;
@@ -53,214 +65,173 @@ desktopEnv() {
                 break
                 ;;
             *)
-                echo -e "[${RED}ERROR${RESET}] Invalid Option, Try Again..."
+                log_error "Invalid Option, Try Again..."
                 ;;
         esac
     done
 }
 
 sublimeInstaller() {
-    echo "${NEWLINE}"
-    read -p "Do you want to add Sublime Text? [y/n]: " subl
-    if [[ $subl =~ ^[Yy]$ ]]
-    then 
-        echo -e "[${YELLOW}SYNTAX${RESET}] Installing Sublime Text...${NEWLINE}"
+    subl=$(prompt_for_input "Do you want to add Sublime Text? [y/n]: ")
+    if [[ $subl =~ ^[Yy]$ ]]; then 
+        log_info "Installing Sublime Text..."
         curl -O https://download.sublimetext.com/sublimehq-pub.gpg && pacman-key --add sublimehq-pub.gpg && pacman-key --lsign-key 8A8F901A && rm sublimehq-pub.gpg
         sleep 3
         echo -e "\n[sublime-text]\nServer = https://download.sublimetext.com/arch/stable/x86_64" | tee -a /etc/pacman.conf
         sleep 3
         pacman -Syu sublime-text --noconfirm
     else
-        echo -e "[${YELLOW}INFO${RESET}] Skipping Sublime Text Installation"
+        log_info "Skipping Sublime Text Installation"
     fi
 }
 
 vidDriver() {
-        echo ${NEWLINE}
-        echo ${NEWLINE}
-        echo -e "[${YELLOW}INFO${RESET}] Gathering Graphics info..."
-        echo ${NEWLINE}
-        echo ${NEWLINE}
-        sleep 2
-        str=$(lspci -vmm | grep VGA -A6)
-        AMD='AMD'
-        NVD='NVIDIA'
-        case $str in
-                *"$AMD"*)
-                        echo -e "[${YELLOW}INFO${RESET}] Installing AMD Drivers...${NEWLINE}"
-                        pacman -S xf86-video-ati xf86-video-amdgpu mesa --noconfirm
-                        ;;
-
-                *"$NVD"*)
-                        echo -e "[${YELLOW}INFO${RESET}] Installing NVIDIA Drivers...${NEWLINE}"
-                        pacman -S nvidia nvidia-settings nvidia-utils glxinfo nvtop --noconfirm
-                        curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/nvidia.hook
-                        curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/20-nvidia.conf
-                        mkdir -p /etc/pacman.d/hooks
-                        mv /nvidia.hook /etc/pacman.d/hooks
-                        echo "blacklist nouveau" > /etc/modprobe.d/blacklist-nvidia-nouveau.conf
-                        # Add changes to mkinitcpio.conf - WIP
-                        # If issues, try:
-                        # xrandr --setprovideroutputsource modesetting NVIDIA-0
-                        # xrandr --auto
-                        ;;
-                *)
-                        echo -e "[${YELLOW}INFO${RESET}] Unable to determine Graphics info.. Installing default drivers"
-                        pacman -S xf86-video-fbdev --noconfirm
-        esac
-
+    log_info "Gathering Graphics info..."
+    sleep 2
+    str=$(lspci -vmm | grep VGA -A6)
+    AMD='AMD'
+    NVD='NVIDIA'
+    case $str in
+        *"$AMD"*)
+            log_info "Installing AMD Drivers..."
+            pacman -S xf86-video-ati xf86-video-amdgpu mesa --noconfirm
+            ;;
+        *"$NVD"*)
+            log_info "Installing NVIDIA Drivers..."
+            pacman -S nvidia nvidia-settings nvidia-utils glxinfo nvtop --noconfirm
+            curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/nvidia.hook
+            curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/20-nvidia.conf
+            mv nvidia.hook /etc/pacman.d/hooks
+            mv 20-nvidia.conf /etc/X11/xorg.conf.d/
+            bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
+            # Add changes to mkinitcpio.conf - WIP
+            # If issues, try:
+            # xrandr --setprovideroutputsource modesetting NVIDIA-0
+            # xrandr --auto
+            ;;
+        *)
+            log_info "Unable to determine Graphics info.. Installing default drivers"
+            pacman -S xf86-video-fbdev --noconfirm
+    esac
 }
 
 userInfo() {
-        #Set root password
-        echo ${NEWLINE}
-        echo ${NEWLINE}
-        echo -e "[${GREEN}USER${RESET}] Please set ROOT password!!!"
-        passwd
-        #Create a new user
-        read -p "Enter Username: " username
-        echo ${NEWLINE}
-        echo ${NEWLINE}
-        echo -e "${GREEN}------> Hack the Universe $username! <------${RESET}"
-        echo ${NEWLINE}
-        echo ${NEWLINE}
-        useradd -mg users -G wheel,power,storage -s /usr/bin/fish $username
-        echo '%wheel ALL=(ALL:ALL) ALL' >> /etc/sudoers.d/wheel_group
-        chmod 440 /etc/sudoers.d/wheel_group
-        echo -e "[${GREEN}USER${RESET}] Please set your password now!"
-        passwd $username
+    log_info "Setting Root password..."
+    passwd
+
+    username=$(prompt_for_input "Enter Username: ")
+    log_info "Creating a new user: $username"
+    useradd -mg users -G wheel,power,storage -s /usr/bin/fish $username
+    echo '%wheel ALL=(ALL:ALL) ALL' >> /etc/sudoers.d/wheel_group
+    chmod 440 /etc/sudoers.d/wheel_group
+    log_info "Setting password for user: $username"
+    passwd $username
 }
 
 booter() {
-        echo ${NEWLINE}
-        echo ${NEWLINE}
-        echo -e "[${YELLOW}INFO${RESET}] Setting Booterloader...${NEWLINE}"
-        drives=$(lsblk -f)
-        echo ${NEWLINE}
-        echo -e "[${GREEN}USER_INPUT${RESET}]"
-        echo -e "$drives${NEWLINE}"
-        echo -e "[${YELLOW}SYNTAX${RESET}] If BIOS, attach bootloader to disk: ex- /dev/sda"
-        echo -e "[${YELLOW}SYNTAX${RESET}] If UEFI, attach bootloader to partition: ex- /dev/nvme0n1p1"
-        read -p "Enter Drive to install Booterloader [Example: /dev/nvme0n1p1]: " drive
-        if [[ -d "/sys/firmware/efi" ]]
-        then
+    log_info "Setting Bootloader..."
+    drives=$(lsblk -f)
+    echo -e "$drives${NEWLINE}"
+    echo -e "[${YELLOW}SYNTAX${RESET}] If BIOS, attach bootloader to disk: ex- /dev/sda"
+    echo -e "[${YELLOW}SYNTAX${RESET}] If UEFI, attach bootloader to partition: ex- /dev/nvme0n1p1"
+    drive=$(prompt_for_input "Enter Drive to install Bootloader [Example: /dev/nvme0n1p1]: ")
+    if [[ -d "/sys/firmware/efi" ]]; then
+        log_info "Installing UEFI Bootloader..."
         pacman -S efibootmgr grub dosfstools mtools os-prober --noconfirm
         grub-install --target=x86_64-efi --bootloader-id=HARCH_UEFI --efi-directory=/boot/EFI --recheck
         grub-mkconfig -o /boot/grub/grub.cfg
         mkinitcpio -p linux
-        else
+    else
+        log_info "Installing BIOS Bootloader..."
         pacman -S grub --noconfirm
         grub-install --target=i386-pc $drive --recheck
         grub-mkconfig -o /boot/grub/grub.cfg
         mkinitcpio -p linux
-
-        fi
+    fi
 }
 
 blackArch() {
-        #Install BlackArch Mirror & download tools list
-        echo ${NEWLINE}
-        echo ${NEWLINE}
-        echo -e "[${YELLOW}INFO${RESET}] Installing BlackArch Repo...${NEWLINE}"
-        curl -O https://blackarch.org/strap.sh
-        chmod +x strap.sh
-        ./strap.sh
-        sleep 3
-        pacman -Syu --noconfirm
-
+    log_info "Installing BlackArch Repo..."
+    curl -O https://blackarch.org/strap.sh
+    chmod +x strap.sh
+    ./strap.sh
+    sleep 3
+    pacman -Syu --noconfirm
 }
 
 vimSetup() {
-        echo ${NEWLINE}
-        echo ${NEWLINE}
-        read -p "Do you want to add Bunle to VIM? [y/n]: " vim
-        if [[ $vim == 'y' ]] || [[ $vim == 'Y' ]]
-        then 
-        curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/vimrc_bundle_conf
+    vim=$(prompt_for_input "Do you want to add Bundle to VIM? [y/n]: ")
+    if [[ $vim == 'y' || $vim == 'Y' ]]; then
+        log_info "Adding Bundle to VIM..."
         users=$(ls /home)
+        curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/vimrc_bundle_conf
         mv vimrc_bundle_conf /home/$users/.vimrc
-        else
-        echo -e "[${YELLOW}SKIPPING${RESET}]"
-
-        fi
+    else
+        log_warning "Skipping..."
+    fi
 }
 
 hackTools() {
-        echo ${NEWLINE}
-        echo ${NEWLINE}
-        read -p 'Do you want to add the Master Hacking Toolset? [y/n]: ' ht
-        if [[ $ht == 'y' ]] || [[ $ht == 'Y' ]]
-        then
-        echo -e "[${YELLOW}INFO${RESET}] Please Wait... Installing Tools"
-        echo ${NEWLINE}
-        echo "Grab a coffee, play with your pet...${RESET}"
-        echo ${NEWLINE}
+    ht=$(prompt_for_input 'Do you want to add the Master Hacking Toolset? [y/n]: ')
+    if [[ $ht == 'y' || $ht == 'Y' ]]; then
+        log_info "Installing Master Hacking Toolset..."
         curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/Master
         curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/useful-packages
         pacman -S - < /Master --noconfirm && pacman -S - < /useful-packages --noconfirm
-        else
+    else
+        log_warning "Skipping..."
         curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/Master
         curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/useful-packages
-        echo -e "[${YELLOW}SKIPPING${RESET}]"
-        sleep 5
-
-        fi
+    fi
 }
 
-
 complete() {
-        #Successfully Installed
-        mv /20-nvidia.conf /etc/X11/xorg.conf.d/
-        neofetch
-        echo ${NEWLINE}
-        echo ${NEWLINE}
-        echo -e "[${YELLOW}INFO${RESET}] hArch has been succesfully installed on your system"
-        echo ${NEWLINE}
-        echo -e "${PURPLE}Hack the Universe $username${RESET}"
-        echo ${NEWLINE}
-        echo ${NEWLINE}
-        echo -e "[${YELLOW}INFO${RESET}] A reboot should now take place"
-        echo -e "[${YELLOW}INFO${RESET}] Run the following commands to reboot properly!"
-        echo ${NEWLINE}
-        echo -e "${GREEN}[1]: exit"
-        echo -e "[2]: umount -a"
-        echo -e "[3]: reboot${RESET}"
+    log_success "hArch has been successfully installed on your system"
+    log_info "Hack the Universe $username"
+    log_info "A reboot should now take place"
+    log_info "Run the following commands to reboot properly:"
+    log_info "1: exit"
+    log_info "2: umount -a"
+    log_info "3: reboot"
+    exit
+}
 
-        exit
+sleep_and_clear() {
+    sleep 3
+    clear
 }
 
 oneFuncToRuleThemAll() {
-        installer
-        sleep 3
-        clear
-        userInfo
-        sleep 3
-        clear
-        vidDriver
-        sleep 3
-        clear
-        booter
-        sleep 3
-        clear
-        sublimeInstaller
-        sleep 3
-        clear
-        blackArch
-        sleep 3
-        clear
-        hackTools
-        sleep 3
-        clear
-        vimSetup
-        sleep 3
-        clear
-        desktopEnv
-        sleep 3
-        clear
+    installer
+    sleep_and_clear
 
-        complete
+    userInfo
+    sleep_and_clear
 
+    vidDriver
+    sleep_and_clear
+
+    booter
+    sleep_and_clear
+
+    sublimeInstaller
+    sleep_and_clear
+
+    blackArch
+    sleep_and_clear
+
+    hackTools
+    sleep_and_clear
+
+    vimSetup
+    sleep_and_clear
+
+    desktopEnv
+    sleep_and_clear
+
+    complete
 }
+
 
 
 oneFuncToRuleThemAll
