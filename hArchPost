@@ -41,34 +41,42 @@ installer() {
 }
 
 desktopEnv() {
-    log_info "Choosing Desktop Environment"
-    print_info "Select a Desktop Environment:"
-    print_info "1. Mate"
-    print_info "2. KDE"
-    print_info "3. Gnome"
-    print_info "4. Cinnamon"
-    print_info "5. Deepin"
-    print_info "6. Enlightenment"
-    print_info "7. i3"
-    print_info "8. Skip"
+    log_info "Choose a Desktop Environment"
+    log_info "Select number corresponding to DE you want, after installation enter 8 to continue if prompt returns${NEWLINE}"
     
     DEs=("Mate" "KDE" "Gnome" "Cinnamon" "Deepin" "Enlightenment" "i3" "Skip")
     select opt in "${DEs[@]}"
     do
         case $opt in
-            "Mate" | "KDE" | "Gnome" | "Cinnamon" | "Deepin" | "Enlightenment" | "i3")
-                log_info "Installing $opt Desktop Environment..."
-                pacman -S "$opt" "${opt,,}-extra" "${opt,,}-settings" lightdm "lightdm-${opt,,}-greeter" xorg-server xorg-xinit --needed --noconfirm
-                systemctl enable "lightdm"
-                ;;
-            "Skip")
-                break
-                ;;
-            *)
-                log_error "Invalid Option, Try Again..."
-                ;;
+            "Mate") install_desktop "mate mate-extra lightdm" "lightdm" ;;
+            "KDE") install_desktop "plasma-meta sddm plasma-desktop" "sddm" ;;
+            "Gnome") install_desktop "gnome gnome-extra gdm" "gdm" ;;
+            "Cinnamon") install_desktop "cinnamon metacity gnome-shell gdm" "gdm" ;;
+            "Deepin") install_desktop "deepin deepin-extra lightdm lightdm-deepin-greeter" "lightdm" ;;
+            "Enlightenment") install_desktop "enlightenment terminology lxdm" "lxdm" ;;
+            "i3") install_desktop "i3-gaps i3blocks i3lock numlockx gdm" "gdm" ;;
+            "Skip") break ;;
+            *) log_error "Invalid Option, Try Again..." ;;
         esac
+        print_info "Select number corresponding to DE you want, after installation enter 8 to continue if prompt returns"
     done
+}
+
+install_desktop() {
+    packages="$1"
+    display_manager="$2"
+    pacman -S $packages xorg-server xorg-apps xorg-xinit --needed --noconfirm
+    handle_nvidia
+    systemctl enable $display_manager
+}
+
+handle_nvidia() {
+    NVD='NVIDIA'
+    card=$(lspci -vmm | grep VGA -A6)
+    if [[ $card == *"$NVD"* ]]; then
+        log_info "Nvidia graphics detected. Applying configuration..."
+        # Add Nvidia-specific configurations here
+    fi
 }
 
 sublimeInstaller() {
@@ -187,6 +195,7 @@ hackTools() {
 
 complete() {
     log_success "hArch has been successfully installed on your system"
+    neofetch
     log_info "Hack the Universe $username"
     log_info "A reboot should now take place"
     log_info "Run the following commands to reboot properly:"
