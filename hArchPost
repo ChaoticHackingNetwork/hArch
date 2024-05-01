@@ -48,11 +48,11 @@ desktopEnv() {
     select opt in "${DEs[@]}"
     do
         case $opt in
-            "Mate") install_desktop "mate mate-extra lightdm" "lightdm" ;;
+            "Mate") install_desktop "mate mate-extra lightdm lightdm-slick-greeter" "lightdm-slick-greeter" ;;
             "KDE") install_desktop "plasma-meta sddm plasma-desktop" "sddm" ;;
             "Gnome") install_desktop "gnome gnome-extra gdm" "gdm" ;;
             "Cinnamon") install_desktop "cinnamon metacity gnome-shell gdm" "gdm" ;;
-            "Deepin") install_desktop "deepin deepin-extra lightdm lightdm-deepin-greeter" "lightdm" ;;
+            "Deepin") install_desktop "deepin deepin-extra gdm" "gdm" ;;
             "Enlightenment") install_desktop "enlightenment terminology lxdm" "lxdm" ;;
             "i3") install_desktop "i3-gaps i3blocks i3lock numlockx gdm" "gdm" ;;
             "Skip") break ;;
