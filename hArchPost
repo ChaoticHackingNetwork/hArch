@@ -47,7 +47,7 @@ desktopEnv() {
     select opt in "${DEs[@]}"
     do
         case $opt in
-            "Mate") install_desktop "mate mate-extra lightdm lightdm-slick-greeter" "lightdm" ;;
+            "Mate") install_desktop "mate mate-extra lightdm lightdm-gtk-greeter" "lightdm" ;;
             "KDE") install_desktop "plasma-meta sddm plasma-desktop" "sddm" ;;
             "Gnome") install_desktop "gnome gnome-extra gdm" "gdm" ;;
             "Cinnamon") install_desktop "cinnamon metacity gnome-shell gdm" "gdm" ;;
