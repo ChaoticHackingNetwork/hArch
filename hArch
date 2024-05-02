@@ -82,17 +82,20 @@ checkNet() {
 }
 
 
-# Determine if the system is UEFI or BIOS
-is_uefi_system() {
-    [[ -d "/sys/firmware/efi" ]]
-}
-
 # Calculate Swap Size Based on System RAM
 calculate_swap_size() {
     local ram_gb=$(free -g | awk '/^Mem:/{print $2}')
     local swap_size="2G" # Default
 
-    if ((ram_gb < 4)); then
+    if [[ ! $ram_gb =~ ^[0-9]+$ ]]; then
+        echo "Error: Could not determine RAM size." >&2
+        exit 1
+    fi
+
+    if ((ram_gb < 2)); then
+        echo "Error: Insufficient RAM (< 2GB)." >&2
+        exit 1
+    elif ((ram_gb < 4)); then
         swap_size="${ram_gb}G"
     elif ((ram_gb < 16)); then
         swap_size="4G"
@@ -103,14 +106,17 @@ calculate_swap_size() {
     echo "$swap_size"
 }
 
+swap_size=$(calculate_swap_size)
+echo "Recommended swap size: $swap_size"
+
+
 # Partitioning Function
 partition_drive() {
     local drive="$1"
-    local is_uefi=$(is_uefi_system)
     local swap_size=$(calculate_swap_size)
     local cmd_list=()
 
-    if $is_uefi; then
+    if [[ -d "/sys/firmware/efi/efivars/" ]]; then
         # Commands for UEFI
         cmd_list=(
             "g"                          # Create a new GPT table
@@ -137,7 +143,7 @@ partition_drive() {
     printf "%s\n" "${cmd_list[@]}" | fdisk "$drive"
 
     # Format partitions and mount them
-    if $is_uefi; then
+    if [[ -d "/sys/firmware/efi/efivars/" ]]; then
         mkfs.fat -F32 "${drive}1" # Format EFI partition
         mkswap "${drive}2"         # Format swap partition
         mkfs.ext4 "${drive}3"      # Format root partition
@@ -194,6 +200,10 @@ main() {
     sleep 1
     print_info "Gathering drives..."
     lsblk
+    print_info "Time to select the drive you want too partition..."
+    print_info "If you want to manually partition you may, just type exit after mounting /mnt"
+    print_info "Otherwise, automated partition will create the standard BIOS/UEFI partitions"
+    echo ${NEWLINE}
     local drive=$(prompt_for_input "Enter Drive to prepare (e.g., /dev/sda): ")
     local manual=$(prompt_for_input "Do you want to manually partition [y/n]: ")
 
