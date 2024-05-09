@@ -48,10 +48,10 @@ desktopEnv() {
     do
         case $opt in
             "Mate") install_desktop "mate mate-extra lightdm lightdm-gtk-greeter" "lightdm" ;;
-            "KDE") install_desktop "plasma-meta sddm plasma-desktop" "sddm" ;;
-            "Gnome") install_desktop "gnome gnome-extra gdm" "gdm" ;;
-            "Cinnamon") install_desktop "cinnamon metacity gnome-shell gdm" "gdm" ;;
-            "Deepin") install_desktop "deepin deepin-extra gdm" "gdm" ;;
+            "KDE") install_desktop "plasma plasma-wayland-session kde-applications" "sddm" ;;
+            "Gnome") install_desktop "gnome gnome-extra lxdm" "lxdm" ;;
+            "Cinnamon") install_desktop "cinnamon gnome-terminal lxdm" "lxdm" ;;
+            "Deepin") install_desktop "deepin deepin-extra lightdm" "lightdm" ;;
             "Enlightenment") install_desktop "enlightenment terminology lxdm" "lxdm" ;;
             "i3") install_desktop "i3-gaps i3blocks i3lock numlockx gdm" "gdm" ;;
             "Skip") break ;;
@@ -64,7 +64,10 @@ desktopEnv() {
 install_desktop() {
     packages="$1"
     display_manager="$2"
-    pacman -S $packages xorg-server xorg-apps xorg-xinit --needed --noconfirm
+    pacman -S $packages xorg xorg-server xorg-apps xorg-xinit --needed --noconfirm
+    if [[ $packages == *"deepin"* ]]; then
+    sed -i '/^greeter-session=/c\greeter-session=lightdm-deepin-greeter' /etc/lightdm/lightdm.conf
+    fi
     handle_nvidia
     systemctl enable $display_manager
 }
@@ -75,6 +78,7 @@ handle_nvidia() {
     if [[ $card == *"$NVD"* ]]; then
         log_info "Nvidia graphics detected. Applying configuration..."
         # Add Nvidia-specific configurations here
+        # This will replace vidDriver() NVD case
     fi
 }
 
@@ -97,6 +101,7 @@ vidDriver() {
             mv nvidia.hook /etc/pacman.d/hooks
             mv 20-nvidia.conf /etc/X11/xorg.conf.d/
             bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
+            # FIXME
             # Add changes to mkinitcpio.conf - WIP
             # If issues, try:
             # xrandr --setprovideroutputsource modesetting NVIDIA-0

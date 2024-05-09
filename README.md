@@ -6,11 +6,9 @@ Version 1.0.0
 
 
 
-A simplistic Arch build, and a lightweight hacker distro... SPEED and EFFICIENCY is what hArch gurantees. Spin up a hacking VM or bare metal system within minutes **Internet Speed Dependent**
+A simplistic Arch build – your gateway to a streamlined Arch Linux experience designed for speed and efficiency. Whether you're a seasoned security researcher, a bug hunter, or simply a Linux enthusiast looking to breathe new life into aging hardware, hArch guarantees a swift and seamless journey – because your hardware's age shouldn't limit your potential.
 
-Harch is intended ideally for Security Researchers/Bug Hunters but open to anyone, it is geared towards those who want to get into Penetration Testing/Reverse Engineering or even learn Linux but have an old or slow; maybe even Ancient piece of Technology. Nothing wrong with that either!
-
-The tools (Downloaded during install or after, your choice) are many of the known but widely used tools out there. The lightweight Arch distro is ideal for bringing the older computers to life and this gives you the ability too tweak your system too your liking, I encourage you too make adjustments too the script, its only Bash ;)
+Geared towards those delving into penetration testing, reverse engineering, or eager to dive into the Linux ecosystem, hArch offers a curated selection of essential tools, downloaded during installation or at your convenience. And with its bash script foundation, customization is not just encouraged, but celebrated. Make hArch truly yours by tweaking to your heart's content.
 
 Have an old laptop collecting dust? Throw hArch on it. By Default, Networking is not Enabled. 
 
@@ -25,14 +23,14 @@ Have an old laptop collecting dust? Throw hArch on it. By Default, Networking is
 
 **Works great with HypverV/irtualbox or Bare-Metal... Whatever you prefer** 
 
-The added vimrc file is well... perfection but VSCode will still be available as an alternative. Please drop any suggestions on other IDE's as I am always looking too improve or try others. 
+The added vimrc file is well... perfection but VSCode/Nvim will still be available as an alternative. Please drop any suggestions on other IDE's as I am always looking too improve or try others. 
 
 
 ![image](https://user-images.githubusercontent.com/49621391/198865669-f8c270ba-19c0-47cb-830b-722c25845d37.png)
 
 
 
-Vim/Nvim is the only IDE/text editor youll ever need,(Unless you too like Sublime :). Run vim on startup to execute plugin installation.
+Run vim after completion to execute plugin installation...
 
 Checkout - https://realpython.com/vim-and-python-a-match-made-in-heaven/ - if you don't believe me
 __________________________________________________________________________________________________________________________________________________________________
@@ -48,14 +46,14 @@ To install, boot into Arch live ISO and:
     6. ./hArchPost
     7. Hack the Universe!
  
-The prompt at end will ask to download master toolset or skip. It will add an extra 5-10 min install time. 
+At the end of the installation process, you'll encounter a prompt to either download the master toolset or skip. Opting to download the master toolset may extend the installation time by an additional 5-10 minutes. However, this feature will evolve over time with updates. Future iterations will introduce a more user-defined installation process, allowing you to tailor your system more accurately to your needs. For instance, if you're embarking on a reverse engineering task or a web pentest, you can simply select those specific options during installation to receive the necessary tools, streamlining the process and saving time by excluding unnecessary ones.
 
 ### To-Do List
 - [x] vimrc completed
 - [x] Tested bare-metal & Virtual
 - [x] Manual partitioning
 - [x] Better script UI
-- [x] Parallel Downloads
+- [x] Parallel Downloads w/ Speedtest
 - [x] Add Dockerfile for small hackers lab
 - [ ] User defined tool set
 - [ ] Kernel choice
@@ -64,6 +62,7 @@ The prompt at end will ask to download master toolset or skip. It will add an ex
 - [ ] Fix NVIDIA drivers not working
 - [ ] Auto add bootloader
 - [ ] Improve Hacker lab
+- [ ] 2024 Tools/Wordlist improvements
 
 If you wish to communicate with me on any updates or bugs! Create an issue or find me on Discord: @Chaotic_Guru#8356 or email me @bughunt3r88@outlook.com
   
