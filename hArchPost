@@ -35,7 +35,7 @@ installer() {
     hostname=$(prompt_for_input "Enter Hostname: ")
     echo $hostname > /etc/hostname
     log_info "Installing some handy packages..."
-    pacman -S dkms linux-headers dhcpcd iwd mlocate cmake ntp neofetch pulseaudio net-tools dnsutils git fish noto-fonts ttf-ubuntu-font-family ttf-dejavu ttf-freefont ttf-liberation ttf-droid ttf-roboto terminus-font rxvt-unicode ranger rofi dmenu --needed --noconfirm
+    pacman -S dkms linux-headers iwd mlocate cmake ntp neofetch pulseaudio net-tools dnsutils git fish noto-fonts ttf-ubuntu-font-family ttf-dejavu ttf-freefont ttf-liberation ttf-droid ttf-roboto terminus-font rxvt-unicode ranger rofi dmenu --needed --noconfirm
     hwclock --systohc
 }
 

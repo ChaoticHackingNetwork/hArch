@@ -167,7 +167,7 @@ partition_drive() {
 installer() {
     print_info "Installing Arch base..."
     sleep 2
-    pacstrap /mnt base base-devel linux linux-firmware vi vim nano dhcpcd net-tool
+    pacstrap /mnt base base-devel linux linux-firmware vi vim nano dhcpcd
     sleep 2
     #Generate fstab
     genfstab -U /mnt >> /mnt/etc/fstab
