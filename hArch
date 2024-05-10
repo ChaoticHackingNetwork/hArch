@@ -214,8 +214,7 @@ main() {
         print_info "Modifying $drive... HANG TIGHT!!!"
         sleep 3
 
-        local is_uefi=$(is_uefi_system)
-        partition_drive "$drive" "$is_uefi"
+        partition_drive "$drive"
     fi
 
     installer || log_error "Base system installation failed. Exiting."
