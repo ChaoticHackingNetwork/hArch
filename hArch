@@ -8,7 +8,7 @@
 # ---------------------------------------------------------------
 
 
-# Color Constants
+# Constants
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 WHITE='\033[0;37m'
@@ -17,19 +17,20 @@ PURPLE='\033[0;35m'
 RESET='\033[0m'
 NEWLINE=$'\n'
 
-# Logging Functions
+# Logging
 log_info() { echo -e "[${GREEN}INFO${RESET}] $1"; }
 log_warning() { echo -e "[WARNING] $1"; }
 log_error() { echo -e "[ERROR] $1"; }
 print_info() { echo -e "[${YELLOW}INFO${RESET}] $1${NEWLINE}"; }
 log_success() { echo -e "[SUCCESS] $1"; }
 
-# Prompt for User Input
+# User Input
 prompt_for_input() {
     read -p "$1" response
     echo "$response"
 }
 
+# Simple greeter function
 greet() {
 	echo -e "${PURPLE}Chaotic_Guru's hArch Installer${RESET}"
 	echo ${NEWLINE}
@@ -84,6 +85,7 @@ checkNet() {
 
 
 # Calculate Swap Size Based on System RAM
+# Improve this...
 calculate_swap_size() {
     local ram_gb=$(free -g | awk '/^Mem:/{print $2}')
     local swap_size="2G" # Default
@@ -106,9 +108,6 @@ calculate_swap_size() {
 
     echo "$swap_size"
 }
-
-swap_size=$(calculate_swap_size)
-echo "Recommended swap size: $swap_size"
 
 
 # Partitioning Function

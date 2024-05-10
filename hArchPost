@@ -8,7 +8,7 @@
 # ---------------------------------------------------------------
 
 
-# Color Constants
+# Constants
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 WHITE='\033[0;37m'
@@ -18,19 +18,20 @@ RESET='\033[0m'
 NEWLINE=$'\n'
 GITHUB='https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch'
 
-# Logging Functions
+# Logging
 log_info() { echo -e "[${GREEN}INFO${RESET}] $1"; }
 log_warning() { echo -e "[WARNING] $1"; }
 log_error() { echo -e "[ERROR] $1"; }
 print_info() { echo -e "[${YELLOW}INFO${RESET}] $1${NEWLINE}"; }
 log_success() { echo -e "[SUCCESS] $1"; }
 
-# Prompt for User Input
+# User Input
 prompt_for_input() {
     read -p "$1" response
     echo "$response"
 }
 
+# Basic Packages
 installer() {
     print_info "What would you like your system name set too..."
     hostname=$(prompt_for_input "Enter Hostname: ")
@@ -40,6 +41,7 @@ installer() {
     hwclock --systohc
 }
 
+# Setup Desktop Env
 desktopEnv() {
     log_info "Choose a Desktop Environment"
     log_info "Select number corresponding to DE you want, after installation enter 8 to continue if prompt returns${NEWLINE}"
@@ -62,6 +64,7 @@ desktopEnv() {
     done
 }
 
+# Setup Developer Env
 devSetup() {
     coder=$(prompt_for_input "Are you a programmer? [Y/n]: ")
     if [[ $coder == 'y' || $coder == 'Y' ]]; then
@@ -91,22 +94,26 @@ devSetup() {
     fi
 }
 
+# DE Wrapper
 install_desktop() {
     packages="$1"
     display_manager="$2"
     pacman -S $packages xorg xorg-server xorg-apps xorg-xinit --needed --noconfirm
+    sleep 5
     if [[ $packages == *"deepin"* ]]; then
-    sed -i '/^greeter-session=/c\greeter-session=lightdm-deepin-greeter' /etc/lightdm/lightdm.conf
+        sed -i '/^greeter-session=/c\greeter-session=lightdm-deepin-greeter' /etc/lightdm/lightdm.conf
     fi
-    handle_nvidia
+    #handle_nvidia
     systemctl enable $display_manager
 }
 
+# Dev Wrapper
 install_language() {
     packages="$1"
     pacman -S $packages git code neovim --noconfirm
 }
 
+# Nvidia function to handle nvidia driver installation... WIP
 handle_nvidia() {
     NVD='NVIDIA'
     card=$(lspci -vmm | grep VGA -A6)
@@ -117,6 +124,7 @@ handle_nvidia() {
     fi
 }
 
+# Basic Video Driver setup
 vidDriver() {
     log_info "Gathering Graphics info..."
     sleep 2
@@ -148,6 +156,7 @@ vidDriver() {
     esac
 }
 
+# Setup local/root user accounts
 userInfo() {
     log_info "Setting Root password..."
     passwd
@@ -161,6 +170,7 @@ userInfo() {
     passwd $username
 }
 
+# Bootloader - eventually will be automated
 booter() {
     log_info "Setting Bootloader..."
     drives=$(lsblk -f)
@@ -183,6 +193,7 @@ booter() {
     fi
 }
 
+# Setup blackarch repo for tooling
 blackArch() {
     log_info "Installing BlackArch Repo..."
     curl -O https://blackarch.org/strap.sh
@@ -192,6 +203,7 @@ blackArch() {
     pacman -Syu --noconfirm
 }
 
+# Setup VIM 
 vimSetup() {
     vim=$(prompt_for_input "Do you want to add Bundle to VIM? [y/n]: ")
     if [[ $vim == 'y' || $vim == 'Y' ]]; then
@@ -204,17 +216,16 @@ vimSetup() {
     fi
 }
 
+# Install 3gb worth of tools
 hackTools() {
     ht=$(prompt_for_input 'Do you want to add the Master Hacking Toolset? [y/N]: ')
     if [[ $ht == 'y' || $ht == 'Y' ]]; then
         log_info "Installing Master Hacking Toolset..."
         curl -O $GITHUB/main/Tools/Master
-        curl -O $GITHUB/main/Tools/useful-packages
-        pacman -S - < /Master --noconfirm && pacman -S - < /useful-packages --noconfirm
+        pacman -S - < /Master --noconfirm
     else
         log_warning "Skipping..."
         curl -O $GITHUB/main/Tools/Master
-        curl -O $GITHUB/main/Tools/useful-packages
     fi
 }
 
@@ -235,6 +246,7 @@ sleep_and_clear() {
     clear
 }
 
+# Find a cleaner method than this oneFuncToRuleThemAll
 oneFuncToRuleThemAll() {
     installer
     sleep_and_clear
