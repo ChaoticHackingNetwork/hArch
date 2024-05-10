@@ -49,7 +49,7 @@ desktopEnv() {
     do
         case $opt in
             "Mate") install_desktop "mate mate-extra lightdm lightdm-gtk-greeter" "lightdm" ;;
-            "KDE") install_desktop "plasma plasma-wayland-session kde-applications" "sddm" ;;
+            "KDE") install_desktop "plasma kde-applications sddm" "sddm" ;;
             "Gnome") install_desktop "gnome gnome-extra lxdm" "lxdm" ;;
             "Cinnamon") install_desktop "cinnamon gnome-terminal lxdm" "lxdm" ;;
             "Deepin") install_desktop "deepin deepin-extra lightdm" "lightdm" ;;
@@ -260,7 +260,8 @@ oneFuncToRuleThemAll() {
     desktopEnv
     sleep_and_clear
 
-    devS
+    devSetup
+    sleep_and_clear
 
     complete
 }
