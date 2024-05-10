@@ -16,6 +16,7 @@ YELLOW='\033[0;33m'
 PURPLE='\033[0;35m'
 RESET='\033[0m'
 NEWLINE=$'\n'
+GITHUB='https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch'
 
 # Logging Functions
 log_info() { echo -e "[${GREEN}INFO${RESET}] $1"; }
@@ -61,6 +62,35 @@ desktopEnv() {
     done
 }
 
+devSetup() {
+    coder=$(prompt_for_input "Are you a programmer? [Y/n]: ")
+    if [[ $coder == 'y' || $coder == 'Y' ]]; then
+        log_info "Lets setup your Dev Env"
+        log_info "Select Coding Lang..."
+        log_info "Select number corresponding to lang you want, after installation enter 9 to continue if prompt returns${NEWLINE}"
+        
+        DEs=("Haskell" "Java" "Python" "C/C++" "Rust" "Go" "Javascript" "ALL" "Skip")
+        select opt in "${DEs[@]}"
+        do
+            case $opt in
+                "Haskell") install_language "ghcup" ;;
+                "Java") install_language "jre-openjdk jdk-openjdk" ;;
+                "Python") install_language "python-pip python3" ;;
+                "C/C++") install_language "gcc g++" ;;
+                "Rust") install_language "rustup" ;;
+                "Go") install_language "go" ;;
+                "JavaScript") install_language "nodejs npm" ;;
+                "Give me all") install_language ghcup jre-openjdk jdk-openjdk python-pip python3 gcc g++ rustup go nodejs npm
+                "Skip") break ;;
+                *) log_error "Invalid Option, Try Again..." ;;
+            esac
+            log_info "Select the number corresponding to the language you want. After installation, enter 9 to continue if prompted"
+        done
+    else
+        continue
+    fi
+}
+
 install_desktop() {
     packages="$1"
     display_manager="$2"
@@ -74,7 +104,7 @@ install_desktop() {
 
 install_language() {
     packages="$1"
-    pacman -S $packages 
+    pacman -S $packages git code neovim --noconfirm
 }
 
 handle_nvidia() {
@@ -101,8 +131,8 @@ vidDriver() {
         *"$NVD"*)
             log_info "Installing NVIDIA Drivers..."
             pacman -S nvidia nvidia-settings nvidia-utils glxinfo nvtop --noconfirm
-            curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/nvidia.hook
-            curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/20-nvidia.conf
+            curl -O $GITHUB/main/nvidia.hook
+            curl -O $GITHUB/main/20-nvidia.conf
             mv nvidia.hook /etc/pacman.d/hooks
             mv 20-nvidia.conf /etc/X11/xorg.conf.d/
             bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
@@ -167,7 +197,7 @@ vimSetup() {
     if [[ $vim == 'y' || $vim == 'Y' ]]; then
         log_info "Adding Bundle to VIM..."
         users=$(ls /home)
-        curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/vimrc_bundle_conf
+        curl -O $GITHUB/main/vimrc_bundle_conf
         mv vimrc_bundle_conf /home/$users/.vimrc
     else
         log_warning "Skipping..."
@@ -178,40 +208,14 @@ hackTools() {
     ht=$(prompt_for_input 'Do you want to add the Master Hacking Toolset? [y/N]: ')
     if [[ $ht == 'y' || $ht == 'Y' ]]; then
         log_info "Installing Master Hacking Toolset..."
-        curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/Master
-        curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/useful-packages
+        curl -O $GITHUB/main/Tools/Master
+        curl -O $GITHUB/main/Tools/useful-packages
         pacman -S - < /Master --noconfirm && pacman -S - < /useful-packages --noconfirm
     else
         log_warning "Skipping..."
-        curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/Master
-        curl -O https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch/main/Tools/useful-packages
+        curl -O $GITHUB/main/Tools/Master
+        curl -O $GITHUB/main/Tools/useful-packages
     fi
-}
-
-devSetup() {
-    coder=$(prompt_for_input "Are you a programmer? [Y/n]: ")
-    if [[ $coder == 'y' || $coder == 'Y' ]]; then
-        log_info "Lets setup your Dev Env"
-        log_info "Select Coding Lang..."
-    log_info "Select number corresponding to lang you want, after installation enter 8 to continue if prompt returns${NEWLINE}"
-    
-    DEs=("Haskell" "Java" "Python" "C/C++" "Web Dev" "Rust" "Go" "Skip")
-    select opt in "${DEs[@]}"
-    do
-        case $opt in
-            "Mate") install_desktop "mate mate-extra lightdm lightdm-gtk-greeter" "lightdm" ;;
-            "KDE") install_desktop "plasma plasma-wayland-session kde-applications" "sddm" ;;
-            "Gnome") install_desktop "gnome gnome-extra lxdm" "lxdm" ;;
-            "Cinnamon") install_desktop "cinnamon gnome-terminal lxdm" "lxdm" ;;
-            "Deepin") install_desktop "deepin deepin-extra lightdm" "lightdm" ;;
-            "Enlightenment") install_desktop "enlightenment terminology lxdm" "lxdm" ;;
-            "i3") install_desktop "i3-gaps i3blocks i3lock numlockx gdm" "gdm" ;;
-            "Skip") break ;;
-            *) log_error "Invalid Option, Try Again..." ;;
-        esac
-        print_info "Select number corresponding to DE you want, after installation enter 8 to continue if prompt returns"
-    done
-
 }
 
 complete() {
@@ -255,6 +259,8 @@ oneFuncToRuleThemAll() {
 
     desktopEnv
     sleep_and_clear
+
+    devS
 
     complete
 }

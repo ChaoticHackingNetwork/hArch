@@ -67,6 +67,7 @@ checkNet() {
     fi
     
     # Perform speed test
+    log_info "Calculating Internet Speed..."
     sleep 1
     local speed=$(./speedtest-cli --simple | awk '/^Download:/ {print $2}')
     sleep 1
