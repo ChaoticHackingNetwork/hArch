@@ -54,7 +54,7 @@ desktopEnv() {
             "Cinnamon") install_desktop "cinnamon gnome-terminal lxdm" "lxdm" ;;
             "Deepin") install_desktop "deepin deepin-extra lightdm" "lightdm" ;;
             "Enlightenment") install_desktop "enlightenment terminology lxdm" "lxdm" ;;
-            "i3") install_desktop "i3-gaps i3blocks i3lock numlockx gdm" "gdm" ;;
+            "i3") install_desktop "i3-gaps i3blocks i3lock numlockx sddm sddm-kcm" "sddm" ;;
             "Skip") break ;;
             *) log_error "Invalid Option, Try Again..." ;;
         esac
