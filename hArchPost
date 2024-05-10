@@ -73,14 +73,14 @@ devSetup() {
         select opt in "${DEs[@]}"
         do
             case $opt in
-                "Haskell") install_language "ghcup" ;; #FIXME
-                "Java") install_language "jre-openjdk jdk-openjdk" ;; #FIXME
+                "Haskell") log_warning "Setting up GHCUP..." ;; #FIXME
+                "Java") install_language "jdk-openjdk" ;; #FIXME
                 "Python") install_language "python-pip python3" ;;
                 "C/C++") install_language "gcc g++" ;; #Alredy installed
                 "Rust") install_language "rustup" ;; #WORKS
                 "Go") install_language "go" ;; #WORKS
-                "JavaScript") install_language "nodejs npm" ;;
-                "Give me all") install_language "ghcup jre-openjdk jdk-openjdk python-pip python3 gcc g++ rustup go nodejs npm" ;;
+                "Javascript") install_language "nodejs npm" ;;
+                "ALL") install_language "jdk-openjdk python-pip python3 gcc g++ rustup go nodejs npm" ;;
                 "Skip") break ;;
                 *) log_error "Invalid Option, Try Again..." ;;
             esac
