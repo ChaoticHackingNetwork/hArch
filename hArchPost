@@ -69,7 +69,7 @@ devSetup() {
     coder=$(prompt_for_input "Can you code? [Y/n]: ")
     if [[ $coder == 'y' || $coder == 'Y' ]]; then
         log_info "Setting up a coding env... This may take awhile"
-        pacman -S jdk-openjdk python-pip rustup go nodejs npm python3 git code neovim >/dev/null 2>&1
+        pacman -S jdk-openjdk python-pip rustup go nodejs npm python3 git code neovim --needed --noconfirm >/dev/null 2>&1
         haskellIsTheBest=$(prompt_for_input "Can you code in Haskell? [y/N]: ")
         if [[ $haskellIsTheBest == 'y' || $haskellIsTheBest == 'Y' ]]; then
             user=$(ls /home)
