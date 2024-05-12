@@ -55,41 +55,34 @@ desktopEnv() {
             "Gnome") install_desktop "gnome gnome-extra lxdm" "lxdm" ;;
             "Cinnamon") install_desktop "cinnamon gnome-terminal lxdm" "lxdm" ;;
             "Deepin") install_desktop "deepin deepin-extra lightdm" "lightdm" ;;
-            "Enlightenment") install_desktop "enlightenment terminology lxdm" "lxdm" ;;
+            "Enlightenment") install_desktop "enlightenment terminology connman bluez lightdm" "lightdm" ;;
             "i3") install_desktop "i3-gaps i3blocks i3lock numlockx sddm sddm-kcm" "sddm" ;;
             "Skip") break ;;
             *) log_error "Invalid Option, Try Again..." ;;
         esac
-        print_info "Select number corresponding to DE you want, after installation enter 8 to continue if prompt returns"
+        print_info "Install as many as you want, the last one installed will be default, enter 8 too continue"
     done
 }
 
 # Setup Developer Env
 devSetup() {
-    coder=$(prompt_for_input "Are you a programmer? [Y/n]: ")
+    coder=$(prompt_for_input "Can you code? [Y/n]: ")
     if [[ $coder == 'y' || $coder == 'Y' ]]; then
-        log_info "Lets setup your Dev Env"
-        log_info "Select Coding Lang..."
-        log_info "Select number corresponding to lang you want, after installation enter 9 to continue if prompt returns${NEWLINE}"
-        
-        langs=("Haskell" "Java" "Python" "C/C++" "Rust" "Go" "Javascript" "ALL" "Skip")
-        select opt in "${langs[@]}"
-        do
-            case $opt in
-                "Haskell") log_warning "Setting up GHCUP..." ;; #FIXME
-                "Java") install_language "jdk-openjdk" ;; #FIXME
-                "Python") install_language "python-pip python3" ;;
-                "C/C++") install_language "gcc g++" ;; #Alredy installed
-                "Rust") install_language "rustup" ;; #WORKS
-                "Go") install_language "go" ;; #WORKS
-                "Javascript") install_language "nodejs npm" ;;
-                "ALL") install_language "jdk-openjdk python-pip python3 gcc g++ rustup go nodejs npm" ;;
-                "Skip") break ;;
-                *) log_error "Invalid Option, Try Again..." ;;
-            esac
-            log_info "Select the number corresponding to the language you want. After installation, enter 9 to continue if prompted"
-        done
+        log_info "Setting up a coding env..."
+        pacman -S jdk-openjdk python-pip rustup go nodejs npm python3 git code neovim >/dev/null 2>&1
+        haskellIsTheBest=$(prompt_for_input "Can you code in Haskell? [y/N]: ")
+        if [[ $haskellIsTheBest == 'y' || $haskellIsTheBest == 'Y' ]]; then
+            user=$(ls /home)
+            cd /home/$user && mkdir AUR && cd /AUR && git clone https://aur.archlinux.org/ghcup-hs-bin.git
+            sleep 2
+            log_info "Setting up GHCUP!"
+            cd ghcup-hs-bin && y | makepkg -si >/dev/null 2>&1
+        else
+            log_warning "Ill post a blog posting soon as too why I love Haskell"
+            continue
+        fi
     else
+        log_warning "Do you know where the term Script Kiddie comes from?"
         continue
     fi
 }
@@ -106,13 +99,6 @@ install_desktop() {
     fi
     #handle_nvidia
     systemctl enable $display_manager >/dev/null
-}
-
-# Dev Wrapper
-install_language() {
-    packages="$1"
-    log_info "Installing Dev Env..."
-    pacman -S $packages git code neovim --noconfirm --needed >/dev/null
 }
 
 # Nvidia function to handle nvidia driver installation... WIP
