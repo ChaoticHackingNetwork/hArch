@@ -55,7 +55,7 @@ desktopEnv() {
             "Gnome") install_desktop "gnome gnome-extra lxdm" "lxdm" ;;
             "Cinnamon") install_desktop "cinnamon gnome-terminal lxdm" "lxdm" ;;
             "Deepin") install_desktop "deepin deepin-extra sddm" "sddm" ;;
-            "Enlightenment") install_desktop "enlightenment terminology connman bluez sddm" "sddm" ;;
+            "Enlightenment") install_desktop "enlightenment terminology connman bluez bluez-utils sddm" "sddm" ;;
             "i3") install_desktop "i3-gaps i3blocks i3lock numlockx sddm sddm-kcm" "sddm" ;;
             "Skip") break ;;
             *) log_error "Invalid Option, Try Again..." ;;
@@ -96,6 +96,10 @@ install_desktop() {
     sleep 5
     if [[ $packages == *"deepin"* ]]; then
         sed -i '/^greeter-session=/c\greeter-session=lightdm-deepin-greeter' /etc/lightdm/lightdm.conf
+    fi
+    if [[ $packages == *"enlightenment"* ]]; then
+        systemctl enable connman >/dev/null
+        systemctl enable bluetooth >/dev/null
     fi
     #handle_nvidia
     systemctl enable $display_manager >/dev/null
