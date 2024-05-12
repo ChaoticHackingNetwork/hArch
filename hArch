@@ -16,6 +16,7 @@ YELLOW='\033[0;33m'
 PURPLE='\033[0;35m'
 RESET='\033[0m'
 NEWLINE=$'\n'
+SUPPRESS='>/dev/null'
 
 # Logging
 log_info() { echo -e "[${GREEN}INFO${RESET}] $1"; }
@@ -63,8 +64,8 @@ checkNet() {
     # Check if speedtest-cli is installed
     if ! command -v speedtest-cli &>/dev/null; then
         print_info "speedtest-cli is not installed. Installing..."
-        pacman -Sy
-        python3 -m venv speedTest && cd speedTest/bin/ && ./pip3 install speedtest-cli
+        pacman -Sy $SUPPRESS
+        python3 -m venv speedTest && cd speedTest/bin/ && ./pip3 install speedtest-cli $SUPPRESS
     fi
     
     # Perform speed test
@@ -140,7 +141,7 @@ partition_drive() {
     fi
 
     # Execute commands through fdisk
-    printf "%s\n" "${cmd_list[@]}" | fdisk "$drive"
+    printf "%s\n" "${cmd_list[@]}" | fdisk "$drive" $SUPPRESS
 
     # Format partitions and mount them
     if [[ -d "/sys/firmware/efi/efivars/" ]]; then
@@ -167,7 +168,7 @@ partition_drive() {
 installer() {
     print_info "Installing Arch base..."
     sleep 2
-    pacstrap /mnt base base-devel linux linux-firmware vi vim nano dhcpcd
+    pacstrap /mnt base base-devel linux linux-firmware vi vim nano dhcpcd $SUPPRESS
     sleep 2
     #Generate fstab
     genfstab -U /mnt >> /mnt/etc/fstab
@@ -177,7 +178,7 @@ installer() {
 lastMinSetup() {
     print_info "Finishing last minute setup..."
     echo 0 > /proc/sys/kernel/hung_task_timeout_secs
-    curl -O 'https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/hArchPost'
+    curl -O 'https://raw.githubusercontent.com/ChaoticHackingNetwork/Harch/main/hArchPost' $SUPPRESS
     chmod +x hArchPost
     mv hArchPost /mnt
     print_info "Time to enter CHROOT"
