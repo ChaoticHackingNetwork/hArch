@@ -16,7 +16,6 @@ YELLOW='\033[0;33m'
 PURPLE='\033[0;35m'
 RESET='\033[0m'
 NEWLINE=$'\n'
-SUPPRESS='>/dev/null'
 GITHUB='https://raw.githubusercontent.com/ChaoticHackingNetwork/hArch'
 
 # Logging
@@ -38,7 +37,7 @@ installer() {
     hostname=$(prompt_for_input "Enter Hostname: ")
     echo $hostname > /etc/hostname
     log_info "Installing some handy packages..."
-    pacman -S dkms linux-headers iwd mlocate cmake ntp neofetch pulseaudio net-tools dnsutils fish noto-fonts ttf-ubuntu-font-family ttf-dejavu ttf-freefont ttf-liberation ttf-droid ttf-roboto terminus-font rxvt-unicode ranger rofi dmenu --needed --noconfirm $SUPPRESS
+    pacman -S dkms linux-headers iwd mlocate cmake ntp neofetch pulseaudio net-tools dnsutils fish noto-fonts ttf-ubuntu-font-family ttf-dejavu ttf-freefont ttf-liberation ttf-droid ttf-roboto terminus-font rxvt-unicode ranger rofi dmenu --needed --noconfirm >/dev/null
     hwclock --systohc
 }
 
@@ -100,20 +99,20 @@ install_desktop() {
     packages="$1"
     display_manager="$2"
     log_info "Installing Desktop Env..."
-    pacman -S $packages xorg xorg-server xorg-apps xorg-xinit --needed --noconfirm $SUPPRESS
+    pacman -S $packages xorg xorg-server xorg-apps xorg-xinit --needed --noconfirm >/dev/null
     sleep 5
     if [[ $packages == *"deepin"* ]]; then
         sed -i '/^greeter-session=/c\greeter-session=lightdm-deepin-greeter' /etc/lightdm/lightdm.conf
     fi
     #handle_nvidia
-    systemctl enable $display_manager $SUPPRESS
+    systemctl enable $display_manager >/dev/null
 }
 
 # Dev Wrapper
 install_language() {
     packages="$1"
     log_info "Installing Dev Env..."
-    pacman -S $packages git code neovim --noconfirm --needed $SUPPRESS
+    pacman -S $packages git code neovim --noconfirm --needed >/dev/null
 }
 
 # Nvidia function to handle nvidia driver installation... WIP
@@ -137,11 +136,11 @@ vidDriver() {
     case $str in
         *"$AMD"*)
             log_info "Installing AMD Drivers..."
-            pacman -S xf86-video-ati xf86-video-amdgpu mesa --noconfirm --needed $SUPPRESS
+            pacman -S xf86-video-ati xf86-video-amdgpu mesa --noconfirm --needed >/dev/null
             ;;
         *"$NVD"*)
             log_info "Installing NVIDIA Drivers..."
-            pacman -S nvidia nvidia-settings nvidia-utils glxinfo nvtop --noconfirm --needed $SUPPRESS
+            pacman -S nvidia nvidia-settings nvidia-utils glxinfo nvtop --noconfirm --needed >/dev/null
             curl -O $GITHUB/main/nvidia.hook
             curl -O $GITHUB/main/20-nvidia.conf
             mv nvidia.hook /etc/pacman.d/hooks
@@ -183,13 +182,13 @@ booter() {
     drive=$(prompt_for_input "Enter Drive to install Bootloader [Example: /dev/nvme0n1p1]: ")
     if [[ -d "/sys/firmware/efi" ]]; then
         log_info "Installing UEFI Bootloader..."
-        pacman -S efibootmgr grub dosfstools mtools os-prober --noconfirm $SUPPRESS
+        pacman -S efibootmgr grub dosfstools mtools os-prober --noconfirm >/dev/null
         grub-install --target=x86_64-efi --bootloader-id=HARCH_UEFI --efi-directory=/boot/EFI --recheck
         grub-mkconfig -o /boot/grub/grub.cfg
         mkinitcpio -p linux
     else
         log_info "Installing BIOS Bootloader..."
-        pacman -S grub --noconfirm $SUPPRESS
+        pacman -S grub --noconfirm >/dev/null
         grub-install --target=i386-pc $drive --recheck
         grub-mkconfig -o /boot/grub/grub.cfg
         mkinitcpio -p linux
@@ -199,12 +198,12 @@ booter() {
 # Setup blackarch repo for tooling
 blackArch() {
     log_info "Installing BlackArch Repo and setting everything up..."
-    curl -O https://blackarch.org/strap.sh $SUPPRESS
+    curl -O https://blackarch.org/strap.sh >/dev/null
     chmod +x strap.sh
-    ./strap.sh $SUPPRESS
+    ./strap.sh >/dev/null
     sleep 3
     log_info "Installing Blackarch Keyring"
-    pacman -Syu --noconfirm $SUPPRESS
+    pacman -Syu --noconfirm >/dev/null
 }
 
 # Setup VIM 
@@ -213,7 +212,7 @@ vimSetup() {
     if [[ $vim == 'y' || $vim == 'Y' ]]; then
         log_info "Adding Bundle to VIM..."
         users=$(ls /home)
-        curl -O $GITHUB/main/vimrc_bundle_conf $SUPPRESS
+        curl -O $GITHUB/main/vimrc_bundle_conf >/dev/null
         mv vimrc_bundle_conf /home/$users/.vimrc
     else
         log_warning "Skipping..."
@@ -225,11 +224,11 @@ hackTools() {
     ht=$(prompt_for_input 'Do you want to add the Master Hacking Toolset? [y/N]: ')
     if [[ $ht == 'y' || $ht == 'Y' ]]; then
         log_info "Installing Master Hacking Toolset..."
-        curl -O $GITHUB/main/Tools/Master $SUPPRESS
+        curl -O $GITHUB/main/Tools/Master >/dev/null
         pacman -S - < /Master --noconfirm
     else
         log_warning "Skipping..."
-        curl -O $GITHUB/main/Tools/Master $SUPPRESS
+        curl -O $GITHUB/main/Tools/Master >/dev/null
     fi
 }
 
