@@ -72,18 +72,16 @@ devSetup() {
         pacman -S jdk-openjdk python-pip rustup go nodejs npm python3 git code neovim --needed --noconfirm >/dev/null 2>&1
         haskellIsTheBest=$(prompt_for_input "Can you code in Haskell? [y/N]: ")
         if [[ $haskellIsTheBest == 'y' || $haskellIsTheBest == 'Y' ]]; then
-            user=$(ls /home)
-            cd /home/$user && mkdir AUR && cd /AUR && git clone https://aur.archlinux.org/ghcup-hs-bin.git
+            userHome=$(ls /home)
+            cd /home/$user && mkdir -p ~/AUR && cd ~/AUR && git clone https://aur.archlinux.org/ghcup-hs-bin.git
             sleep 2
             log_info "Setting up GHCUP!"
             cd ghcup-hs-bin && y | makepkg -si >/dev/null 2>&1
         else
             log_warning "Ill post a blog posting soon as too why I love Haskell"
-            continue
         fi
     else
         log_warning "Do you know where the term Script Kiddie comes from?"
-        continue
     fi
 }
 
